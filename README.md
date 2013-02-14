@@ -3,13 +3,6 @@
 
 Westwood Robotics 2013 FRC Competition Code
 
-TODO
---------
-- [x] Scale/Square Joystick Speed - 2/13
-- [ ] Complete Vision Tracking
-- [ ] Complete Tele-Op Selective Targeting
-
-
 Requires
 --------
 - LabVIEW 2012
