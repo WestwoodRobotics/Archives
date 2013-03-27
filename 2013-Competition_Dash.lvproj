@@ -22,6 +22,8 @@
 		</Item>
 		<Item Name="TypeDefs" Type="Folder">
 			<Item Name="DStoPCPacketTypeDef.ctl" Type="VI" URL="../DStoPCPacketTypeDef.ctl"/>
+			<Item Name="DIOOutput.ctl" Type="VI" URL="../DIOOutput.ctl"/>
+			<Item Name="SensorsOutput.ctl" Type="VI" URL="../SensorsOutput.ctl"/>
 		</Item>
 		<Item Name="Dashboard Main.vi" Type="VI" URL="../Dashboard Main.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
