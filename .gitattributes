@@ -1,6 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+#Labview - don't diff lvproj files
+*.lvproj -crlf -diff
+
 # Custom for Visual Studio
 *.cs     diff=csharp
 *.sln    merge=union
