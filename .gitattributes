@@ -11,6 +11,7 @@
 *.vbproj merge=union
 *.fsproj merge=union
 *.dbproj merge=union
+*.lvproj merge=mine
 
 # Standard to msysgit
 *.doc	 diff=astextplain
