@@ -25,6 +25,16 @@
 			<Item Name="DIOOutput.ctl" Type="VI" URL="../DIOOutput.ctl"/>
 			<Item Name="SensorsOutput.ctl" Type="VI" URL="../SensorsOutput.ctl"/>
 		</Item>
+		<Item Name="Team Code" Type="Folder">
+			<Item Name="DIOToString.vi" Type="VI" URL="../../2013-Competition_Code/DIOToString.vi"/>
+			<Item Name="AddToLog.vi" Type="VI" URL="../AddToLog.vi"/>
+			<Item Name="SensorsToString.vi" Type="VI" URL="../../2013-Competition_Code/SensorsToString.vi"/>
+			<Item Name="JSAxiesToString.vi" Type="VI" URL="../JSAxiesToString.vi"/>
+			<Item Name="CheckForEnabled.vi" Type="VI" URL="../CheckForEnabled.vi"/>
+			<Item Name="JSButtonsToString.vi" Type="VI" URL="../JSButtonsToString.vi"/>
+			<Item Name="BatteryToString.vi" Type="VI" URL="../BatteryToString.vi"/>
+			<Item Name="Dashboard Global Data.vi" Type="VI" URL="../Dashboard Global Data.vi"/>
+		</Item>
 		<Item Name="Dashboard Main.vi" Type="VI" URL="../Dashboard Main.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
@@ -139,6 +149,7 @@
 				<Item Name="Compute Delta.vi" Type="VI" URL="/&lt;vilib&gt;/Rock Robotics/Network Tables/Compute Delta.vi"/>
 				<Item Name="NT Read String Array.vi" Type="VI" URL="/&lt;vilib&gt;/Rock Robotics/Network Tables/NT Read String Array.vi"/>
 				<Item Name="SD Read String.vi" Type="VI" URL="/&lt;vilib&gt;/Rock Robotics/Network Tables/SD Read String.vi"/>
+				<Item Name="SD Write String.vi" Type="VI" URL="/&lt;vilib&gt;/Rock Robotics/Network Tables/SD Write String.vi"/>
 			</Item>
 			<Item Name="nivissvc.dll" Type="Document" URL="nivissvc.dll">
 				<Property Name="NI.PreserveRelativePath" Type="Bool">true</Property>
@@ -180,7 +191,7 @@
 				<Property Name="SourceCount" Type="Int">2</Property>
 				<Property Name="TgtF_autoIncrement" Type="Bool">true</Property>
 				<Property Name="TgtF_fileDescription" Type="Str">FRC PC Dashboard - WWRobotics</Property>
-				<Property Name="TgtF_fileVersion.build" Type="Int">15</Property>
+				<Property Name="TgtF_fileVersion.build" Type="Int">28</Property>
 				<Property Name="TgtF_fileVersion.major" Type="Int">5</Property>
 				<Property Name="TgtF_internalName" Type="Str">FRC PC Dashboard - WWRobotics</Property>
 				<Property Name="TgtF_targetfileGUID" Type="Str">{AEE2EF3D-7087-47D6-AEAE-9F87F896ED5E}</Property>
