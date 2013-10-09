@@ -58,7 +58,7 @@ void setup(){
 void loop(){
 
   //Get data from the serial port (If any Available)
-  if(Serial.available()){
+  /*if(Serial.available()){
     serialBytes = Serial.available();
     Serial.readBytes(serialIn, serialBytes);
     if((serialIn[1] == '|' && serialIn[3] == '|' && serialIn[5] == '|' && serialIn[7] == '|')){
@@ -74,7 +74,7 @@ void loop(){
       Serial.print("Path Setup: Failure\n")
     }
     
-  }
+  }*/
 
   //Grab all the Button Values
   for(i = 0; i < 10; i++){
@@ -103,7 +103,7 @@ void loop(){
 int checkPath(int n, int a, int b){
   return (
           //If We are using the AND Gate
-          ((n == 1 && (a == 1) && (b == 1))) ? 1 : 0) ||
+          ((n == 1 && ((a == 1) && (b == 1))) ? 1 : 0) ||
           //If we are using the OR Gate
           ((n == 2 && ((a == 1) || (b == 1))) ? 1 : 0) ||
           //If we are using NAND Gate
