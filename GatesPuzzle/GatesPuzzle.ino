@@ -44,14 +44,15 @@ void setup(){
   1 0 0 0|1 0 0 1|1 0 1 0|1 0 1 1
   1 1 0 0|1 1 0 1|1 1 1 0|1 1 1 1
   */
+  randomSeed(analogRead(A6));
   for(i = 0; i < 4; i++){
-    pathStates[i] = random(0,1);
+    pathStates[i] = random(0,2);
   }
 
   //Begin Serial Communication
   Serial.begin(9600);
   //Send 'Setup Complete' Message
-  Serial.print("Setup Complete");
+  Serial.print("Setup Complete\n");
 }
 
 //Start the Main Loop
@@ -78,7 +79,7 @@ void loop(){
 
   //Grab all the Button Values
   for(i = 0; i < 10; i++){
-    btnStates[i] = digitalRead(btnPins[i]);
+    btnStates[i] = !digitalRead(btnPins[i]);
   }
 
   //Calculate Each Button Group Value
@@ -90,29 +91,43 @@ void loop(){
   //Check if we have Valid Paths
   pathStates[4] = checkPath(btnSets[0], pathStates[0], pathStates[1]);
   pathStates[5] = checkPath(btnSets[1], pathStates[2], pathStates[3]);
-  pathStates[6] = (pathStates[4] ^ btnStates[9] ? 1 : 0);
-  pathStates[7] = checkPath(btnSets[2], pathStates[5], pathStates[6]);
+  pathStates[6] = checkPath(8, pathStates[4], btnStates[9]);
+  pathStates[7] = (checkPath(btnSets[2], pathStates[5], pathStates[6]) && (btnSets[0] > 0) && (btnSets[1] > 0) && (btnSets[2] > 0) ? 1 : 0);
   
   //Write out the LED Values
   for(i = 0; i < 8; i++){
     digitalWrite(ledPins[i], pathStates[i]);
   }
+
+  Serial.print(String(pathStates[0]) + "|" +
+               String(pathStates[1]) + "|" +
+               String(pathStates[2]) + "|" +
+               String(pathStates[3]) + "|" +
+               String(pathStates[4]) + "|" +
+               String(pathStates[5]) + "|" +
+               String(pathStates[6]) + "|" +
+               String(pathStates[7]) + "\n");
 }
 
 //Method to check for a Valid Path
 int checkPath(int n, int a, int b){
   return (
           //If We are using the AND Gate
-          ((n == 1 && ((a == 1) && (b == 1))) ? 1 : 0) ||
+          (n == 1 && ((a == 1) && (b == 1)) ? 1 : 0) ||
           //If we are using the OR Gate
-          ((n == 2 && ((a == 1) || (b == 1))) ? 1 : 0) ||
+          (n == 2 && ((a == 1) || (b == 1)) ? 1 : 0) ||
           //If we are using NAND Gate
-          ((n == 3 && !((a == 1) && (b == 1))) ? 1 : 0) ||
+          (n == 3 && !((a == 1) && (b == 1)) ? 1 : 0) ||
           //If we are using NOR Gate
-          ((n == 4 && !((a == 1) || (b == 1))) ? 1 : 0) ||
+          (n == 4 && !((a == 1) || (b == 1)) ? 1 : 0) ||
           //If we are using XOR Gate
-          ((n == 5 && ((a == 1) ^ (b == 1))) ? 1 : 0) ||
+          (n == 5 && ((a == 1) ^ (b == 1)) ? 1 : 0) ||
           //If we are using XNOR Gate
-          ((n == 6 && !((a == 1) ^ (b == 1))) ? 1 : 0)
+          (n == 6 && !((a == 1) ^ (b == 1)) ? 1 : 0) ||
+          //Catch 7
+          ((n == 7 ? 0 : 0)) ||
+          //Check for NOT Gate, make is simple
+          (n == 8 && b == 1 ? !a : 0) ||
+          (n == 8 && b == 0 ? a : 0)
         );
 }
