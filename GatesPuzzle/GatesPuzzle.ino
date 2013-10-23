@@ -15,9 +15,9 @@ int ledPins[8] = {12,13,A0,A1,A2,A3,A4,A5};
 //Button States (True/1, False/0)
 int btnStates[10];
 //Button Value Groups
-int btnSets[3] = {0,0,0};
+int btnSets[3];
 //Path State Values {A,B,C,D,E,F,G,H}
-int pathStates[8] = {0,0,0,0,0,0,0,0};
+int pathStates[8];
 //Variables that are reused Constantly
 int i, baseI, serialBytes;
 //Serial Input Array
@@ -112,6 +112,7 @@ void loop(){
 //Method to check for a Valid Path
 int checkPath(int n, int a, int b){
   return (
+          (n == 0 ? 0 : 0) ||
           //If We are using the AND Gate
           (n == 1 && ((a == 1) && (b == 1)) ? 1 : 0) ||
           //If we are using the OR Gate
@@ -125,7 +126,7 @@ int checkPath(int n, int a, int b){
           //If we are using XNOR Gate
           (n == 6 && !((a == 1) ^ (b == 1)) ? 1 : 0) ||
           //Catch 7
-          ((n == 7 ? 0 : 0)) ||
+          (n == 7 ? 0 : 0) ||
           //Check for NOT Gate, make is simple
           (n == 8 && b == 1 ? !a : 0) ||
           (n == 8 && b == 0 ? a : 0)
