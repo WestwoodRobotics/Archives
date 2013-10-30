@@ -1,0 +1,105 @@
+/**
+ *
+ * BEST 2013 Logic Gate Puzzle Display
+ *
+ *
+ * Austin Reuland
+ * Westwood Robotics
+ */
+
+
+//Button Input Pins
+int btnPins[10] = {2,3,4,5,6,7,8,9,10,11};
+//LED Output Pins
+int ledPins[8] = {A5,A4,A3,A2,A1,A0,13,12};
+//Button States (True/1, False/0)
+int btnStates[10];
+//Button Value Groups
+int btnSets[3];
+//Path State Values {A,B,C,D,E,F,G,H}
+int pathStates[8];
+//Variables that are reused Constantly
+int i, baseI, serialBytes;
+//Serial Input Array
+char serialIn[64];
+
+//Setup the Arduino
+void setup(){
+
+  //Set the Button Input Pins (Uses Internal Pullup Resistors)
+  for(i = 0; i < 10; i++){
+    pinMode(btnPins[i], INPUT_PULLUP);
+  }
+
+  //Set the LED Relay Pins
+  for(i = 0; i < 8; i++){
+    pinMode(ledPins[i], OUTPUT);
+  }
+
+  //TODO Implement Custom Path Setup
+  /*Possible Starting Paths:
+  A B C D|A B C D|A B C D|A B C D
+  0 0 0 0|0 0 0 1|0 0 1 0|0 0 1 1
+  0 1 0 0|0 1 0 1|0 1 1 0|0 1 1 1
+  1 0 0 0|1 0 0 1|1 0 1 0|1 0 1 1
+  1 1 0 0|1 1 0 1|1 1 1 0|1 1 1 1
+  */
+  randomSeed(analogRead(A6));
+  for(i = 0; i < 4; i++){
+    pathStates[i] = random(0,2);
+  }
+
+  //Begin Serial Communication
+  Serial.begin(9600);
+  //Send 'Setup Complete' Message
+  Serial.print("Setup Complete\n");
+}
+
+//Start the Main Loop
+void loop(){
+
+  //Grab all the Button Values
+  for(i = 0; i < 10; i++){
+    btnStates[i] = !digitalRead(btnPins[i]);
+  }
+
+  //Calculate Each Button Group Value
+  for(i = 0; i < 3; i++){
+    baseI = i * 3;
+    btnSets[i] = btnStates[baseI]*1 + btnStates[baseI+1]*2 + btnStates[baseI+2]*4;
+  }
+
+  //Check if we have Valid Paths
+  pathStates[4] = checkPath(btnSets[0], pathStates[0], pathStates[1]);
+  pathStates[5] = checkPath(btnSets[1], pathStates[2], pathStates[3]);
+  pathStates[6] = checkPath(8, pathStates[4], btnStates[9]);
+  pathStates[7] = (checkPath(btnSets[2], pathStates[5], pathStates[6]) && (btnSets[0] > 0) && (btnSets[1] > 0) && (btnSets[2] > 0) ? 1 : 0);
+  
+  //Write out the LED Values
+  for(i = 0; i < 8; i++){
+    digitalWrite(ledPins[i], pathStates[i]);
+  }
+
+//Method to check for a Valid Path
+int checkPath(int n, int a, int b){
+  return (
+          (n == 0 ? 0 : 0) ||
+          //If We are using the AND Gate
+          (n == 1 && ((a == 1) && (b == 1)) ? 1 : 0) ||
+          //If we are using the OR Gate
+          (n == 2 && ((a == 1) || (b == 1)) ? 1 : 0) ||
+          //If we are using NAND Gate
+          (n == 3 && !((a == 1) && (b == 1)) ? 1 : 0) ||
+          //If we are using NOR Gate
+          (n == 4 && !((a == 1) || (b == 1)) ? 1 : 0) ||
+          //If we are using XOR Gate
+          (n == 5 && ((a == 1) ^ (b == 1)) ? 1 : 0) ||
+          //If we are using XNOR Gate
+          (n == 6 && !((a == 1) ^ (b == 1)) ? 1 : 0) ||
+          //Catch 7
+          (n == 7 ? 0 : 0) ||
+          //Check for NOT Gate, make is simple
+          (n == 8 && b == 1 ? !a : 0) ||
+          (n == 8 && b == 0 ? a : 0)
+        );
+}

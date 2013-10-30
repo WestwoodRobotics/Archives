@@ -1,0 +1,22 @@
+//Serial Input Array
+char serialIn[64];
+
+
+	//Get data from the serial port (If any Available)
+	/*if(Serial.available()){
+		serialBytes = Serial.available();
+		Serial.readBytes(serialIn, serialBytes);
+		if((serialIn[1] == '|' && serialIn[3] == '|' && serialIn[5] == '|' && serialIn[7] == '|')){
+			pathStates[0] = atoi(serialIn[0]);
+			pathStates[1] = atoi(serialIn[2]);
+			pathStates[2] = atoi(serialIn[4]);
+			pathStates[3] = atoi(serialIn[6]);
+			Serial.print("Path Setup: Complete (A - " + pathStates[0] +
+									 " | B - " + pathStates[1] +
+									 " | C - " + pathStates[2] +
+									 " | D - " + pathStates[3] + ")\n");
+		}else{
+			Serial.print("Path Setup: Failure\n")
+		}
+		
+	}*/
