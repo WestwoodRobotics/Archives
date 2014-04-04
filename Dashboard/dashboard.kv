@@ -33,91 +33,6 @@
             BoxLayout:
                 orientation: 'horizontal'
 
-                GridLayout:
-                    cols: 2
-                    rows: 2
-                    size_hint_x: 1.5
-
-                    RelativeLayout:
-                        size_hint_x: 1.5
-                        Slider:
-                            max: 1
-                            min: -1
-                            value: 0
-                            size_hint_y: None
-                            # height: 10
-                            # width: 5
-                            pos_hint: {'center_x':.5, 'center_y':.5}
-
-                        Slider:
-                            max: 1
-                            min: -1
-                            value: 0
-                            orientation: 'vertical'
-                            # height: 5
-                            # width: 10
-                            pos_hint: {'center_x':.5, 'center_y':.5}
-
-                    RelativeLayout:
-                        size_hint_x: 1.5
-                        Slider:
-                            max: 1
-                            min: -1
-                            value: 0
-                            size_hint_y: None
-                            # height: 10
-                            # width: 5
-                            pos_hint: {'center_x':.5, 'center_y':.5}
-
-                        Slider:
-                            max: 1
-                            min: -1
-                            value: 0
-                            orientation: 'vertical'
-                            # height: 5
-                            # width: 10
-                            pos_hint: {'center_x':.5, 'center_y':.5}
-
-                    RelativeLayout:
-                        size_hint_x: 1.5
-                        Slider:
-                            max: 1
-                            min: -1
-                            value: 0
-                            size_hint_y: None
-                            # height: 10
-                            # width: 5
-                            pos_hint: {'center_x':.5, 'center_y':.5}
-
-                        Slider:
-                            max: 1
-                            min: -1
-                            value: 0
-                            orientation: 'vertical'
-                            # height: 5
-                            # width: 10
-                            pos_hint: {'center_x':.5, 'center_y':.5}
-
-                    RelativeLayout:
-                        size_hint_x: 1.5
-                        Slider:
-                            max: 1
-                            min: -1
-                            value: 0
-                            size_hint_y: None
-                            # height: 10
-                            # width: 5
-                            pos_hint: {'center_x':.5, 'center_y':.5}
-
-                        Slider:
-                            max: 1
-                            min: -1
-                            value: 0
-                            orientation: 'vertical'
-                            # height: 5
-                            # width: 10
-                            pos_hint: {'center_x':.5, 'center_y':.5}
-
                 BoxLayout:
                     orientation: 'vertical'
                     spacing: 10
@@ -151,7 +66,7 @@
 
                     TextInput:
                         id: text_drivemode
-                        null: root.add_get_item('text_drivemode', '/Robot/Drivetrain/drivemode_string', '')
+                        null: root.add_get_item('text_drivemode', 'drivemode_string', '')
                         value: 'Arcade'
                         text: self.value
                         readonly: True
@@ -195,38 +110,13 @@
                         Button:
 
                     BoxLayout:
-                        size_hint_x: 3.25
-                        orientation: 'horizontal'
+                        orientation: 'vertical'
 
-                        RelativeLayout:
-                            size_hint_x: 1.5
-                            Slider:
-                                max: 1
-                                min: -1
-                                value: 0
-                                size_hint_y: None
-                                # height: 10
-                                # width: 5
-                                pos_hint: {'center_x':.5, 'center_y':.5}
+                        Button:
 
-                            Slider:
-                                max: 1
-                                min: -1
-                                value: 0
-                                orientation: 'vertical'
-                                # height: 5
-                                # width: 10
-                                pos_hint: {'center_x':.5, 'center_y':.5}
+                        Button:
 
-
-                        BoxLayout:
-                            orientation: 'vertical'
-
-                            Button:
-
-                            Button:
-
-                            Button:
+                        Button:
         TabbedPanel:
             do_default_tab: False
 
