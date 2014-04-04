@@ -24,14 +24,15 @@ from pynetworktables import *
 Config.set('graphics', 'width', '600')
 Config.set('graphics', 'height', '400')
 Config.set('graphics', 'resizable', '0')
+Config.set('kivy', 'exit_on_escape', '0')
 
 NetworkTable.SetIPAddress("192.168.1.104")
 NetworkTable.SetClientMode()
 NetworkTable.Initialize()
 RoboTable = NetworkTable.GetTable("Robot")
-RoboDrive = RoboTable.GetSubTable("Drivetrain")
-RoboCatcher = RoboTable.GetSubTable("Catcher")
-RoboSensors = RoboTable.GetTable("Sensors")
+DriveTable = RoboTable.GetSubTable("Drivetrain")
+CatcherTable = RoboTable.GetSubTable("Catcher")
+SensorsTable = RoboTable.GetTable("Sensors")
 
 Dash = None
 
@@ -61,7 +62,7 @@ class Dashboard(FloatLayout):
         print("Test")
     
     def change_drivemode(self, mode):
-        RoboDrive.PutNumber("drivemode", mode * 1.0)
+        DriveTable.PutNumber("drivemode", mode * 1.0)
 
     def change_spindle_scale(self, speed):
         a = float(speed)
@@ -71,7 +72,7 @@ class Dashboard(FloatLayout):
         if a < 0.0:
             a = 0.0
             self.ids['spindle_scaler'].text = str(a)
-        RoboCatcher.PutNumber("spindleScale", a/10)
+        CatcherTable.PutNumber("spindleScale", a/10)
 
     def change_move_scale(self, speed):
         a = float(speed)
@@ -81,7 +82,7 @@ class Dashboard(FloatLayout):
         if a < 0.0:
             a = 0.0
             self.ids['move_scaler'].text = str(a)
-        RoboDrive.PutNumber("move_scale", a/10)
+        DriveTable.PutNumber("move_scale", a/10)
     
     def __update_value(self, _id, value):
         self.ids[_id].value = value
@@ -123,20 +124,22 @@ class DriveTableListener(ITableListener):
         elif key == "move_scale":
             dashTextChanger('move_scaler', table.GetValue(key)*10)
 
+driveListener = DriveTableListener()
+DriveTable.AddTableListener(driveListener)
+
 class CatcherTableListener(ITableListener):
     def ValueChanged(self, table, key, value, isNew):
         if key == "spindleScale":
             dashTextChanger('spindle_scaler', table.GetValue(key)*10)
+catchListener = CatcherTableListener()
+CatcherTable.AddTableListener(catchListener)
 
 class SensorTableListener(ITableListener):
     def ValueChanged(self, table, key, value, isNew):
         if key == "distance":
             dashTextChanger("ultrasonic_out", table.GetValue(key))
-
-
-driveListener = DriveTableListener()
-
-RoboDrive.AddTableListener(driveListener)
+sensorListener = SensorTableListener()
+SensorsTable.AddTableListener(sensorListener)
 
 
 if __name__ == '__main__':
