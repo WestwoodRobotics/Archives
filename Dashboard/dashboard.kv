@@ -37,6 +37,9 @@
                     orientation: 'vertical'
                     spacing: 10
                     padding: 10
+
+                    HSeparator:
+                        text: 'Drivemode'
                     
                     ToggleButton:
                         id: toggle_drivemode_arcade
@@ -52,22 +55,20 @@
 
                     ToggleButton:
                         id: toggle_drivemode_mecanum
-                        value: 'Mecanum'
-                        text: self.value
+                        text: 'Mecanum'
                         group: 'drivemode_toggle'
                         on_press: root.change_drivemode(3)
 
                     ToggleButton:
                         id: toggle_drivemode_mecatank
-                        value: 'MecaTank'
-                        text: self.value
+                        text: 'MecaTank'
                         group: 'drivemode_toggle'
                         on_press: root.change_drivemode(4)
 
                     TextInput:
                         id: text_drivemode
-                        null: root.add_get_item('text_drivemode', 'drivemode_string', '')
-                        value: 'Arcade'
+                        multiline: False
+                        value: ''
                         text: self.value
                         readonly: True
 
@@ -77,326 +78,40 @@
 
                     ProgressBar:
                         id: battery_level_bar
-                        null: root.add_get_item('battery_level_bar', '/Robot/Status/battery_level', 0)
                         size_hint_y: None
                         height: 10
 
-            BoxLayout:
-                orientation: 'vertical'
                 BoxLayout:
-                    padding: 2
-                    size_hint_y: 0.15
+                    orientation: 'vertical'
+                    spacing: 10
+                    padding: 10
 
                     HSeparator:
-                        text: 'Gyro Readout'
+                        text: 'Distance (In)'
+
+                    TextInput:
+                        id: ultrasonic_out
+                        multiline: False
+                        input_type: 'number'
+                        text: '0.00'
+                        readonly: True
 
                     HSeparator:
-                        text: ''
+                        text: 'Drive Scale'
 
-                BoxLayout:
-                    orientation: 'horizontal'
+                    TextInput
+                        id: move_scaler
+                        multiline: False
+                        on_text_validate: root.change_move_scale(self.text)
+                        input_type: 'number'
+                        text: '10.0'
 
-                    BoxLayout:
-                        orientation: 'vertical'
+                    HSeparator:
+                        text: 'Spindle Scale'
 
-                        Button:
-
-                        Button:
-
-                        Button:
-
-                        Button:
-
-                        Button:
-
-                    BoxLayout:
-                        orientation: 'vertical'
-
-                        Button:
-
-                        Button:
-
-                        Button:
-        TabbedPanel:
-            do_default_tab: False
-
-            TabbedPanelItem:
-                text: 'Drivetrain'
-                
-                GridLayout:
-                    rows: 5
-                    cols: 2
-                    
-                    ToggleButton:
-
-                    ToggleButton:
-
-                    ToggleButton:
-
-# <Dashboard>:
-#     BoxLayout:
-#         orientation: 'horizontal'
-
-#         BoxLayout:
-#             orientation: 'vertical'
-
-#             BoxLayout:
-#                 orientation: 'horizontal'
-
-#                 GridLayout:
-#                     rows: 2
-#                     cols: 2
-
-#                     FloatLayout:
-#                         Slider:
-#                             max: 1
-#                             min: -1
-#                             value: 0
-#                             size_hint_y: None
-#                             # height: 10
-#                             # width: 5
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-#                         Slider:
-#                             max: 1
-#                             min: -1
-#                             value: 0
-#                             orientation: 'vertical'
-#                             # height: 5
-#                             # width: 10
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-
-#                     FloatLayout:
-#                         Slider:
-#                             max: 1
-#                             min: -1
-#                             value: 0
-#                             size_hint_y: None
-#                             # height: 10
-#                             # width: 5
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-#                         Slider:
-#                             max: 1
-#                             min: -1
-#                             value: 0
-#                             orientation: 'vertical'
-#                             # height: 5
-#                             # width: 10
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-#                     FloatLayout:
-#                         Slider:
-#                             max: 1
-#                             min: -1
-#                             value: 0
-#                             size_hint_y: None
-#                             # height: 10
-#                             # width: 5
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-#                         Slider:
-#                             max: 1
-#                             min: -1
-#                             value: 0
-#                             orientation: 'vertical'
-#                             # height: 5
-#                             # width: 10
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-#                     FloatLayout:
-#                         Slider:
-#                             max: 1
-#                             min: -1
-#                             value: 0
-#                             size_hint_y: None
-#                             # height: 10
-#                             # width: 5
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-#                         Slider:
-#                             max: 1
-#                             min: -1
-#                             value: 0
-#                             orientation: 'vertical'
-#                             # height: 5
-#                             # width: 10
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-#                 BoxLayout:
-#                     width: 100
-#                     size_hint_x: None
-#                     orientation: 'vertical'
-
-#                     ToggleButton:
-#                         id: toggle_drivemode_arcade
-#                         text: 'Arcade'
-#                         group: 'drivemode_toggle'
-#                         on_press: root.change_drive_mode(1)
-
-#                     ToggleButton:
-#                         id: toggle_drivemode_tank
-#                         text: 'Tank'
-#                         group: 'drivemode_toggle'
-#                         on_press: root.change_drive_mode(2)
-
-#                     ToggleButton:
-#                         id: toggle_drivemode_mecanum
-#                         text: 'Mecanum'
-#                         group: 'drivemode_toggle'
-#                         on_press: root.change_drive_mode(3)
-
-#                     TextInput:
-#                         text: 'Arcade'
-#                         size_hint_y: None
-#                         height: sp(30)
-#                         readonly: True
-
-#             BoxLayout:
-#                 orientation: 'horizontal'
-
-#                 BoxLayout:
-#                     width: 100
-#                     size_hint_x: None
-#                     orientation: 'vertical'
-
-#                     TextInput:
-#                         text: 'Arcade'
-#                         size_hint_y: None
-#                         height: sp(30)
-#                         readonly: True
-
-#                     TextInput:
-#                         text: 'Arcade'
-#                         size_hint_y: None
-#                         height: sp(30)
-#                         readonly: True
-
-#                     TextInput:
-#                         text: 'Arcade'
-#                         size_hint_y: None
-#                         height: sp(30)
-#                         readonly: True
-
-#                     TextInput:
-#                         text: 'Arcade'
-#                         size_hint_y: None
-#                         height: sp(30)
-#                         readonly: True
-
-#                     TextInput:
-#                         text: 'Arcade'
-#                         size_hint_y: None
-#                         height: sp(30)
-#                         readonly: True
-
-#                 BoxLayout:
-#                     orientation: 'horizontal'
-
-#                     FloatLayout:
-#                         Slider:
-#                             value: 50
-#                             size_hint_y: None
-#                             # height: 10
-#                             # width: 5
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-#                         Slider:
-#                             orientation: 'vertical'
-#                             value: 50
-#                             # height: 5
-#                             # width: 10
-#                             pos_hint: {'center_x':.5, 'center_y':.5}
-
-#                     BoxLayout:
-#                         width: 100
-#                         size_hint_x: None
-#                         orientation: 'vertical'
-
-#                         TextInput:
-#                             text: 'Arcade'
-#                             size_hint_y: None
-#                             height: sp(30)
-#                             readonly: True
-
-#                         TextInput:
-#                             text: 'Arcade'
-#                             size_hint_y: None
-#                             height: sp(30)
-#                             readonly: True
-
-#                         TextInput:
-#                             text: 'Arcade'
-#                             size_hint_y: None
-#                             height: sp(30)
-#                             readonly: True
-
-                
-
-	# BoxLayout:
-        
- #        FloatLayout:
-            
- #            GridLayout:
- #                rows: 3
-                
- #                ProgressBar:
- #                    value: root.batteryValue
- #                    size_hint_y: None
- #                    height: 50
-
- #                TextInput:
- #                    text: 
- #                    size_hint_y: None
- #                    height: sp(30)
- #                    readonly: True
-
- #            FloatLayout:
-
- #                Slider:
- #                    value: 50
- #                    size_hint_y: None
- #                    height: 10
- #                    pos: 0, 200
-
- #                Slider:
- #                    orientation: 'vertical'
- #                    value: 50
-
- #                Slider:
- #                    value: 50
- #                    size_hint_y: None
- #                    height: 50
-
- #                Slider:
- #                    orientation: 'vertical'
- #                    value: 50
-
- #        TabbedPanel:
- #            do_default_tab: False
-
- #            TabbedPanelItem:
- #                text: 'Drivetrain'
-                
- #                GridLayout:
- #                    rows: 5
- #                    cols: 2
-                    
- #                    ToggleButton:
- #                        id: toggle_drivemode_arcade
- #                        text: 'Arcade'
- #                        group: 'drivemode_toggle'
- #                        on_press: root.change_drive_mode(1)
-
- #                    ToggleButton:
- #                        id: toggle_drivemode_tank
- #                        text: 'Tank'
- #                        group: 'drivemode_toggle'
- #                        on_press: root.change_drive_mode(2)
-
- #                    ToggleButton:
- #                        id: toggle_drivemode_mecanum
- #                        text: 'Mecanum'
- #                        group: 'drivemode_toggle'
- #                        on_press: root.change_drive_mode(3)
+                    TextInput
+                        id: spindle_scaler
+                        multiline: False
+                        on_text_validate: root.change_spindle_scale(self.text)
+                        input_type: 'number'
+                        text: '7.5'

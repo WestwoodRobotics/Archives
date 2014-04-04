@@ -21,15 +21,17 @@ from kivy.uix.widget import Widget
 from kivy.config import Config
 from pynetworktables import *
 
-Config.set('graphics', 'width', '750')
-Config.set('graphics', 'height', '500')
+Config.set('graphics', 'width', '600')
+Config.set('graphics', 'height', '400')
 Config.set('graphics', 'resizable', '0')
 
 NetworkTable.SetIPAddress("192.168.1.104")
 NetworkTable.SetClientMode()
 NetworkTable.Initialize()
 RoboTable = NetworkTable.GetTable("Robot")
-RoboDrive = RoboTable.GetTable("Drivetrain")
+RoboDrive = RoboTable.GetSubTable("Drivetrain")
+RoboCatcher = RoboTable.GetSubTable("Catcher")
+RoboSensors = RoboTable.GetTable("Sensors")
 
 Dash = None
 
@@ -60,6 +62,26 @@ class Dashboard(FloatLayout):
     
     def change_drivemode(self, mode):
         RoboDrive.PutNumber("drivemode", mode * 1.0)
+
+    def change_spindle_scale(self, speed):
+        a = float(speed)
+        if a > 10.0:
+            a = 10.0
+            self.ids['spindle_scaler'].text = str(a)
+        if a < 0.0:
+            a = 0.0
+            self.ids['spindle_scaler'].text = str(a)
+        RoboCatcher.PutNumber("spindleScale", a/10)
+
+    def change_move_scale(self, speed):
+        a = float(speed)
+        if a > 10.0:
+            a = 10.0
+            self.ids['move_scaler'].text = str(a)
+        if a < 0.0:
+            a = 0.0
+            self.ids['move_scaler'].text = str(a)
+        RoboDrive.PutNumber("move_scale", a/10)
     
     def __update_value(self, _id, value):
         self.ids[_id].value = value
@@ -74,10 +96,43 @@ class DashboardApp(App):
 def dashChanger(_id, value):
     Dash.ids[_id].value = value
 
+def dashTextChanger(_id, value):
+    Dash.ids[_id].text = str(value)
+
+def modeChanger(mode):
+    {
+        1: Dash.ids['toggle_drivemode_arcade'],
+        2: Dash.ids['toggle_drivemode_tank'],
+        3: Dash.ids['toggle_drivemode_mecanum'],
+        4: Dash.ids['toggle_drivemode_mecatank']
+    }[mode]._do_press()
+
+class RobotTableListener(ITableListener):
+    def ValueChanged(self, table, key, value, isNew):
+        if key == "battery_level":
+            dashChanger('battery_level_bar', table.GetValue(key))
+roboListener = RobotTableListener()
+RoboTable.AddTableListener(roboListener)
+
 class DriveTableListener(ITableListener):
     def ValueChanged(self, table, key, value, isNew):
         if key == "drivemode_string":
-            dashChanger('text_drivemode', table.GetValue(key))
+            dashTextChanger('text_drivemode', table.GetValue(key))
+        elif key == "drivemode":
+            modeChanger(table.GetValue(key))
+        elif key == "move_scale":
+            dashTextChanger('move_scaler', table.GetValue(key)*10)
+
+class CatcherTableListener(ITableListener):
+    def ValueChanged(self, table, key, value, isNew):
+        if key == "spindleScale":
+            dashTextChanger('spindle_scaler', table.GetValue(key)*10)
+
+class SensorTableListener(ITableListener):
+    def ValueChanged(self, table, key, value, isNew):
+        if key == "distance":
+            dashTextChanger("ultrasonic_out", table.GetValue(key))
+
 
 driveListener = DriveTableListener()
 
