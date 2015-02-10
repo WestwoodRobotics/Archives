@@ -13,35 +13,37 @@
  * included in all copies or substantial portions of the Software.
  */
 
-package org.team2583.rcyclrsh;
+package org.team2583.rcyclrsh.elevator;
 
-import org.team2583.rcyclrsh.drawer.Drawer;
-import org.team2583.rcyclrsh.drivetrain.Drivetrain;
-
-import io.github.robolib.RoboLibBot;
-import io.github.robolib.util.TableSender;
-import io.github.robolib.util.mapper.RobotMap;
+import io.github.robolib.command.Subsystem;
+import io.github.robolib.module.controller.SpeedController;
 
 /**
- * 
+ *
  * @author Austin Reuland <amreuland@gmail.com>
  */
-public class WestwoodBot extends RoboLibBot {
-//    private LCDManager m_lcdManager;
+public class Elevator extends Subsystem {
     
-    public WestwoodBot(){
-        super("Stacker", "1.0.0");
-        RobotMap.setMapFile("/home/lvuser/rmap.json");
-        enableDebug(true);
-//        m_lcdManager = new LCDManager();
-//        m_lcdManager.startThread();
-        
-        new OI();
-        
+    private static SpeedController m_leftTrolleyMotor;
+    private static SpeedController m_rightTrolleyMotor;
+//    private static S
+    
+    public static final void initialize(){
+        //Do Shit
+    }
 
-        TableSender.setEnabled(false);
-        
-        Drivetrain.initialize();
-        Drawer.initialize();
+    private static final Elevator m_instance = new Elevator();
+
+    public static final Elevator getInstance(){
+        return m_instance;
+    }
+
+    private Elevator(){
+        super("Lifter");
+    }
+
+    public void initDefaultCommand()    {
+        //setDefaultCommand();
     }
 }
+
