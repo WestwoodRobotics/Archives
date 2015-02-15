@@ -17,22 +17,42 @@ package org.team2583.rcyclrsh.drawer;
 
 import io.github.robolib.command.Command;
 
-
 /**
  *
  * @author Austin Reuland <amreuland@gmail.com>
  */
-public class CMDLowerDrawer extends Command {
-    
-    public CMDLowerDrawer(){
-        super("CMDLowerDrawer");
-        requires(Drawer.getInstance());
+public class CMDToggleTailgate extends Command {
+
+    public CMDToggleTailgate() {
+        super("CMDToggleDrawer");
+        requires(Tailgate.getInstance());
     }
 
-    protected void initialize(){ Drawer.lowerDrawer(); }
-    protected void execute(){}
-    protected boolean isFinished(){ return true; }
-    protected void end(){}
-    protected void interrupted(){}
+    /** Called just before this Command runs the first time */
+    protected void initialize() {
+        Tailgate.toggle();
+    }
 
+    /** Called repeatedly when this Command is scheduled to run */
+    protected void execute() {
+    
+    }
+
+    /** Make this return true when this Command no longer needs to run execute() */
+    protected boolean isFinished() {
+        return true;
+    }
+
+    /** Called once after isFinished returns true */
+    protected void end() {
+    
+    }
+
+    /**
+     * Called when another command which requires one or more of the same
+     * subsystems is scheduled to run
+     */
+    protected void interrupted() {
+
+    }
 }
