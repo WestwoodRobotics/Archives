@@ -21,26 +21,25 @@ import io.github.robolib.command.Command;
  *
  * @author Austin Reuland <amreuland@gmail.com>
  */
-public class CMDArmsUp extends Command {
+public class CMDElevatorDown extends Command {
 
-    public CMDArmsUp() {
-        super("CMDArmsUp");
+    public CMDElevatorDown() {
+        super("CMDElevatorDown");
         requires(Elevator.getInstance());
     }
 
     /** Called just before this Command runs the first time */
     protected void initialize() {
-    
     }
 
     /** Called repeatedly when this Command is scheduled to run */
     protected void execute() {
-        Elevator.up();
+        Elevator.down();
     }
 
     /** Make this return true when this Command no longer needs to run execute() */
     protected boolean isFinished() {
-        return false;
+        return Elevator.isAtLimit();
     }
 
     /** Called once after isFinished returns true */

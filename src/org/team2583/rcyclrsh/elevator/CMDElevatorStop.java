@@ -21,15 +21,15 @@ import io.github.robolib.command.SingleActionCommand;
  *
  * @author Austin Reuland <amreuland@gmail.com>
  */
-public class CMDArmsStop extends SingleActionCommand {
+public class CMDElevatorStop extends SingleActionCommand {
 
-    public CMDArmsStop() {
-        super("CMDArmsStop");
+    public CMDElevatorStop() {
+        super("CMDElevatorStop");
         requires(Elevator.getInstance());
     }
 
     /** Called just before this Command runs the first time */
-    protected void doAction() {
+    protected void execute() {
         Elevator.stop();
     }
 }

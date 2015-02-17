@@ -21,10 +21,10 @@ import io.github.robolib.command.Command;
  *
  * @author Austin Reuland <amreuland@gmail.com>
  */
-public class CMDArmsUpContinue extends Command {
+public class CMDElevatorUpContinue extends Command {
 
-    public CMDArmsUpContinue() {
-        super("CMDArmsUpContinue");
+    public CMDElevatorUpContinue() {
+        super("CMDElevatorUpContinue");
         requires(Elevator.getInstance());
     }
 

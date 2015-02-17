@@ -13,23 +13,22 @@
  * included in all copies or substantial portions of the Software.
  */
 
-package org.team2583.rcyclrsh.boxlift;
+package org.team2583.rcyclrsh.drawer;
 
-import io.github.robolib.command.SingleActionCommand;
+import io.github.robolib.command.CommandGroup;
+import io.github.robolib.command.WaitCommand;
 
 /**
  *
  * @author Austin Reuland <amreuland@gmail.com>
  */
-public class CMDStopLift extends SingleActionCommand {
-
-    public CMDStopLift() {
-        super("CMDStopLift");
-        requires(BoxLift.getInstance());
-    }
-
-    /** Called just before this Command runs the first time */
-    protected void execute() {
-        BoxLift.stop();
+public class CGRunEjector extends CommandGroup {
+    
+    public CGRunEjector() {
+        super("CGRunEjector");
+        
+        addSequential(new CMDExtendEjector());
+        addSequential(new WaitCommand(1));
+        addSequential(new CMDRetractEjector());
     }
 }
