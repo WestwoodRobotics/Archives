@@ -13,26 +13,26 @@
  * included in all copies or substantial portions of the Software.
  */
 
-package org.team2583.rcyclrsh.drawer;
+package org.team2583.rcyclrsh;
 
-import io.github.robolib.command.Command;
-
+import io.github.robolib.command.CommandGroup;
 
 /**
+ * 
  *
  * @author Austin Reuland <amreuland@gmail.com>
  */
-public class CMDRetractDrawer extends Command {
+public class CGEjectBoxes extends CommandGroup {
     
-    public CMDRetractDrawer(){
-        super("CMDRetractDrawer");
-        requires(Drawer.getInstance());
+    public CGEjectBoxes(){        
+        addSequential(Drawer.extend());
+        addSequential(Wait(0.5));
+        addSequential(Tailgate.lower());
+        addParallel(Ejector.extend());
+        addSequential(Wait(1));
+        addParallel(Ejector.retract());
+        addSequential(Drawer.retract());
+        addSequential(Tailgate.raise());
     }
-
-    protected void initialize(){}
-    protected void execute(){ Drawer.retract(); }
-    protected boolean isFinished(){ return Drawer.isRetracted(); }
-    protected void end(){ Drawer.stop(); }
-    protected void interrupted(){}
 
 }

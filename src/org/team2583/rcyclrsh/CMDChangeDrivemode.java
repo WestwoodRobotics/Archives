@@ -13,23 +13,26 @@
  * included in all copies or substantial portions of the Software.
  */
 
-package org.team2583.rcyclrsh.boxlift;
+package org.team2583.rcyclrsh;
+
+import org.team2583.rcyclrsh.Drivetrain.DriveMode;
 
 import io.github.robolib.command.SingleActionCommand;
+
 
 /**
  *
  * @author Austin Reuland <amreuland@gmail.com>
  */
-public class CMDStopLift extends SingleActionCommand {
-
-    public CMDStopLift() {
-        super("CMDStopLift");
-        requires(BoxLift.getInstance());
+public class CMDChangeDrivemode extends SingleActionCommand {
+    
+    private final DriveMode m_mode;
+    
+    public CMDChangeDrivemode(DriveMode mode){
+        super("C_ChangeDrivemode - " + mode);
+        requires(Drivetrain.getInstance());
+        m_mode = mode;
     }
 
-    /** Called just before this Command runs the first time */
-    protected void execute() {
-        BoxLift.stop();
-    }
+    protected void execute(){Drivetrain.setDriveMode(m_mode);}
 }
