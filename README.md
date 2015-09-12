@@ -1,4 +1,4 @@
 # BEST-2015
 Code for the BEST 2015 "Pay Dirt" compitition.
 
-robot-main.c runs the robot.
+The folder 'robot' contains the code for the robot.
