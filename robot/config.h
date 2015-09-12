@@ -19,4 +19,7 @@
 #define DEADBAND_LIMIT 10.0
 #define DEADBAND(x) ((abs(x) >= DEADBAND_LIMIT) ? x : 0.0)
 
+#define JOY_AXIS_LEFT Ch3
+#define JOY_AXIS_RIGHT Ch2
+
 #endif
