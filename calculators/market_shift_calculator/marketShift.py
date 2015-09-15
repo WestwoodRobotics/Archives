@@ -34,17 +34,17 @@ min_percent = 0.0
 max_percent = 0.0
 
 print
-match_num = (int)(input("How many matches: "))
+match_num = int(input("How many matches: "))
 
-temp = (int)(input("How many coal scored: "))
+temp = int(input("How many coal scored: "))
 if (temp <= (coal_max_num * match_num)):
-	coal_ore_percent = ((float)(temp) / (coal_max_num * match_num))
+	coal_ore_percent = (float(temp) / (coal_max_num * match_num))
 	min_percent = coal_ore_percent
 	max_percent = coal_ore_percent
 
 temp = (int)(input("How many magnetite scored: "))
 if (temp <= (magnetite_max_num * match_num)):
-    magnetite_ore_percent = ((float)(temp) / (magnetite_max_num * match_num))
+    magnetite_ore_percent = (float(temp) / (magnetite_max_num * match_num))
 if(min_percent > magnetite_ore_percent):
 	min_percent = magnetite_ore_percent
 if(max_percent < magnetite_ore_percent):
@@ -52,7 +52,7 @@ if(max_percent < magnetite_ore_percent):
 
 temp = (int)(input("How many bauxite scored: "))
 if (temp <= (bauxite_max_num * match_num)):
-    bauxite_ore_percent = ((float)(temp) / (bauxite_max_num * match_num))
+    bauxite_ore_percent = (float(temp) / (bauxite_max_num * match_num))
 if(min_percent > bauxite_ore_percent):
 	min_percent = bauxite_ore_percent
 if(max_percent < bauxite_ore_percent):
@@ -60,7 +60,7 @@ if(max_percent < bauxite_ore_percent):
 
 temp = (int)(input("How many chalcopyrite scored: "))
 if (temp <= (chalcopyrite_max_num * match_num)):
-    chalcopyrite_ore_percent = ((float)(temp) / (chalcopyrite_max_num * match_num))
+    chalcopyrite_ore_percent = (float(temp) / (chalcopyrite_max_num * match_num))
 if(min_percent > chalcopyrite_ore_percent):
 	min_percent = chalcopyrite_ore_percent
 if(max_percent < chalcopyrite_ore_percent):
@@ -68,7 +68,7 @@ if(max_percent < chalcopyrite_ore_percent):
 
 temp = (int)(input("How many spodumene scored: "))
 if (temp <= (spodumene_max_num * match_num)):
-    spodumene_ore_percent = ((float)(temp) / (spodumene_max_num * match_num))
+    spodumene_ore_percent = (float(temp) / (spodumene_max_num * match_num))
 if(min_percent > spodumene_ore_percent):
 	min_percent = spodumene_ore_percent
 if(max_percent < spodumene_ore_percent):
