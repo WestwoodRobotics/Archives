@@ -50,19 +50,28 @@ void setup() {
 
 void loop() {
     float val = analogRead(poten);
-    int percent = (int)(200 * val/1020);
-  
+    float percent = (int)(200 * (val + 1)/1020);
+    float pixels = (30 * (percent/100)) - 1;
+    int pixelInt = (int)pixels;
+    if (pixelInt < 0) {
+      pixelInt = 0;
+    }
+    
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Market value percent: ");
     lcd.setCursor(0, 1);
     lcd.print("Current: ");
-    lcd.print (percent);
+    lcd.print ((int)percent);
+    lcd.print (" ");
+    lcd.print (pixelInt);
 
-int pixels = (int)(60/percent) - 1;
-rainbow(3, pixels);
+
+rainbow(10, pixelInt);
+//rainbow(3, pixels);
+//theaterChaseRainbow(10);
    
-    delay(175);
+    //delay(175);
 
 
   /*
@@ -85,24 +94,25 @@ rainbow(3, pixels);
 }
 
 // Fill the dots one after the other with a color
-void colorWipe(uint32_t c, uint8_t wait) {
-  for(uint16_t i=0; i<strip.numPixels(); i++) {
+void colorWipe(uint32_t c, uint8_t wait, int setpix) {
+  for(uint16_t i=setpix; i<strip.numPixels(); i++) {
     strip.setPixelColor(i, c);
     strip.show();
     delay(wait);
   }
 }
 
-void rainbow(uint8_t wait, int pix) {
+void rainbow(uint8_t wait, int setpix) {
   uint16_t i, j;
 
   for(j=0; j<256; j++) {
-    for(i=pix; i<60; i++) {
+    for(i=0; i<setpix; i++) {
       strip.setPixelColor(i, Wheel((i+j) & 255));
     }
     strip.show();
     delay(wait);
   }
+  colorWipe(strip.Color(0, 0, 0), 0, setpix);
 }
 
 // Slightly different, this makes the rainbow equally distributed throughout
