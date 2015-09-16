@@ -63,11 +63,10 @@ void loop() {
     lcd.setCursor(0, 1);
     lcd.print("Current: ");
     lcd.print ((int)percent);
-    lcd.print (" ");
-    lcd.print (pixelInt);
+    lcd.print ("%");
 
 
-rainbow(10, pixelInt);
+rainbow(3, pixelInt);
 //rainbow(3, pixels);
 //theaterChaseRainbow(10);
    
