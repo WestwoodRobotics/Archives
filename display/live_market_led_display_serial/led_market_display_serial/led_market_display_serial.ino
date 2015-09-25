@@ -10,14 +10,14 @@
 //Define the number of pixels on each strip (strips 1-5), useful if missing pixels
 //Set to zero to turn off strip
 #define NUMPIXELS1 58
-//#define NUMPIXELS2 0
-#define NUMPIXELS2 59
-//#define NUMPIXELS3 0
-#define NUMPIXELS3 60
-//#define NUMPIXELS4 0
-#define NUMPIXELS4 60
-//#define NUMPIXELS5 0
-#define NUMPIXELS5 60
+#define NUMPIXELS2 0
+//#define NUMPIXELS2 59
+#define NUMPIXELS3 0
+//#define NUMPIXELS3 60
+#define NUMPIXELS4 0
+//#define NUMPIXELS4 60
+#define NUMPIXELS5 0
+//#define NUMPIXELS5 60
 
 #define NUMPIXELS_TOTAL (NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3 + NUMPIXELS4 + NUMPIXELS5)
 
@@ -25,14 +25,14 @@
 #define PIN 8 
 //initialize LED
 #define LED_PIN 13
-//Analog pin to connect control potentiometer to
-#define POTENTIOMETER 3
 
 //For temporary storage
+String inString = "";
 float tempVal = 0.0;
 float val = 0.0;
 int count1 = 0;
 int count2 = 0;
+int activate = 0;
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -53,6 +53,9 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS_TOTAL, PIN, NEO_GRB + NEO_
 void setup() {
   // initialize the serial communication:
   Serial.begin(9600);
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for Leonardo only
+  }
   Serial.println("Please send a percent between 0 and 200!");
   // initialize the LED_PIN as an output:
   pinMode(LED_PIN, OUTPUT);
@@ -67,49 +70,74 @@ void setup() {
   //begin strip
   strip.begin();
   show();
-  delay(3000);
+  delay(1500);
   digitalWrite(LED_PIN, LOW);
   
 }
 
 void loop() {
+  
+  while (Serial.available() > 0) {
+    int inChar = Serial.read();
 
-    if (Serial.available()) {
-    // read the most recent byte (which will be from 0 to 255):
-    // set the brightness of the LED:
-    val = (float)Serial.read();
-    digitalWrite(LED_PIN, HIGH);
-  }
+    if (inChar != '\n') { 
 
-    //make sure nobody sends fake values
-    if(val < 0)
-      val = 0.0;
-    if(val > 200)
-      val = 0.0;
-    if(val >= 0 && val <= 200 && val != tempVal) {
-      Serial.println("Got value: " + String(val) + "%");
-      digitalWrite(LED_PIN, HIGH);
-      count1 = 0;
-      tempVal = val;
+      // As long as the incoming byte
+      // is not a newline,
+      // convert the incoming byte to a char
+      // and add it to the string
+      inString += (char)inChar;
+      //Activate thing to parse the string
+      activate = 1;
     }
-
+  }
+  
+  if(activate){
+    activate = 0;
+    count1 = 0;
+    //Send to float
+    val = inString.toFloat();
+    //Clear string
+    inString = "";
+    if(val != tempVal){
+      tempVal = val;
+      //Turn on led
+      digitalWrite(LED_PIN, HIGH);
+      Serial.println();
+      Serial.println("Got value: " + String(val) + "%");
+      Serial.println();
+      count2 = 2;
+    }
+    
+   }
+    
+    //make sure nobody sends fake values
+    if(val < 0){
+      val = 0.0;
+      tempVal = 0.0;
+    } 
+    if(val > 200){
+      val = 0.0;
+      tempVal = 0.0;
+    }
+   
     //Turn off recieve led
-    if(count1 > 15)
+    if(count1 > 2)
       digitalWrite(LED_PIN, LOW);
-      
-    //calculate percent from potentiometer reading
+
+    //calculate percent
     int percent = (int)val;
     //Find pixel numbers based on percent (for a 60 pixel strip)
-    int pixelInt = (int)(30 * (percent/100));
+    int pixelInt = (30 * percent/100);
     //remove any -1 errors
     if(pixelInt < 0) {
       pixelInt = 0;
     }
 
     //Output current market percent on serial
-    if(count2 > 20) {
+    if(count2 > 2) {
     Serial.println("Market value percent: " + String(percent) + "%");
-    Serial.println("Please send a percent between 0 and 200!");
+    Serial.println("Displaying " + String(pixelInt) + " pixels, send a value between 0 and 200 to change it!");
     count2 = 0; 
     }
     //display the partial percents on the neopixels in a pretty rainbow, passes in a delay in ms and the pixelInt
