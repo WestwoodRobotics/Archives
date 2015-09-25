@@ -6,7 +6,6 @@
 #ifdef __AVR__
   #include <avr/power.h>
 #endif
-#include <LiquidCrystal.h>
 
 //Define the number of pixels on each strip (strips 1-5), useful if missing pixels
 //Set to zero to turn off strip
@@ -24,11 +23,16 @@
 
 //digital pin to connect the LED Strip input pin to
 #define PIN 8 
-//initialize LCD on digital pins 2,3,4,5,6,7 leaving TX and RX open (d0 && d1) for use in other projects
-LiquidCrystal lcd(7,6,5,4,3,2);
+//initialize LED
+#define LED_PIN 13
 //Analog pin to connect control potentiometer to
 #define POTENTIOMETER 3
 
+//For temporary storage
+float tempVal = 0.0;
+float val = 0.0;
+int count1 = 0;
+int count2 = 0;
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -47,9 +51,12 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS_TOTAL, PIN, NEO_GRB + NEO_
 // on a live circuit...if you must, connect GND first.
 
 void setup() {
-  //Start lcd display
-  lcd.begin(16, 2);
-  
+  // initialize the serial communication:
+  Serial.begin(9600);
+  Serial.println("Please send a percent between 0 and 200!");
+  // initialize the LED_PIN as an output:
+  pinMode(LED_PIN, OUTPUT);
+  digitalWrite(LED_PIN, HIGH);
   // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
  /* #if defined (__AVR_ATtiny85__)
     if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
@@ -60,36 +67,57 @@ void setup() {
   //begin strip
   strip.begin();
   show();
+  delay(3000);
+  digitalWrite(LED_PIN, LOW);
   
 }
 
 void loop() {
-  
-    //raw analog value 0 - 1020 ish from potentiometer
-    float val = analogRead(POTENTIOMETER);
+
+    if (Serial.available()) {
+    // read the most recent byte (which will be from 0 to 255):
+    // set the brightness of the LED:
+    val = (float)Serial.read();
+    digitalWrite(LED_PIN, HIGH);
+  }
+
+    //make sure nobody sends fake values
+    if(val < 0)
+      val = 0.0;
+    if(val > 200)
+      val = 0.0;
+    if(val >= 0 && val <= 200 && val != tempVal) {
+      Serial.println("Got value: " + String(val) + "%");
+      digitalWrite(LED_PIN, HIGH);
+      count1 = 0;
+      tempVal = val;
+    }
+
+    //Turn off recieve led
+    if(count1 > 15)
+      digitalWrite(LED_PIN, LOW);
+      
     //calculate percent from potentiometer reading
-    float percent = (int)(200 * (val)/1020);
+    int percent = (int)val;
     //Find pixel numbers based on percent (for a 60 pixel strip)
     int pixelInt = (int)(30 * (percent/100));
     //remove any -1 errors
-    if (pixelInt < 0) {
+    if(pixelInt < 0) {
       pixelInt = 0;
     }
 
-    //show current market percent on lcd
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Market value percent: ");
-    lcd.setCursor(0, 1);
-    lcd.print("Current: ");
-    lcd.print ((int)percent);
-    lcd.print ("%");
-
+    //Output current market percent on serial
+    if(count2 > 20) {
+    Serial.println("Market value percent: " + String(percent) + "%");
+    Serial.println("Please send a percent between 0 and 200!");
+    count2 = 0; 
+    }
     //display the partial percents on the neopixels in a pretty rainbow, passes in a delay in ms and the pixelInt
     
-    rainbow(0, pixelInt);
+    rainbow(5, pixelInt);
 
-
+    count1++;
+    count2++;
 }
 
 //class to organize rainbow display on pixel part defined by percent integer above
