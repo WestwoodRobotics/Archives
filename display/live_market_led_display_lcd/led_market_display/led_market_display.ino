@@ -10,15 +10,15 @@
 
 //Define the number of pixels on each strip (strips 1-5), useful if missing pixels
 //Set to zero to turn off strip
-#define NUMPIXELS1 60
-#define NUMPIXELS2 0
-//#define NUMPIXELS2 60
-#define NUMPIXELS3 0
-//#define NUMPIXELS3 60
-#define NUMPIXELS4 0
-//#define NUMPIXELS4 60
-#define NUMPIXELS5 0
-//#define NUMPIXELS5 60
+#define NUMPIXELS1 58
+//#define NUMPIXELS2 0
+#define NUMPIXELS2 59
+//#define NUMPIXELS3 0
+#define NUMPIXELS3 60
+//#define NUMPIXELS4 0
+#define NUMPIXELS4 60
+//#define NUMPIXELS5 0
+#define NUMPIXELS5 60
 
 #define NUMPIXELS_TOTAL (NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3 + NUMPIXELS4 + NUMPIXELS5)
 
@@ -86,7 +86,8 @@ void loop() {
     lcd.print ("%");
 
     //display the partial percents on the neopixels in a pretty rainbow, passes in a delay in ms and the pixelInt
-    rainbow(15, pixelInt);
+    
+    rainbow(0, pixelInt);
 
 
 }
@@ -96,7 +97,7 @@ void rainbow(uint8_t wait, int setpix) {
   uint16_t i, j;
 
   //Clear all pixels (fresh slate), also eliminates blink of changing pixels versus clearing them individually
-  for(int k = 0; k < NUMPIXELS_TOTAL; k++) {
+  for(int k = 0; k < NUMPIXELS_TOTAL + 5; k++) {
      strip.setPixelColor(k, strip.Color(0,0,0)); //Black or off
   }
   
