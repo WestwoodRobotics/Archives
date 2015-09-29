@@ -13,6 +13,7 @@
 * included in all copies or substantial portions of the Software.
 */
 
+// Defines constants for the program
 #ifndef RCONFIG
 #define RCONFIG
 
