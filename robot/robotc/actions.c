@@ -10,6 +10,6 @@ void init(){
 void toggle_door(){
 	// If the door is open, close it, if it is closed, open it
 	motor[doorServo] = doorOpen ? doorClosePos : doorOpenPos;
-	// change the boolean tracker to reflect the new state
+	// Change the boolean tracker to reflect the new state
 	doorOpen = !doorOpen;
 }
