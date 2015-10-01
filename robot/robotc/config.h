@@ -13,7 +13,7 @@
 * included in all copies or substantial portions of the Software.
 */
 
-// Defines constants and variables for the program
+/****Defines constants and variables for the program****/
 #ifndef RCONFIG
 #define RCONFIG
 
@@ -21,21 +21,28 @@
 #define DEADBAND_LIMIT 10.0
 #define DEADBAND(x) ((abs(x) >= DEADBAND_LIMIT) ? x : 0.0)
 
-// Button and joysick names
+/****Button and Joysick Names****/
 #define JOY_AXIS_LEFT Ch3
 #define JOY_AXIS_RIGHT Ch2
 
+// Press this button to decrease the speed of the robot
 #define SLOW_BTN Btn6D
-#define FORWARD_BTN Btn6U
+// Press this button to control both motor simultaneously with the right joysitck
+// Note: Only works with forward-backward movement. Not turning.
+#define SIMU_BTN Btn6U
+// Press this button to toggle tha position of the back door
 #define DOOR_BTN Btn5U
 
-// Constants
+/****Constants****/
+// Defines how fast the slow speed of the robot should be relative to normal speed
 #define SLOW_MOD 0.25
 
+// Defines the positions that servo controlling the door is in when the door is opened and closed
 #define doorClosePos 127
 #define doorOpenPos (-1 * doorClosePos)
 
-// Variables
-bool doorOpen = false;
+/****Variables: They Change****/
+// Tracks the current position of the door
+bool doorOpen;
 
 #endif
