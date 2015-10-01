@@ -14,7 +14,7 @@ task main()
 	init();
 
 	// Start taking input from the driver for moving (see drive.c)
-	startTask(tank_drive);
+	startTask(drive);
 
 	// Run the moveable door
 	while(true){

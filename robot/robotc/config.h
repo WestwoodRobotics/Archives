@@ -29,7 +29,7 @@
 #define SLOW_BTN Btn6D
 // Press this button to control both motor simultaneously with the right joysitck
 // Note: Only works with forward-backward movement. Not turning.
-#define SIMU_BTN Btn6U
+#define SYNC_BTN Btn6U
 // Press this button to toggle tha position of the back door
 #define DOOR_BTN Btn5U
 
