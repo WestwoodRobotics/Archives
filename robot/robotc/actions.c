@@ -3,6 +3,7 @@ void init(){
 
 }
 
-void run_door(){
+void toggle_door(){
 	motor[doorServo] = doorOpen ? doorClosePos : doorOpenPos;
+	doorOpen = !doorOpen;
 }

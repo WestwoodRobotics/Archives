@@ -19,7 +19,7 @@ task main()
 	// Run the moveable door
 	while(true){
 		if(vexRT[DOOR_BTN]){
-			run_door();
+			toggle_door();
 		}
 	}
 }

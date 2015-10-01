@@ -33,7 +33,7 @@
 #define SLOW_MOD 0.25
 
 #define doorClosePos 127
-#define doorOpenPos (doorClosePos + -100)
+#define doorOpenPos (-1 * doorClosePos)
 
 // Variables
 bool doorOpen = false;
