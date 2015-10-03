@@ -24,6 +24,7 @@
 /****Button and Joysick Names****/
 #define JOY_AXIS_LEFT Ch3
 #define JOY_AXIS_RIGHT Ch2
+#define JOY_AXIS_TURN Ch1
 
 // Press this button to decrease the speed of the robot
 #define SLOW_BTN Btn6D
