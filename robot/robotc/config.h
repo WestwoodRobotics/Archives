@@ -22,38 +22,34 @@
 #define DEADBAND(x) ((abs(x) >= DEADBAND_LIMIT) ? x : 0.0)
 
 /****Button and Joysick Names****/
-#define JOY_AXIS_LEFT Ch3
-#define JOY_AXIS_RIGHT Ch2
-#define JOY_AXIS_TURN Ch1
+#define JOY_AXIS_LEFT Ch3   	// Forward-Backward movement on the left joystick
+#define JOY_AXIS_RIGHT Ch2  	// Forward-Backward movement on the right joystick
+#define JOY_AXIS_TURN Ch1   	// Left-Right movement on the right joystick for turning
 
-// Press this button to decrease the speed of the robot
-#define SLOW_BTN Btn7L
-// Press this button to control both motor simultaneously with the right joysitck
-// Note: Only works with forward-backward movement. Not turning.
-#define SYNC_BTN Btn6U
-// Press this button to raise position of the back door
-#define DOOR_UP_BTN Btn5U
-#define DOOR_DOWN_BTN Btn5D
-#define BACK_BTN Btn6D
+// Control the drive
+#define SLOW_BTN Btn7L      	// Decreases the speed of the robot
+#define ARCADE_BTN Btn6U    	// Toggles the robot's drive mode
+#define REVERSE_BTN Btn6D			// Changes the direction of the robot's wheels
+
+// Opens and closes the back door
+#define DOOR_UP_BTN Btn5U			// Raises the back door
+#define DOOR_DOWN_BTN Btn5D		// Lowers the back door
+
 // Control the lift
-#define LIFT_UP Btn8U
-#define LIFT_UP2 Btn7U
-#define LIFT_DOWN Btn8D
-#define LIFT_DOWN2 Btn7D
+#define LIFT_UP Btn8U					// Moves the lift up
+#define LIFT_UP2 Btn7U				// Also moves the lift up
+#define LIFT_DOWN Btn8D				// Moves the lift down
+#define LIFT_DOWN2 Btn7D			// Also moves the lift down
 
 /****Constants****/
-// Defines how fast the slow speed of the robot should be relative to normal speed
-#define SLOW_MOD 0.5
-#define BTN_SPEED 127
+#define SLOW_MOD 0.5					// The relative slow speed of the robot
+#define BTN_SPEED 127					// A modifier to multiply the button inputs by for motors
 
-// Defines the positions that servo controlling the door is in when the door is opened and closed
+// Defines the positions for the opened and closed positions for the back door
 #define doorClosePos 127
 #define doorOpenPos (-1 * doorClosePos)
 
 /****Variables: They Change****/
-// Tracks the current position of the door
-//bool doorOpen;
-
-bool arcade = false;
+bool arcade = false;					// Tracks the drive mode for the robot
 
 #endif
