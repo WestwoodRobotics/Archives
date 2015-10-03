@@ -2,8 +2,8 @@
 task dump_dozer(){
 	while(true){
 		// The lift activates if the up or down buttons on either side of the controller are pressed
-		motor[liftLeft] = ((vexRT[LIFT_UP] || vexRT[LIFT_UP2]) - (vexRT[LIFT_DOWN] || vexRT[LIFT_DOWN2])) * BTN_SPEED;
-		motor[liftRight] = ((vexRT[LIFT_UP] || vexRT[LIFT_UP2]) - (vexRT[LIFT_DOWN] || vexRT[LIFT_DOWN2])) * BTN_SPEED;
+		motor[liftLeft] = ((vexRT[LIFT_UP] || vexRT[LIFT_UP2] ? 1 : 0) - (vexRT[LIFT_DOWN] || vexRT[LIFT_DOWN2] ? 1 : 0)) * BTN_SPEED;
+		motor[liftRight] = ((vexRT[LIFT_UP] || vexRT[LIFT_UP2] ? 1 : 0) - (vexRT[LIFT_DOWN] || vexRT[LIFT_DOWN2] ? 1 : 0)) * BTN_SPEED;
 	}
 }
 
