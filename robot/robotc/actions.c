@@ -10,7 +10,7 @@ task dump_dozer(){
 // Toggles the state of the back door
 void toggle_door(bool moveUp){
 	// If the door is open, close it, if it is closed, open it
-	motor[doorServo] = moveUp ? doorOpenPos : doorClosePos;
+motor[doorServo] = moveUp ? doorOpenPos : doorClosePos;
 	// Change the boolean tracker to reflect the new state
 }
 
@@ -19,4 +19,5 @@ void init(){
 	// Assume that the door is open so the it can be closed
 	// Close the back door
 	toggle_door(true);
+	arcade = false;
 }

@@ -27,7 +27,7 @@
 #define JOY_AXIS_TURN Ch1
 
 // Press this button to decrease the speed of the robot
-#define SLOW_BTN Btn6D
+#define SLOW_BTN Btn7L
 // Press this button to control both motor simultaneously with the right joysitck
 // Note: Only works with forward-backward movement. Not turning.
 #define SYNC_BTN Btn6U
@@ -53,5 +53,7 @@
 /****Variables: They Change****/
 // Tracks the current position of the door
 //bool doorOpen;
+
+bool arcade = false;
 
 #endif

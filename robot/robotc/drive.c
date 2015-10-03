@@ -5,8 +5,8 @@ void sync_drive(){
 }
 
 void sync_arcade(){
-	motor[leftMotor] = (DEADBAND(vexRT[JOY_AXIS_RIGHT]) + DEADBAND(vexRT[JOY_AXIS_TURN])) * (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1) * (vexRT[BACK_BTN] > 0 ? -1 : 1);
-	motor[leftMotor] = (DEADBAND(vexRT[JOY_AXIS_RIGHT]) - DEADBAND(vexRT[JOY_AXIS_TURN])) * (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1) * (vexRT[BACK_BTN] > 0 ? -1 : 1);
+	motor[leftMotor] = (DEADBAND(vexRT[JOY_AXIS_LEFT]) + DEADBAND(vexRT[JOY_AXIS_TURN])) * (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1) * (vexRT[BACK_BTN] > 0 ? -1 : 1);
+	motor[rightMotor] = (DEADBAND(vexRT[JOY_AXIS_LEFT]) - DEADBAND(vexRT[JOY_AXIS_TURN])) * (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1) * (vexRT[BACK_BTN] > 0 ? -1 : 1);
 }
 
 // This method moves each wheel independently, taking input from the respective joysticks
@@ -20,9 +20,10 @@ void tank_drive(){
 task drive(){
 	// The loop repeats forever (or until the robot is turned off)
 	while(true){
-		if(vexRT[SYNC_BTN]){
+		if(vexRT[SYNC_BTN]) arcade = !arcade;
+		if(arcade){
 			// If the SYNC_BTN is pressed, we want to move both wheel together
-			sync_drive();
+			sync_arcade();
 		}else{
 			// If the SYNC_BTN is not pressed, we want to move each wheel independently
 			tank_drive();
