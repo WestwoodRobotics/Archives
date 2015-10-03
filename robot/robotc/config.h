@@ -31,8 +31,10 @@
 // Press this button to control both motor simultaneously with the right joysitck
 // Note: Only works with forward-backward movement. Not turning.
 #define SYNC_BTN Btn6U
-// Press this button to toggle tha position of the back door
-#define DOOR_BTN Btn5U
+// Press this button to raise position of the back door
+#define DOOR_UP_BTN Btn5U
+#define DOOR_DOWN_BTN Btn5D
+#define BACK_BTN Btn6D
 // Control the lift
 #define LIFT_UP Btn8U
 #define LIFT_UP2 Btn7U
@@ -50,6 +52,6 @@
 
 /****Variables: They Change****/
 // Tracks the current position of the door
-bool doorOpen;
+//bool doorOpen;
 
 #endif

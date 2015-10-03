@@ -23,9 +23,11 @@ task main()
 	// Run the moveable door
 	while(true){
 		// Only if the DOOR_BTN is pressed down
-		if(vexRT[DOOR_BTN]){
+		if(vexRT[DOOR_UP_BTN]){
 			// Call the toggle_door method (in actions.c)
-			toggle_door();
+			toggle_door(true);
+		}else if(vexRT[DOOR_DOWN_BTN]){
+			toggle_door(false);
 		}
 	}
 }
