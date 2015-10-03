@@ -4,6 +4,11 @@ void sync_drive(){
 	motor[rightMotor] = DEADBAND(vexRT[JOY_AXIS_RIGHT]) * (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1);
 }
 
+void sync_arcade(){
+	motor[leftMotor] = (DEADBAND(vexRT[JOY_AXIS_RIGHT]) + DEADBAND(vexRT[JOY_AXIS_TURN])) * (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1);
+	motor[leftMotor] = (DEADBAND(vexRT[JOY_AXIS_RIGHT]) - DEADBAND(vexRT[JOY_AXIS_TURN])) * (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1);
+}
+
 // This method moves each wheel independently, taking input from the respective joysticks
 void tank_drive(){
 	motor[leftMotor] = DEADBAND(vexRT[JOY_AXIS_LEFT]) * (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1);

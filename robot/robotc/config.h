@@ -32,10 +32,16 @@
 #define SYNC_BTN Btn6U
 // Press this button to toggle tha position of the back door
 #define DOOR_BTN Btn5U
+// Control the lift
+#define LIFT_UP Btn8U
+#define LIFT_UP2 Btn7U
+#define LIFT_DOWN Btn8D
+#define LIFT_DOWN2 Btn7D
 
 /****Constants****/
 // Defines how fast the slow speed of the robot should be relative to normal speed
-#define SLOW_MOD 0.25
+#define SLOW_MOD 0.5
+#define BTN_SPEED 127
 
 // Defines the positions that servo controlling the door is in when the door is opened and closed
 #define doorClosePos 127

@@ -1,3 +1,12 @@
+// Moves the lift based on input from two buttons
+task dump_dozer(){
+	while(true){
+		// The lift activates if the up or down buttons on either side of the controller are pressed
+		motor[liftLeft] = ((vexRT[LIFT_UP] || vexRT[LIFT_UP2]) - (vexRT[LIFT_DOWN] || vexRT[LIFT_DOWN2])) * BTN_SPEED;
+		motor[liftRight] = ((vexRT[LIFT_UP] || vexRT[LIFT_UP2]) - (vexRT[LIFT_DOWN] || vexRT[LIFT_DOWN2])) * BTN_SPEED;
+	}
+}
+
 // Toggles the state of the back door
 void toggle_door(){
 	// If the door is open, close it, if it is closed, open it
