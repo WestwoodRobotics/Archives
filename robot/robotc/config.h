@@ -49,7 +49,9 @@
 #define doorClosePos 127
 #define doorOpenPos (-1 * doorClosePos)
 
-/****Variables: They Change****/
+/****Variables & Such: They Change****/
 bool arcade = false;					// Tracks the drive mode for the robot
+#define SLOW (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1)
+#define REVERSE (vexRT[REVERSE_BTN] > 0 ? -1 : 1)
 
 #endif
