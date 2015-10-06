@@ -4,8 +4,8 @@ task dump_dozer(){
 		// The lift is controlled by the up or down buttons on both sides of the controller
 		int up = vexRT[LIFT_UP] + vexRT[LIFT_UP2];				// Input for up
 		int down = vexRT[LIFT_DOWN] + vexRT[LIFT_DOWN2];	// Input for down
-		motor[liftLeft] = up - down * BTN_SPEED;					// Sets the left motor's speed
-		motor[liftRight] = up - down * BTN_SPEED;					// Sets the right motor's speed
+		motor[liftLeft] = (up - down) * BTN_SPEED;					// Sets the left motor's speed
+		motor[liftRight] = (up - down) * BTN_SPEED;					// Sets the right motor's speed
 	}
 }
 

@@ -46,11 +46,13 @@
 #define BTN_SPEED 127					// A modifier to multiply the button inputs by for motors
 
 // Defines the positions for the opened and closed positions for the back door
-#define doorClosePos 127
+#define doorClosePos 255
 #define doorOpenPos (-1 * doorClosePos)
 
 /****Variables & Such: They Change****/
 bool arcade = false;					// Tracks the drive mode for the robot
+
+// Checks for slow and reverse modes based on button input
 #define SLOW (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1)
 #define REVERSE (vexRT[REVERSE_BTN] > 0 ? -1 : 1)
 

@@ -10,17 +10,18 @@
 #include "drive.c"
 #include "actions.c"
 
+// Run the main task: starts the other tasks and controls the back door
 task main()
 {
-	// Run the start-up actions to get the robot ready (see actions.c)
+	// Runs the start-up actions (see actions.c)
 	init();
 
-	// Start taking input from the driver for moving (see drive.c)
+	// Starts taking input from the driver for moving (see drive.c)
 	startTask(drive);
 
 	startTask(dump_dozer);
 
-	// Run the moveable door
+	// Runs the moveable door
 	while(true){
 		if(vexRT[DOOR_UP_BTN]){
 			// Call the toggle_door method (in actions.c) to open the door
