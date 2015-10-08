@@ -46,7 +46,7 @@
 #define BTN_SPEED 127					// A modifier to multiply the button inputs by for motors
 
 // Defines the positions for the opened and closed positions for the back door
-#define doorClosePos 255
+#define doorClosePos 127
 #define doorOpenPos (-1 * doorClosePos)
 
 /****Variables & Such: They Change****/
