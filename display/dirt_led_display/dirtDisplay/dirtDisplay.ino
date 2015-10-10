@@ -1,6 +1,6 @@
 /*Created by Qrules for WWRobotics 2015 BEST Season under GNU GPL v3
 Based on adafruit libraries*/
-
+//Need 2 power adapters
 
 #include <Wire.h>
 #include <Adafruit_NeoPixel.h>
@@ -28,9 +28,9 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(2*60, PIN, NEO_GRB + NEO_KHZ800);
 
 void setup() {
   // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
-  #if defined (__AVR_ATtiny85__)
-    if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
-  #endif
+  //#if defined (__AVR_ATtiny85__)
+  //  if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
+  //#endif
   // End of trinket special code
 
 
@@ -40,17 +40,19 @@ void setup() {
 
 void loop() {
   // Some example procedures showing how to display to the pixels:
-  colorWipe(strip.Color(255, 0, 0), 20); // Red
-  colorWipe(strip.Color(0, 255, 0), 20); // Green
-  colorWipe(strip.Color(0, 0, 255), 20); // Blue
-  // Send a theater pixel chase in...
-  theaterChase(strip.Color(127, 127, 127), 20); // White
-  theaterChase(strip.Color(127, 0, 0), 20); // Red
-  theaterChase(strip.Color(0, 0, 127), 20); // Blue
-
-  rainbow(5);
-  rainbowCycle(5);
-  theaterChaseRainbow(20);
+  colorWipe(strip.Color(203, 85, 0), 25); // Orange
+  colorWipe(strip.Color(150, 150, 150), 25); // White
+  colorWipe(strip.Color(203, 85, 0), 25); // Orange
+  colorWipe(strip.Color(150, 150, 150), 25); // White
+  colorWipe(strip.Color(203, 85, 0), 25); // Orange
+  colorWipe(strip.Color(150, 150, 150), 25); // White
+  rainbow(10);
+  rainbow(10);
+  rainbow(10);
+  rainbow(10);
+  colorWipe(strip.Color(255, 0, 0), 25); // Red
+  colorWipe(strip.Color(150, 150, 150), 25); // White
+  colorWipe(strip.Color(0, 0, 255), 25); // Blue
 }
 
 // Fill the dots one after the other with a color
