@@ -38,7 +38,7 @@
 #define FORKLIFT_UP Btn8U			// Raises the forklift
 #define FORKLIFT_DOWN Btn8D		// Lowers the forklift
 
-/****Constants****/
+/****Constants with numbers****/
 #define SLOW_MOD 0.5					// The relative slow speed of the robot
 #define BTN_SPEED 127					// A modifier to multiply the button inputs by for motors
 
@@ -51,6 +51,5 @@ bool arcade = false;					// Tracks the drive mode for the robot
 
 // Checks for slow and reverse modes based on button input
 #define SLOW (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1)
-#define REVERSE (vexRT[REVERSE_BTN] > 0 ? -1 : 1)
 
-#endif
+#endif // RCONFIG
