@@ -1,7 +1,4 @@
-//Created by Qrules for Westwood Robotics under GNU GPL v3
-//Based on adafruit libraries for neopixel led modules
-
-#include <Wire.h>
+nclude <Wire.h>
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
   #include <avr/power.h>
@@ -124,15 +121,31 @@ void serialEvent()
 
 void loop() 
 {
-  Serial.println(String(per1) + ", " + String(per2) + ", " + String(per3) + ", " + String(per4) + ", " + String(per5));
-  delay(3000);
-
-  
+  //prints out current percents
+  Serial.println("Coal: " + String(per1) + "%, " + "Magnetite: " + String(per2) + "%, " + "Bauxite: " + String(per3) + "%, " + "Chalcopyrite: " + String(per4) + "%, " + "Spodumene: " + String(per5) + "%");
+  showEachVal(15000);
+  showRainbowVal(200, 15);
+  showRainbowVal(200, 15);
+  showRainbowVal(200, 15);
+  showRainbowVal(200, 15);
+  showRainbowVal(200, 15);
+  colorWipe(strip.Color(203, 85, 0), 10); // Orange
+  colorWipe(strip.Color(150, 150, 150), 10); // White
+  colorWipe(strip.Color(203, 85, 0), 10); // Orange
+  colorWipe(strip.Color(150, 150, 150), 10); // White
 }
-    
+
+// Fill the dots one after the other with a color
+void colorWipe(uint32_t c, uint8_t wait) {
+  for(uint16_t i=0; i<strip.numPixels(); i++) {
+    strip.setPixelColor(i, c);
+    strip.show();
+    delay(wait);
+  }
+}    
 
 //Calculates and shows the market values
-void showVal(int percent)
+void showRainbowVal(int percent, int wait)
 {
     //Find pixel numbers based on percent (for a 60 pixel strip)
     int pixelInt = (30 * percent/100);
@@ -140,11 +153,72 @@ void showVal(int percent)
     if(pixelInt < 0) {
       pixelInt = 0;
     }
-    //Output current market percent on serial    
-    rainbow(0, pixelInt);
+       
+    rainbow(wait, pixelInt);
 }
 
+void showEachVal(int wait)
+{
+    //Find pixel numbers based on percent (for a 60 pixel strip)
+    int pixelInt1 = (int)(30 * per1/100);
+    int pixelInt2 = (int)(30 * per2/100);
+    int pixelInt3 = (int)(30 * per3/100);
+    int pixelInt4 = (int)(30 * per4/100);
+    int pixelInt5 = (int)(30 * per5/100);
+    //remove any -1 errors
+    if(pixelInt1 < 0) {
+      pixelInt1 = 0;
+    }
+    if(pixelInt2 < 0) {
+      pixelInt2 = 0;
+    }
+    if(pixelInt3 < 0) {
+      pixelInt3 = 0;
+    }
+    if(pixelInt4 < 0) {
+      pixelInt4 = 0;
+    }
+    if(pixelInt5 < 0) {
+      pixelInt5 = 0;
+    }
+    //Output current market percent    
+    //Clear all pixels (fresh slate), also eliminates blink of changing pixels versus clearing them individually
+  for(int k = 0; k < NUMPIXELS_TOTAL; k++) {
+     strip.setPixelColor(k, strip.Color(0,0,0)); //Black or off
+  }
+  for (int temp = 0; temp < pixelInt1; temp++){
+    if (temp > NUMPIXELS1)
+      temp = NUMPIXELS1;
+    strip.setPixelColor(temp, strip.Color(80,0,80));
+  }
+  
+  for (int temp = 0; temp < pixelInt2; temp++){
+    if (temp > NUMPIXELS2)
+      temp = NUMPIXELS2;
+    strip.setPixelColor(temp + NUMPIXELS1, strip.Color(80,80,80));
+  }
+  
+  for (int temp = 0; temp < pixelInt3; temp++){
+    if (temp > NUMPIXELS3)
+      temp = NUMPIXELS3;
+    strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2, strip.Color(0,255,0));       
+  }
 
+  for (int temp = 0; temp < pixelInt4; temp++){
+    if (temp > NUMPIXELS4)
+      temp = NUMPIXELS4;
+    strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3, strip.Color(255,0,0));
+  }
+
+  for (int temp = 0; temp < pixelInt5; temp++){
+    if (temp > NUMPIXELS5)
+      temp = NUMPIXELS5;
+    strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3 + NUMPIXELS4, strip.Color(0,0,255));
+  }
+            
+  show();
+  delay(wait);
+}
 
 
 //class to organize rainbow display on pixel part defined by percent integer above
