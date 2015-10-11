@@ -28,18 +28,15 @@
 
 // Control the drive
 #define SLOW_BTN Btn7L      	// Decreases the speed of the robot
-#define ARCADE_BTN Btn6U    	// Toggles the robot's drive mode
-#define REVERSE_BTN Btn6D			// Changes the direction of the robot's wheels
+#define ARCADE_BTN Btn5D    	// Toggles the robot's drive mode
 
-// Opens and closes the back door
-#define DOOR_UP_BTN Btn5U			// Raises the back door
-#define DOOR_DOWN_BTN Btn5D		// Lowers the back door
+// Control the dustpan
+#define DUSTPAN_UP Btn7U			// Raises the dustpan
+#define DUSTPAN_DOWN Btn7D		// Lowers the dustpan
 
-// Control the lift
-#define LIFT_UP Btn8U					// Moves the lift up
-#define LIFT_UP2 Btn7U				// Also moves the lift up
-#define LIFT_DOWN Btn8D				// Moves the lift down
-#define LIFT_DOWN2 Btn7D			// Also moves the lift down
+// Control the forklift
+#define FORKLIFT_UP Btn8U			// Raises the forklift
+#define FORKLIFT_DOWN Btn8D		// Lowers the forklift
 
 /****Constants****/
 #define SLOW_MOD 0.5					// The relative slow speed of the robot

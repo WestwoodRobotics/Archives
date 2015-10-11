@@ -19,16 +19,10 @@ task main()
 	// Starts taking input from the driver for moving (see drive.c)
 	startTask(drive);
 
-	startTask(dump_dozer);
+	startTask(forklift);
 
 	// Runs the moveable door
 	while(true){
-		if(vexRT[DOOR_UP_BTN]){
-			// Call the toggle_door method (in actions.c) to open the door
-			toggle_door(true);
-		}else if(vexRT[DOOR_DOWN_BTN]){
-			// Call the toggle_door method (in actions.c) to close the door
-			toggle_door(false);
-		}
+
 	}
 }
