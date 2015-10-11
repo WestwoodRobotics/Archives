@@ -27,7 +27,7 @@
 #define JOY_AXIS_TURN Ch1   	// Left-Right movement on the right joystick for turning
 
 // Control the drive
-#define SLOW_BTN Btn7L      	// Decreases the speed of the robot
+#define SLOW_BTN Btn5U      	// Decreases the speed of the robot
 #define ARCADE_BTN Btn5D    	// Toggles the robot's drive mode
 
 // Control the dustpan
@@ -41,10 +41,6 @@
 /****Constants with numbers****/
 #define SLOW_MOD 0.5					// The relative slow speed of the robot
 #define BTN_SPEED 127					// A modifier to multiply the button inputs by for motors
-
-// Defines the positions for the opened and closed positions for the back door
-#define doorClosePos 127
-#define doorOpenPos (-1 * doorClosePos)
 
 /****Variables & Such: They Change****/
 bool arcade = false;					// Tracks the drive mode for the robot
