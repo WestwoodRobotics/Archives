@@ -29,6 +29,7 @@
 // Control the drive
 #define SLOW_BTN Btn5U      	// Decreases the speed of the robot
 #define ARCADE_BTN Btn5D    	// Toggles the robot's drive mode
+#define REVERSE_BTN Btn6U			// Changes the direction of the robot's wheels
 
 // Control the dustpan
 #define DUSTPAN_UP Btn7U			// Raises the dustpan
@@ -47,5 +48,6 @@ bool arcade = false;					// Tracks the drive mode for the robot
 
 // Checks for slow and reverse modes based on button input
 #define SLOW (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1)
+#define REVERSE (vexRT[REVERSE_BTN] > 0 ? -1 : 1)
 
 #endif // RCONFIG
