@@ -2,10 +2,17 @@
 task dump_dozer(){
 	while(true){
 		// The lift is controlled by the up or down buttons on both sides of the controller
-		int up = vexRT[LIFT_UP] + vexRT[LIFT_UP2];				// Input for up
-		int down = vexRT[LIFT_DOWN] + vexRT[LIFT_DOWN2];	// Input for down
-		motor[liftLeft] = up - down * BTN_SPEED;					// Sets the left motor's speed
-		motor[liftRight] = up - down * BTN_SPEED;					// Sets the right motor's speed
+		int up = vexRT[DUST_UP];													// Input for up
+		int down = vexRT[DUST_UP];												// Input for down
+		motor[dustPan] = (up - down) * BTN_SPEED;					// Sets the dust pan motor's speed
+	}
+}
+
+task fork_lift(){
+	while(true){
+		int up2 = vexRT[FORK_UP];													// Input for up
+		int down2 = vexRT[FORK_DOWN];											// Input for down
+		motor[forkLift] = (up2 - down2) * BTN_SPEED;			// Sets the fork lift's motor's speed
 	}
 }
 

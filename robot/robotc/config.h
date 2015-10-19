@@ -35,11 +35,13 @@
 #define DOOR_UP_BTN Btn5U			// Raises the back door
 #define DOOR_DOWN_BTN Btn5D		// Lowers the back door
 
-// Control the lift
-#define LIFT_UP Btn8U					// Moves the lift up
-#define LIFT_UP2 Btn7U				// Also moves the lift up
-#define LIFT_DOWN Btn8D				// Moves the lift down
-#define LIFT_DOWN2 Btn7D			// Also moves the lift down
+// Control the dustpan
+#define DUST_UP Btn8U					// Moves the dust pan up
+#define DUST_DOWN Btn8D				// Moves the dust pan down
+
+// Control the forklift
+#define FORK_UP Btn7U					// Moves the forklift up
+#define FORK_DOWN Btn7D				// Moves the forklift down
 
 /****Constants****/
 #define SLOW_MOD 0.5					// The relative slow speed of the robot
@@ -49,7 +51,11 @@
 #define doorClosePos 127
 #define doorOpenPos (-1 * doorClosePos)
 
-/****Variables: They Change****/
+/****Variables & Such: They Change****/
 bool arcade = false;					// Tracks the drive mode for the robot
+
+// Checks for slow and reverse modes based on button input
+#define SLOW (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1)
+#define REVERSE (vexRT[REVERSE_BTN] > 0 ? -1 : 1)
 
 #endif
