@@ -9,20 +9,16 @@
 
 //Define the number of pixels on each strip (strips 1-5), useful if missing pixels
 //Set to zero to turn off strip
-#define NUMPIXELS1 58
-#define NUMPIXELS2 0
-//#define NUMPIXELS2 59
-#define NUMPIXELS3 0
-//#define NUMPIXELS3 60
-#define NUMPIXELS4 0
-//#define NUMPIXELS4 60
-#define NUMPIXELS5 0
-//#define NUMPIXELS5 60
+#define NUMPIXELS1 57
+#define NUMPIXELS2 59
+#define NUMPIXELS3 60
+#define NUMPIXELS4 58
+#define NUMPIXELS5 58
 
 #define NUMPIXELS_TOTAL (NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3 + NUMPIXELS4 + NUMPIXELS5)
 
 //digital pin to connect the LED Strip input pin to
-#define PIN 8 
+#define PIN 6 
 //initialize LED
 #define LED_PIN 13
 
@@ -54,7 +50,7 @@ void setup() {
   // initialize the serial communication:
   Serial.begin(9600);
   while (!Serial) {
-    ; // wait for serial port to connect. Needed for Leonardo only
+  // wait for serial port to connect. Needed for Leonardo only
   }
   Serial.println("Please send a percent between 0 and 200!");
   // initialize the LED_PIN as an output:
@@ -101,7 +97,7 @@ void loop() {
     inString = "";
     if(val != tempVal){
       tempVal = val;
-      //Turn on led
+      //Turn on leds
       digitalWrite(LED_PIN, HIGH);
       Serial.println();
       Serial.println("Got value: " + String(val) + "%");
@@ -153,25 +149,37 @@ void rainbow(uint8_t wait, int setpix) {
   uint16_t i, j;
 
   //Clear all pixels (fresh slate), also eliminates blink of changing pixels versus clearing them individually
-  for(int k = 0; k < NUMPIXELS_TOTAL + 5; k++) {
+  for(int k = 0; k < NUMPIXELS_TOTAL; k++) {
      strip.setPixelColor(k, strip.Color(0,0,0)); //Black or off
   }
   
   for(j=0; j<256; j++) {
       for(i=0; i<setpix; i++) {
-         strip.setPixelColor(i, Wheel((i+j) & 255));
+         int temp = i;
+         if (temp > NUMPIXELS1)
+          temp = NUMPIXELS1;
+         strip.setPixelColor(temp, Wheel((temp+j) & 255));
+         temp = i;
+
+         if (temp > NUMPIXELS2)
+          temp = NUMPIXELS2;
+         strip.setPixelColor(temp + NUMPIXELS1, Wheel((temp+j) & 255));
+         temp = i;
          
-        if(NUMPIXELS2 != 0)
-         strip.setPixelColor(i + NUMPIXELS1, Wheel((i+j) & 255));
-
-        if(NUMPIXELS3 != 0)
-         strip.setPixelColor(i + NUMPIXELS1 + NUMPIXELS2, Wheel((i+j) & 255));
-
-        if(NUMPIXELS4 != 0)
-         strip.setPixelColor(i + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3, Wheel((i+j) & 255));
-
-        if(NUMPIXELS5 != 0 )
-         strip.setPixelColor(i + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3 + NUMPIXELS4, Wheel((i+j) & 255));
+         if (temp > NUMPIXELS3)
+          temp = NUMPIXELS3;
+         strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2, Wheel((temp+j) & 255));
+         temp = i;
+         
+         if (temp > NUMPIXELS4)
+          temp = NUMPIXELS4;
+         strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3, Wheel((temp+j) & 255));
+         temp = i;
+         
+         if (temp > NUMPIXELS5)
+          temp = NUMPIXELS5;
+         strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3 + NUMPIXELS4, Wheel((temp+j) & 255));
+         
       }
             
   show();
