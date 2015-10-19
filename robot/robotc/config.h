@@ -36,8 +36,8 @@
 #define DUST_DOWN Btn7D				// Moves the dust pan down
 
 // Control the forklift
-#define FORK_UP Btn7U					// Moves the forklift up
-#define FORK_DOWN Btn7D				// Moves the forklift down
+#define FORK_UP Btn8U					// Moves the forklift up
+#define FORK_DOWN Btn8D				// Moves the forklift down
 
 /****Constants with numbers****/
 #define SLOW_MOD 0.5					// The relative slow speed of the robot

@@ -8,14 +8,6 @@ task dust_pan(){
 	}
 }
 
-task fork_lift(){
-	while(true){
-		int up = vexRT[FORK_UP];													// Input for up
-		int down = vexRT[FORK_DOWN];											// Input for down
-		motor[forkLift] = (up - down) * BTN_SPEED;			// Sets the fork lift's motor's speed
-	}
-}
-
 // Runs the start-up stuffs
 void init(){
 	arcade = false;				// Set the default drive mode to tank_drive
