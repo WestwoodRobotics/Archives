@@ -18,11 +18,11 @@ task main()
 	// Starts taking input from the driver for moving (see drive.c)
 	startTask(drive);
 
-	startTask(dustpan);
+	startTask(dust_pan);
 
 	startTask(fork_lift);
 
 	while(true){
-		motor[forkLift] = (vexRT[FORKLIFT_UP] - vexRT[FORKLIFT_DOWN]) * BTN_SPEED;
+
 	}
 }

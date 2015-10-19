@@ -1,9 +1,9 @@
 // Moves the lift based on input from two buttons
-task dustpan(){
+task dust_pan(){
 	while(true){
 		// The lift is controlled by the up or down buttons on both sides of the controller
 		int up = vexRT[DUST_UP];													// Input for up
-		int down = vexRT[DUST_UP];												// Input for down
+		int down = vexRT[DUST_DOWN];												// Input for down
 		motor[dustPan] = (up - down) * BTN_SPEED;					// Sets the dust pan motor's speed
 	}
 }

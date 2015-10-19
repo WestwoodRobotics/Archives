@@ -32,19 +32,12 @@
 #define REVERSE_BTN Btn6U			// Changes the direction of the robot's wheels
 
 // Control the dustpan
-#define DUSTPAN_UP Btn7U			// Raises the dustpan
-#define DUSTPAN_DOWN Btn7D		// Lowers the dustpan
-
-// Control the dustpan
-#define DUST_UP Btn8U					// Moves the dust pan up
-#define DUST_DOWN Btn8D				// Moves the dust pan down
+#define DUST_UP Btn7U					// Moves the dust pan up
+#define DUST_DOWN Btn7D				// Moves the dust pan down
 
 // Control the forklift
 #define FORK_UP Btn7U					// Moves the forklift up
 #define FORK_DOWN Btn7D				// Moves the forklift down
-// Control the forklift
-#define FORKLIFT_UP Btn8U			// Raises the forklift
-#define FORKLIFT_DOWN Btn8D		// Lowers the forklift
 
 /****Constants with numbers****/
 #define SLOW_MOD 0.5					// The relative slow speed of the robot
