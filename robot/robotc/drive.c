@@ -18,12 +18,15 @@ void tank_drive(){
 task drive(){
 	// The loop repeats forever (or until the robot is turned off)
 	while(true){
-		if(vexRT[ARCADE_BTN]) arcade = !arcade;
+		if(vexRT[ARCADE_BTN]){
+			arcade = !arcade; // Toggle arcade mode
+			while(vexRT[ARCADE_BTN]){}
+		}
 		if(arcade){
-			// If the ARCADE_BTN is pressed, we want to move both wheel together
+			// If arcade mode is activated, we want to move both wheels together
 			sync_arcade();
 		}else{
-			// If the ARCADE_BTN is not pressed, we want to move each wheel independently
+			// If arcade mode is not activated, we want to move each wheel independently
 			tank_drive();
 		}
 	}
