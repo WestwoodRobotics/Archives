@@ -6,7 +6,6 @@
 
 // Include the other files necessary for the program
 #include "config.h"
-#include "drive.c"
 #include "actions.c"
 
 // Run the main task: starts the other tasks and controls the back door
