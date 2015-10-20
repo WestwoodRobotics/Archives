@@ -53,5 +53,6 @@ bool arcade = false;					// Tracks the drive mode for the robot
 // Checks for slow and reverse modes based on button input
 #define SLOW (vexRT[SLOW_BTN] > 0 ? SLOW_MOD : 1)
 #define REVERSE (vexRT[REVERSE_BTN] > 0 ? -1 : 1)
+#define IS_REVERSED (vexRT[REVERSE_BTN] > 0)
 
 #endif // RCONFIG

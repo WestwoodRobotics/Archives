@@ -1,12 +1,16 @@
 void sync_arcade(){
-	motor[leftMotor] = (DEADBAND(vexRT[JOY_AXIS_LEFT]) + DEADBAND(vexRT[JOY_AXIS_TURN])) * SLOW * REVERSE;
-	motor[rightMotor] = (DEADBAND(vexRT[JOY_AXIS_LEFT]) - DEADBAND(vexRT[JOY_AXIS_TURN])) * SLOW * REVERSE;
+	int leftSpeed = (DEADBAND(vexRT[JOY_AXIS_LEFT]) + DEADBAND(vexRT[JOY_AXIS_TURN])) * SLOW * REVERSE;
+	int rightSpeed = (DEADBAND(vexRT[JOY_AXIS_LEFT]) - DEADBAND(vexRT[JOY_AXIS_TURN])) * SLOW * REVERSE;
+	motor[leftMotor] = IS_REVERSED ? rightSpeed : leftSpeed;
+	motor[rightMotor] = IS_REVERSED ? leftSpeed : rightSpeed;
 }
 
 // This method moves each wheel independently, taking input from the respective joysticks
 void tank_drive(){
-	motor[leftMotor] = DEADBAND(vexRT[JOY_AXIS_LEFT]) * SLOW * REVERSE;
-	motor[rightMotor] = DEADBAND(vexRT[JOY_AXIS_RIGHT]) * SLOW * REVERSE;
+	int leftSpeed = DEADBAND(vexRT[JOY_AXIS_LEFT]) * SLOW * REVERSE;
+	int rightSpeed = DEADBAND(vexRT[JOY_AXIS_RIGHT]) * SLOW * REVERSE;
+	motor[leftMotor] = IS_REVERSED ? rightSpeed : leftSpeed;
+	motor[rightMotor] = IS_REVERSED ? leftSpeed : rightSpeed;
 }
 
 // Takes input from the driver to move the robot
