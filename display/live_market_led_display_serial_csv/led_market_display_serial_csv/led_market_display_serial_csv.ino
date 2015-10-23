@@ -1,4 +1,7 @@
-nclude <Wire.h>
+//Created by Qrules for Westwood Robotics under GNU GPL v3
+//Based on adafruit libraries for neopixel led modules
+
+#include <Wire.h>
 #include <Adafruit_NeoPixel.h>
 #ifdef __AVR__
   #include <avr/power.h>
@@ -6,25 +9,25 @@ nclude <Wire.h>
 
 //Define the number of pixels on each strip (strips 1-5), useful if missing pixels
 //Set to zero to turn off strip
-#define NUMPIXELS1 58
-#define NUMPIXELS2 59
-#define NUMPIXELS3 60
+#define NUMPIXELS1 55
+#define NUMPIXELS2 55
+#define NUMPIXELS3 57
 #define NUMPIXELS4 58
-#define NUMPIXELS5 58
+#define NUMPIXELS5 56
 
 #define NUMPIXELS_TOTAL (NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3 + NUMPIXELS4 + NUMPIXELS5)
 
 //digital pin to connect the LED Strip input pin to
-#define PIN 6 
+#define PIN 8 
 //initialize LED
 #define LED_PIN 13
 
 //For storage of individual percentages
-int per1 = 0;
-int per2 = 0;
-int per3 = 0;
-int per4 = 0;
-int per5 = 0;
+int per1 = 100;
+int per2 = 100;
+int per3 = 100;
+int per4 = 100;
+int per5 = 100;
 //Used for the serial read method
 int percent = 0;
 int newPercent = 0;
@@ -69,7 +72,7 @@ void setup() {
   //begin strip
   strip.begin();
   show();
-  delay(1500);
+  delay(1250);
   digitalWrite(LED_PIN, LOW);
   
 }
@@ -122,17 +125,26 @@ void serialEvent()
 void loop() 
 {
   //prints out current percents
-  Serial.println("Coal: " + String(per1) + "%, " + "Magnetite: " + String(per2) + "%, " + "Bauxite: " + String(per3) + "%, " + "Chalcopyrite: " + String(per4) + "%, " + "Spodumene: " + String(per5) + "%");
-  showEachVal(15000);
-  showRainbowVal(200, 15);
-  showRainbowVal(200, 15);
-  showRainbowVal(200, 15);
-  showRainbowVal(200, 15);
-  showRainbowVal(200, 15);
-  colorWipe(strip.Color(203, 85, 0), 10); // Orange
-  colorWipe(strip.Color(150, 150, 150), 10); // White
-  colorWipe(strip.Color(203, 85, 0), 10); // Orange
-  colorWipe(strip.Color(150, 150, 150), 10); // White
+  serialPrint();
+  serialEvent();
+  showEachVal(12500);
+  showRainbowVal(200, 10);
+  showRainbowVal(200, 10);
+  serialEvent();
+  serialPrint();
+  showRainbowVal(200, 10);
+  showRainbowVal(200, 10);
+  serialEvent();
+  serialPrint();
+  for(int k = 0; k < NUMPIXELS_TOTAL; k++) {
+     strip.setPixelColor(k, strip.Color(0,0,0)); //Black or off
+  }
+  colorWipe(strip.Color(203, 85, 0), 7); // Orange
+  colorWipe(strip.Color(125, 125, 125), 7); // White
+  serialEvent();
+  serialPrint();
+  colorWipe(strip.Color(203, 85, 0), 7); // Orange
+  colorWipe(strip.Color(125, 125, 125), 7); // White
 }
 
 // Fill the dots one after the other with a color
@@ -146,7 +158,7 @@ void colorWipe(uint32_t c, uint8_t wait) {
 
 //Calculates and shows the market values
 void showRainbowVal(int percent, int wait)
-{
+{ 
     //Find pixel numbers based on percent (for a 60 pixel strip)
     int pixelInt = (30 * percent/100);
     //remove any -1 errors
@@ -155,6 +167,12 @@ void showRainbowVal(int percent, int wait)
     }
        
     rainbow(wait, pixelInt);
+}
+
+void serialPrint()
+{
+  //prints out current percents
+  Serial.println("Coal: " + String(per1) + "%, " + "Magnetite: " + String(per2) + "%, " + "Bauxite: " + String(per3) + "%, " + "Chalcopyrite: " + String(per4) + "%, " + "Spodumene: " + String(per5) + "%");
 }
 
 void showEachVal(int wait)
@@ -187,32 +205,32 @@ void showEachVal(int wait)
      strip.setPixelColor(k, strip.Color(0,0,0)); //Black or off
   }
   for (int temp = 0; temp < pixelInt1; temp++){
-    if (temp > NUMPIXELS1)
-      temp = NUMPIXELS1;
+    if (temp >= NUMPIXELS1)
+      temp = NUMPIXELS1 - 1;
     strip.setPixelColor(temp, strip.Color(80,0,80));
   }
   
   for (int temp = 0; temp < pixelInt2; temp++){
-    if (temp > NUMPIXELS2)
-      temp = NUMPIXELS2;
+    if (temp >= NUMPIXELS2)
+      temp = NUMPIXELS2 - 1;
     strip.setPixelColor(temp + NUMPIXELS1, strip.Color(80,80,80));
   }
   
   for (int temp = 0; temp < pixelInt3; temp++){
-    if (temp > NUMPIXELS3)
-      temp = NUMPIXELS3;
+    if (temp >= NUMPIXELS3)
+      temp = NUMPIXELS3 - 1;
     strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2, strip.Color(0,255,0));       
   }
 
   for (int temp = 0; temp < pixelInt4; temp++){
-    if (temp > NUMPIXELS4)
-      temp = NUMPIXELS4;
+    if (temp >= NUMPIXELS4)
+      temp = NUMPIXELS4 - 1;
     strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3, strip.Color(255,0,0));
   }
 
   for (int temp = 0; temp < pixelInt5; temp++){
-    if (temp > NUMPIXELS5)
-      temp = NUMPIXELS5;
+    if (temp >= NUMPIXELS5)
+      temp = NUMPIXELS5 - 1;
     strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3 + NUMPIXELS4, strip.Color(0,0,255));
   }
             
@@ -233,28 +251,28 @@ void rainbow(uint8_t wait, int setpix) {
   for(j=0; j<256; j++) {
       for(i=0; i<setpix; i++) {
          int temp = i;
-         if (temp > NUMPIXELS1)
-          temp = NUMPIXELS1;
+         if (temp >= NUMPIXELS1)
+          temp = NUMPIXELS1 - 1;
          strip.setPixelColor(temp, Wheel((temp+j) & 255));
          temp = i;
 
-         if (temp > NUMPIXELS2)
-          temp = NUMPIXELS2;
+         if (temp >= NUMPIXELS2)
+          temp = NUMPIXELS2 - 1;
          strip.setPixelColor(temp + NUMPIXELS1, Wheel((temp+j) & 255));
          temp = i;
          
-         if (temp > NUMPIXELS3)
-          temp = NUMPIXELS3;
+         if (temp >= NUMPIXELS3)
+          temp = NUMPIXELS3 - 1;
          strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2, Wheel((temp+j) & 255));
          temp = i;
          
-         if (temp > NUMPIXELS4)
-          temp = NUMPIXELS4;
+         if (temp >= NUMPIXELS4)
+          temp = NUMPIXELS4 - 1;
          strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3, Wheel((temp+j) & 255));
          temp = i;
          
-         if (temp > NUMPIXELS5)
-          temp = NUMPIXELS5;
+         if (temp >= NUMPIXELS5)
+          temp = NUMPIXELS5 - 1;
          strip.setPixelColor(temp + NUMPIXELS1 + NUMPIXELS2 + NUMPIXELS3 + NUMPIXELS4, Wheel((temp+j) & 255));
          
       }
