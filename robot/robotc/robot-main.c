@@ -1,4 +1,3 @@
-#pragma config(Sensor, dgtl1,  forkTopLimit,   sensorTouch)
 #pragma config(Motor,  port2,           rightMotor,    tmotorServoContinuousRotation, openLoop, reversed, driveLeft)
 #pragma config(Motor,  port3,           dustPan,       tmotorServoContinuousRotation, openLoop, reversed, driveLeft)
 #pragma config(Motor,  port8,           forkLift,      tmotorServoContinuousRotation, openLoop, driveRight)
@@ -23,8 +22,8 @@ task main()
 
 	// Run the forklift
 	while(true){
-		int up = vexRT[FORK_UP] * !SensorValue[forkTopLimit];			// Input for up
-		int down = vexRT[FORK_DOWN];															// Input for down
+		int up = vexRT[FORK_UP];										// Input for up
+		int down = vexRT[FORK_DOWN];										// Input for down
 		motor[forkLift] = (up - down) * BTN_SPEED;								// Sets the fork lift's motor's speed
 	}
 }
