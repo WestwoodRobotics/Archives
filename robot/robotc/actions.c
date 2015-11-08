@@ -23,6 +23,7 @@ task drive(){
 		// Take input to toggle arcade mode
 		if(vexRT[ARCADE_BTN]){
 			arcade = !arcade; // Toggle arcade mode
+			vexRT[servoFlagDrive] = (arcade ? arcadeFlagPos : tankFlagPos);
 			while(vexRT[ARCADE_BTN]){} // Don't test again until the button is released
 		}
 
@@ -51,4 +52,5 @@ task dust_pan(){
 // Runs the start-up stuffs
 void init(){
 	arcade = false;				// Set the default drive mode to tank_drive
+	vexRT[servoFlagDrive] = tankFlagPos;
 }

@@ -48,6 +48,10 @@
 #define doorClosePos 127
 #define doorOpenPos (-1 * doorClosePos)
 
+// Defines the positions for the flag to be in
+#define arcadeFlagPos 127
+#define tankFlagPos 0
+
 /****Variables, Getters, & Such: They Change****/
 bool arcade = false;					// Tracks the drive mode for the robot
 
