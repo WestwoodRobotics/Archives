@@ -43,9 +43,11 @@ task drive(){
 task dust_pan(){
 	while(true){
 		// The lift is controlled by the up or down buttons on both sides of the controller
-		int up = vexRT[DUST_UP];													// Input for up
+		int up = vexRT[DUST_UP];														// Input for up
 		int down = vexRT[DUST_DOWN];												// Input for down
-		motor[dustPan] = (up - down) * BTN_SPEED * 0.8;					// Sets the dust pan motor's speed
+		int power = (up - down) * BTN_SPEED * 0.8;					// Totals and computes the inputs
+		power = ((power == 0) ? (BTN_SPEED * 0.2) : power);	// Apply consistant speed if there is no input
+		motor[dustPan] = power;			// Sets the dust pan motor's speed
 	}
 }
 
