@@ -1,18 +1,18 @@
 /****Drive Methods****/
 
 void sync_arcade(){
-	int leftSpeed = (DEADBAND(vexRT[JOY_AXIS_LEFT]) + DEADBAND(vexRT[JOY_AXIS_TURN])) * SLOW * REVERSE; // Get the normal left speed
-	int rightSpeed = (DEADBAND(vexRT[JOY_AXIS_LEFT]) - DEADBAND(vexRT[JOY_AXIS_TURN])) * SLOW * REVERSE;// Get the normal right speed
-	motor[leftMotor] = IS_REVERSED ? rightSpeed : leftSpeed;	// Set the left motor to the right speed if it is reversed
-	motor[rightMotor] = IS_REVERSED ? leftSpeed : rightSpeed; // Set the right motor to the left speed if it is reversed
+	int leftSpeed = (DEADBAND(vexRT[JOY_AXIS_LEFT]) + DEADBAND(vexRT[JOY_AXIS_TURN])) * SLOW; // Get the normal left speed
+	int rightSpeed = (DEADBAND(vexRT[JOY_AXIS_LEFT]) - DEADBAND(vexRT[JOY_AXIS_TURN])) * SLOW;// Get the normal right speed
+	motor[leftMotor] = IS_REVERSED ? (rightSpeed * -1) : leftSpeed;	// Set the left motor to the right speed if it is reversed
+	motor[rightMotor] = IS_REVERSED ? (leftSpeed * -1) : rightSpeed; // Set the right motor to the left speed if it is reversed
 }
 
 // This method moves each wheel independently, taking input from the respective joysticks
 void tank_drive(){
-	int leftSpeed = DEADBAND(vexRT[JOY_AXIS_LEFT]) * SLOW * REVERSE;	// Get the normal left speed
-	int rightSpeed = DEADBAND(vexRT[JOY_AXIS_RIGHT]) * SLOW * REVERSE;// Get the normal right speed
-	motor[leftMotor] = IS_REVERSED ? rightSpeed : leftSpeed;					// Set the left motor to the right speed if it is reversed
-	motor[rightMotor] = IS_REVERSED ? leftSpeed : rightSpeed;					// Set the right motor to the left speed if it is reversed
+	int leftSpeed = DEADBAND(vexRT[JOY_AXIS_LEFT]) * SLOW;					// Get the normal left speed
+	int rightSpeed = DEADBAND(vexRT[JOY_AXIS_RIGHT]) * SLOW;				// Get the normal right speed
+	motor[leftMotor] = IS_REVERSED ? (rightSpeed * -1) : leftSpeed;	// Set the left motor to the right speed if it is reversed
+	motor[rightMotor] = IS_REVERSED ? (leftSpeed * -1) : rightSpeed;// Set the right motor to the left speed if it is reversed
 }
 
 // Takes input from the driver to move the robot
@@ -23,8 +23,8 @@ task drive(){
 		// Take input to toggle arcade mode
 		if(vexRT[ARCADE_BTN]){
 			arcade = !arcade; // Toggle arcade mode
-			vexRT[servoFlagDrive] = (arcade ? arcadeFlagPos : tankFlagPos);
-			while(vexRT[ARCADE_BTN]){} // Don't test again until the button is released
+			motor[servoFlagDrive] = (arcade ? arcadeFlagPos : tankFlagPos);
+			while(vexRT[ARCADE_BTN]){} // Don't test again (or do anything) until the button is released
 		}
 
 		if(arcade){
@@ -43,16 +43,13 @@ task drive(){
 task dust_pan(){
 	while(true){
 		// The lift is controlled by the up or down buttons on both sides of the controller
-		int up = vexRT[DUST_UP];														// Input for up
-		int down = vexRT[DUST_DOWN];												// Input for down
-		int power = (up - down) * BTN_SPEED * 0.8;					// Totals and computes the inputs
-		power = ((power == 0) ? (BTN_SPEED * 0.2) : power);	// Apply consistant speed if there is no input
-		motor[dustPan] = power;			// Sets the dust pan motor's speed
+		int power = (vexRT[DUST_UP] - vexRT[DUST_DOWN]) * BTN_SPEED * 0.8;// Totals both inputs for up and down
+		motor[dustPan] = ((power == 0) ? (BTN_SPEED * 0.2) : power);			// Sets the dust pan motor's speed, and applies consistant speed if there is no input from the controller
 	}
 }
 
 // Runs the start-up stuffs
 void init(){
 	arcade = false;				// Set the default drive mode to tank_drive
-	vexRT[servoFlagDrive] = tankFlagPos;
+	motor[servoFlagDrive] = tankFlagPos;
 }
