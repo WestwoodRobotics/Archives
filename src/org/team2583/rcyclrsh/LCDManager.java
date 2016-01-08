@@ -1,4 +1,5 @@
 /*
+ * Created by Austin Reuland <amreuland@gmail.com>
  * Copyright (c) 2015 Westwood Robotics <code.westwoodrobotics@gmail.com>.
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
