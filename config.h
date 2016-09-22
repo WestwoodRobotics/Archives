@@ -12,6 +12,11 @@
 #define BTN_DTOGGLE Btn6U
 #define BTN_REVERSE Btn5U
 
+#define BTN_NET_UP Btn7U
+#define BTN_NET_DOWN Btn7D
+#define BTN_SLIDER_UP Btn8U
+#define BTN_SLIDER_DOWN Btn8D
+
 bool tankDrive = true;
 bool reversed = false;
 

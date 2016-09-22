@@ -27,10 +27,22 @@ task drive(){
 			while (vexRT[BTN_REVERSE]);
 		}
 
-		// tank drive if the bol is true, arcade drive if the bool is false
+		// tank drive if the bool is true, arcade drive if the bool is false
 		if (tankDrive)
 			tank_drive();
 		else
 			arcade_drive();
+	}
+}
+
+task net(){
+	while(true){
+		motor[netMotor] = vexRT[BTN_NET_UP] - vexRT[BTN_NET_DOWN];
+	}
+}
+
+task slider(){
+	while(true){
+		motor[sliderMotor] = vexRT[BTN_SLIDER_UP] - vexRT[BTN_SLIDER_DOWN];
 	}
 }
