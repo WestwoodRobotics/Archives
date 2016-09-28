@@ -1,33 +1,33 @@
-// Uses tank driving, both controls forwards
+// Uses tank driving, utilizing both joysticks for the forward/back motion of their respective wheels
 void tank_drive(){
-	// Asigns the motor speed based on the placement of the joy stick, and whether the mode is reversed or not
+	// Asigns the motor speed based on the position of the joy stick, and whether the driver is going in reverse or not
 	motor[rightWheel] = DEADBAND(vexRT[AXIS_RY]) * (reversed ? -1 : 1);
 	motor[leftWheel] = DEADBAND(vexRT[AXIS_LY]) * (reversed ? -1 : 1);
 }
 
 // Uses driving where one joystick controls forwards/backwatds, and one controls left/right
 void arcade_drive(){
-	// Asigns the motor speed based on the placement of the joy stick, and whether the mode is reversed or not
+	// Asigns the motor speed based on the position of the joy stick, and whether the mode is reversed or not
 	motor[rightWheel] = DEADBAND(vexRT[AXIS_RY]) - DEADBAND(vexRT[AXIS_LX]) * (reversed ? -1 : 1);
 	motor[leftWheel] = DEADBAND(vexRT[AXIS_RY]) + DEADBAND(vexRT[AXIS_LX]) * (reversed ? -1 : 1);
 }
 
-// Multithreading thingy
+// Task that drives the robot
 task drive(){
-	// runs these if statements forever
+	// The robot will drive until turned off
 	while(true){
-		// if Button '6u' is pressed, it will toggle tank drive off / on
+		// if the toggle button is pressed, it will toggle tank drive off / on
 		if (vexRT[BTN_DTOGGLE]){
 			tankDrive = !tankDrive;
-			while(vexRT[BTN_DTOGGLE]);
+			while(vexRT[BTN_DTOGGLE]);	// Wait until the button is no longer pressed
 		}
-		// if button '5u' is pressed, it will toggle reverse off / on
+		// if the reverse button is pressed, it will toggle reverse off / on
 		if(vexRT[BTN_REVERSE]) {
 			reversed = !reversed;
-			while (vexRT[BTN_REVERSE]);
+			while (vexRT[BTN_REVERSE]);	// Wait until the button is no longer pressed
 		}
 
-		// tank drive if the bool is true, arcade drive if the bool is false
+		// calls either the tank or arcade drive methods
 		if (tankDrive)
 			tank_drive();
 		else
@@ -35,14 +35,16 @@ task drive(){
 	}
 }
 
+// Runs the net on the side of the robot
 task net(){
 	while(true){
-		motor[netMotor] = vexRT[BTN_NET_UP] - vexRT[BTN_NET_DOWN];
+		motor[netMotor] = vexRT[BTN_NET_UP] - vexRT[BTN_NET_DOWN];	// Runs te net motor when either button is pressed
 	}
 }
 
-task slider(){
+// Runs the sweeper on the front of the robot
+task sweeper(){
 	while(true){
-		motor[sliderMotor] = vexRT[BTN_SLIDER_UP] - vexRT[BTN_SLIDER_DOWN];
+		motor[sweeperMotor] = vexRT[BTN_SWEEPER];	// Runs the sweeper when the button is pressed
 	}
 }
