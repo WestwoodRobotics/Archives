@@ -38,13 +38,13 @@ task drive(){
 // Runs the net on the side of the robot
 task net(){
 	while(true){
-		motor[netMotor] = vexRT[BTN_NET_UP] - vexRT[BTN_NET_DOWN];	// Runs te net motor when either button is pressed
+		motor[netMotor] = (vexRT[BTN_NET_UP] - vexRT[BTN_NET_DOWN]) * 127;	// Runs te net motor when either button is pressed
 	}
 }
 
 // Runs the sweeper on the front of the robot
 task sweeper(){
 	while(true){
-		motor[sweeperMotor] = vexRT[BTN_SWEEPER];	// Runs the sweeper when the button is pressed
+		motor[sweeperMotor] = vexRT[BTN_SWEEPER] * 127;	// Runs the sweeper when the button is pressed
 	}
 }
