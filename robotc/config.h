@@ -19,9 +19,9 @@
 #define BTN_NET_UP Btn7U
 #define BTN_NET_DOWN Btn7D
 #define BTN_SWEEPER Btn8D
+#define BTN_SWEEPER_REVERSE Btn8L
 
 // Global bools to track the status of the robot
 bool tankDrive = true;
 bool reversed = false;
-
 #endif

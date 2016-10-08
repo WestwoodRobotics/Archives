@@ -12,6 +12,7 @@ task main()
 	StartTask(drive);
 	StartTask(net);
 	StartTask(sweeper);
+	StartTask(sweeperReverse);
 
 	while(true);	// Don't want to let the program end before the robot is shut down
 }

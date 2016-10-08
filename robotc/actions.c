@@ -48,3 +48,8 @@ task sweeper(){
 		motor[sweeperMotor] = vexRT[BTN_SWEEPER] * 127;	// Runs the sweeper when the button is pressed
 	}
 }
+task sweeperReverse(){
+	while(true){
+		motor[sweeperMotor] = vexRT[BTN_SWEEPER_REVERSE] * -127;	// Runs the sweeper when the button is pressed
+	}
+}
