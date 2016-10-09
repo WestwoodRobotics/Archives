@@ -45,11 +45,14 @@ task net(){
 // Runs the sweeper on the front of the robot
 task sweeper(){
 	while(true){
-		motor[sweeperMotor] = vexRT[BTN_SWEEPER] * 127;	// Runs the sweeper when the button is pressed
+		motor[sweeperMotor] = (vexRT[BTN_SWEEPER] - vexRT[BTN_SWEEPER_REVERSE]) * 127;	// Runs the sweeper when the button is pressed
 	}
 }
-task sweeperReverse(){
+
+// Runs the continuous servo for the water 
+task water_servo(){
 	while(true){
-		motor[sweeperMotor] = vexRT[BTN_SWEEPER_REVERSE] * -127;	// Runs the sweeper in reverse when the button is pressed
+		motor[waterServoCont] = motor[waterServoCont] + (vexRT[BTN_WATER] - vexRT[BTN_WATER_REVERSE]) * (WATER_SERVO_SPEED / 20);	// Run the sweeper if the button is pressed
+		wait(0.05);	// Wait for one twentieth of a second before continuing
 	}
 }
