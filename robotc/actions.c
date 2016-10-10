@@ -53,6 +53,6 @@ task sweeper(){
 task water_servo(){
 	while(true){
 		motor[waterServoCont] = motor[waterServoCont] + (vexRT[BTN_WATER] - vexRT[BTN_WATER_REVERSE]) * (WATER_SERVO_SPEED / 20);	// Run the sweeper if the button is pressed
-		wait1Msec(50);	// Wait for one twentieth of a second before continuing
+		wait1Msec(50);	// Wait for one twentieth of a second before continuing or 5o miliseconds
 	}
 }
