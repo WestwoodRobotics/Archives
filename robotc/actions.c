@@ -1,8 +1,8 @@
 // Uses tank driving, utilizing both joysticks for the forward/back motion of their respective wheels
 void tank_drive(){
 	// Asigns the motor speed based on the position of the joy stick, and whether the driver is going in reverse or not
-	motor[rightWheel] = DEADBAND(vexRT[AXIS_RY]) * (reversed ? -1 : 1);
-	motor[leftWheel] = DEADBAND(vexRT[AXIS_LY]) * (reversed ? -1 : 1);
+	motor[rightWheel] = !reversed ? DEADBAND(vexRT[AXIS_RY]) : (-1 * DEADBAND(vexRT[AXIS_LY]));
+	motor[leftWheel] = !reversed ? DEADBAND(vexRT[AXIS_LY]) : (-1 * DEADBAND(vexRT[AXIS_RY]));
 }
 
 // Uses driving where one joystick controls forwards/backwatds, and one controls left/right
