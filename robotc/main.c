@@ -8,11 +8,11 @@
 #include "config.h"
 #include "actions.c"
 
-task main()
+task main()			// The main task of the robot that calls all the other tasks
 {
-	StartTask(drive);
-	StartTask(net);
-	StartTask(sweeper);
+	StartTask(drive);	// Starts the drive task (for the wheels of the robot)
+	StartTask(net);		// Starts the net task (for the net attache to the robot)
+	StartTask(sweeper);	// Starts the sweeper task (for the rotating sweeper in the front)
 
-	while(true);	// Don't want to let the program end before the robot is shut down
+	while(true);		// Don't want to let the program end before the robot is shut down
 }

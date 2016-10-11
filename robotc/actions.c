@@ -1,6 +1,7 @@
 // Uses tank driving, utilizing both joysticks for the forward/back motion of their respective wheels
 void tank_drive(){
 	// Asigns the motor speed based on the position of the joy stick, and whether the driver is going in reverse or not
+	//	if driving in reverse, the joysticks that input is taken from is reversed
 	motor[rightWheel] = !reversed ? DEADBAND(vexRT[AXIS_RY]) : (-1 * DEADBAND(vexRT[AXIS_LY]));
 	motor[leftWheel] = !reversed ? DEADBAND(vexRT[AXIS_LY]) : (-1 * DEADBAND(vexRT[AXIS_RY]));
 }
@@ -38,21 +39,21 @@ task drive(){
 // Runs the net on the side of the robot
 task net(){
 	while(true){
-		motor[netMotor] = (vexRT[BTN_NET_UP] - vexRT[BTN_NET_DOWN]) * 127;	// Runs te net motor when either button is pressed
+		motor[netMotor] = (vexRT[BTN_NET_UP] - vexRT[BTN_NET_DOWN]) * 127;	// Runs the net motor when either controlling button is pressed
 	}
 }
 
 // Runs the sweeper on the front of the robot
 task sweeper(){
 	while(true){
-		motor[sweeperMotor] = (vexRT[BTN_SWEEPER] - vexRT[BTN_SWEEPER_REVERSE]) * 127;	// Runs the sweeper when the button is pressed
+		motor[sweeperMotor] = (vexRT[BTN_SWEEPER] - vexRT[BTN_SWEEPER_REVERSE]) * 127;	// Runs the sweeper when either controlling button is pressed
 	}
 }
 
-// Runs the continuous servo for the water
+// Runs the continuous servo for turning the water valve
 task water_servo(){
 	while(true){
 		motor[waterServoCont] = motor[waterServoCont] + (vexRT[BTN_WATER] - vexRT[BTN_WATER_REVERSE]) * (WATER_SERVO_SPEED / 20);	// Run the sweeper if the button is pressed
-		wait1Msec(50);	// Wait for one twentieth of a second before continuing or 5o miliseconds
+		wait1Msec(50);	// Wait for one twentieth of a second (50 ms) before continuing
 	}
 }
