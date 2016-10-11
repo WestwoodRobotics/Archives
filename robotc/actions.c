@@ -36,10 +36,10 @@ task drive(){
 	}
 }
 
-// Runs the net on the side of the robot
-task net(){
+// Runs the roller on the side of the robot
+task roller(){
 	while(true){
-		motor[netMotor] = (vexRT[BTN_NET_UP] - vexRT[BTN_NET_DOWN]) * 127;	// Runs the net motor when either controlling button is pressed
+		motor[rollerMotor] = (vexRT[BTN_ROLLER_UP] - vexRT[BTN_ROLLER_DOWN]) * 127;	// Runs the roller motor when either controlling button is pressed
 	}
 }
 
