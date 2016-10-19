@@ -2,8 +2,8 @@
 void tank_drive(){
 	// Asigns the motor speed based on the position of the joy stick, and whether the driver is going in reverse or not
 	//	if driving in reverse, the joysticks that input is taken from is reversed
-	motor[rightWheel] = !reversed ? DEADBAND(vexRT[AXIS_RY]) : (-1 * DEADBAND(vexRT[AXIS_LY]));
-	motor[leftWheel] = !reversed ? DEADBAND(vexRT[AXIS_LY]) : (-1 * DEADBAND(vexRT[AXIS_RY]));
+	motor[rightWheel] = DEADBAND(vexRT[AXIS_RY]) * (reversed ? -1 : 1);
+	motor[leftWheel] = DEADBAND(vexRT[AXIS_LY]) * (reversed ? -1 : 1);
 }
 
 // Uses driving where one joystick controls forwards/backwatds, and one controls left/right
@@ -50,10 +50,13 @@ task sweeper(){
 	}
 }
 
-// Runs the continuous servo for turning the water valve
-task water_servo(){
+// Runs the interval servo for the ramp
+task ramp(){
 	while(true){
-		motor[waterServoCont] = motor[waterServoCont] + (vexRT[BTN_WATER] - vexRT[BTN_WATER_REVERSE]) * (WATER_SERVO_SPEED / 20);	// Run the sweeper if the button is pressed
-		wait1Msec(50);	// Wait for one twentieth of a second (50 ms) before continuing
+		if(vexRT[BTN_RAMP_UP]){
+			motor[rampServo] = RAMP_MAX;
+		}else if(vexRT[BTN_RAMP_DOWN]){
+			motor[rampServo] = RAMP_MIN;
+		}
 	}
 }
