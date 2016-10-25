@@ -9,8 +9,8 @@ void tank_drive(){
 // Uses driving where one joystick controls forwards/backwatds, and one controls left/right
 void arcade_drive(){
 	// Asigns the motor speed based on the position of the joy stick, and whether the mode is reversed or not
-	motor[rightWheel] = DEADBAND(vexRT[AXIS_RY]) - DEADBAND(vexRT[AXIS_LX]) * (reversed ? -1 : 1);
-	motor[leftWheel] = DEADBAND(vexRT[AXIS_RY]) + DEADBAND(vexRT[AXIS_LX]) * (reversed ? -1 : 1);
+	motor[rightWheel] = (DEADBAND(vexRT[AXIS_RY]) - DEADBAND(vexRT[AXIS_LX])) * (reversed ? -1 : 1);
+	motor[leftWheel] = (DEADBAND(vexRT[AXIS_RY]) + DEADBAND(vexRT[AXIS_LX])) * (reversed ? -1 : 1);
 }
 
 // Task that drives the robot
@@ -53,10 +53,21 @@ task sweeper(){
 // Runs the interval servo for the ramp
 task ramp(){
 	while(true){
-		if(vexRT[BTN_RAMP_UP]){
+		if(vexRT[BTN_RAMP_1] || vexRT[BTN_RAMP_2]){
 			motor[rampServo] = RAMP_MAX;
-		}else if(vexRT[BTN_RAMP_DOWN]){
+		}else{
 			motor[rampServo] = RAMP_MIN;
+		}
+	}
+}
+
+// Runs the seed dispenser's servo
+task seeds(){
+	while(true){
+		if(vexRT[BTN_SEEDS_OPEN]){
+			motor[seedServo] = SEED_MAX;
+		}else if(vexRT[BTN_SEEDS_CLOSE]){
+			motor[seedServo] = SEED_MIN;
 		}
 	}
 }
