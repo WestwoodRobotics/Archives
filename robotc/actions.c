@@ -36,31 +36,6 @@ task drive(){
 	}
 }
 
-// Runs the roller on the side of the robot
-task roller(){
-	while(true){
-		motor[rollerMotor] = (vexRT[BTN_ROLLER_UP] - vexRT[BTN_ROLLER_DOWN]) * 127;	// Runs the roller motor when either controlling button is pressed
-	}
-}
-
-// Runs the sweeper on the front of the robot
-task sweeper(){
-	while(true){
-		motor[sweeperMotor] = (vexRT[BTN_SWEEPER] - vexRT[BTN_SWEEPER_REVERSE]) * 127;	// Runs the sweeper when either controlling button is pressed
-	}
-}
-
-// Runs the interval servo for the ramp
-task ramp(){
-	while(true){
-		if(vexRT[BTN_RAMP_1] || vexRT[BTN_RAMP_2]){
-			motor[rampServo] = RAMP_MAX;
-		}else{
-			motor[rampServo] = RAMP_MIN;
-		}
-	}
-}
-
 // Runs the seed dispenser's servo
 task seeds(){
 	while(true){
