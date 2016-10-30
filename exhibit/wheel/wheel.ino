@@ -1,3 +1,6 @@
+// The commented out parts of the code were not used at competition due to too much current being drawn
+// These are still valid, and uncommenting will not produce errors.
+
 #define pinF 3  // The pin that will move the slides forward
 #define pinB 2  // The pin that will move the slides backward
 
@@ -11,14 +14,14 @@
 
 // Returns a value equal to pinF or pinB if either is pressed. Returns -1 otherwise.
 int getInput(){
-  if(digitalRead(pinF) == LOW) return pinF;
-  if(digitalRead(pinB) == LOW) return pinB;
-  if(digitalRead(pinS1) == LOW) return pinS1;
-  if(digitalRead(pinS2) == LOW) return pinS2;
-  if(digitalRead(pinS3) == LOW) return pinS3;
-  if(digitalRead(pinS4) == LOW) return pinS4;
-  if(digitalRead(pinS5) == LOW) return pinS5;
-  if(digitalRead(pinS6) == LOW) return pinS6;
+  if(digitalRead(pinF) == HIGH) return pinF;
+  if(digitalRead(pinB) == HIGH) return pinB;
+//  if(digitalRead(pinS1) == HIGH) return pinS1;
+//  if(digitalRead(pinS2) == HIGH) return pinS2;
+//  if(digitalRead(pinS3) == HIGH) return pinS3;
+//  if(digitalRead(pinS4) == HIGH) return pinS4;
+//  if(digitalRead(pinS5) == HIGH) return pinS5;
+//  if(digitalRead(pinS6) == HIGH) return pinS6;
   return -1;
 }
 
@@ -32,8 +35,15 @@ void waitForRelease(){
 }
 
 void setup(){
-  pinMode(pinF, INPUT);
-  pinMode(pinB, INPUT);
+  pinMode(pinF, INPUT_PULLUP);
+  pinMode(pinB, INPUT_PULLUP);
+  
+//  pinMode(pinS1, INPUT_PULLUP);
+//  pinMode(pinS2, INPUT_PULLUP);
+//  pinMode(pinS3, INPUT_PULLUP);
+//  pinMode(pinS4, INPUT_PULLUP);
+//  pinMode(pinS5, INPUT_PULLUP);
+//  pinMode(pinS6, INPUT_PULLUP);
   
   Serial.begin(9600);
   while(!Serial);
@@ -50,30 +60,30 @@ void loop(){
       Serial.print("B");
       waitForRelease();
       break;
-    case pinS1:
-      Serial.print("1");
-      waitForRelease(2000);
-      break;
-    case pinS2:
-      Serial.print("2");
-      waitForRelease(2000);
-      break;
-    case pinS3:
-      Serial.print("3");
-      waitForRelease(2000);
-      break;
-    case pinS4:
-      Serial.print("4");
-      waitForRelease(2000);
-      break;
-    case pinS5:
-      Serial.print("5");
-      waitForRelease(2000);
-      break;
-    case pinS6:
-      Serial.print("6");
-      waitForRelease(2000);
-      break;
+//    case pinS1:
+//      Serial.print("1");
+//      waitForRelease(2000);
+//      break;
+//    case pinS2:
+//      Serial.print("2");
+//      waitForRelease(2000);
+//      break;
+//    case pinS3:
+//      Serial.print("3");
+//      waitForRelease(2000);
+//      break;
+//    case pinS4:
+//      Serial.print("4");
+//      waitForRelease(2000);
+//      break;
+//    case pinS5:
+//      Serial.print("5");
+//      waitForRelease(2000);
+//      break;
+//    case pinS6:
+//      Serial.print("6");
+//      waitForRelease(2000);
+//      break;
     default:
       break;
   }
