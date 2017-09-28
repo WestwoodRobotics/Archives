@@ -10,5 +10,6 @@ task main()
 {
 	startTask(drive);
 	startTask(shoot);
+	startTask(arcadeDrive);
 	while(1);
 }

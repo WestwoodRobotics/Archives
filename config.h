@@ -5,7 +5,7 @@
 #define maxShootAngle 127
 #define minShootAngle -127
 
-
+bool driveTypeArcade = false;
 
 
 #endif
