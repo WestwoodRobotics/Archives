@@ -1,5 +1,3 @@
-#include "config.h"
-
 task drive(){
 	while (true){
 		if (driveTypeArcade == false){
@@ -34,7 +32,15 @@ task arcadeDrive(){
 			int y = vexRT[Ch3];
 			int x = vexRT[Ch4];
 			motor[leftMotor] = (x + y)/2;
-			motor(rightMotor) = (y - x)/2;
+			motor[rightMotor] = (y - x)/2;
 		}
+	}
+}
+
+task grabber(){
+	while(true){
+		motor[grabMotor] = vexRT[grabButton] ? 127
+										 : vexRT[releaseButton] ? -127
+										 : 0;
 	}
 }
