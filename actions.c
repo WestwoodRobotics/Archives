@@ -1,18 +1,28 @@
 task drive(){
 	while (true){
-		if (driveTypeArcade == false){
-			int joy1 = vexRT[Ch3];
-			int joy2 = vexRT[Ch2];
-			motor[leftMotor] = joy1;
-			motor[rightMotor] = joy2;
+		//Toggle Button
+		if (vexRT[btnToggle]){
+			driveTypeArcade = !driveTypeArcade;
+			while(vexRT[btnToggle]);
+		}
+
+		//Drive
+		if(driveTypeArcade){
+			int y = vexRT[Ch3];
+			int x = vexRT[Ch4];
+			motor[leftMotor] = (x + y)/2;
+			motor[rightMotor] = (y - x)/2;
+		}
+		else{
+			motor[leftMotor] = vexRT[leftYAxis];
+			motor[rightMotor] = vexRT[rightYAxis];
 		}
 	}
 }
 
 task shoot(){
 	while (true){
-		int button1 = vexRT[Btn8U];
-		if (button1){
+		if (vexRT[shootBtn]){
 			motor[shootServo] = maxShootAngle;
 		}
 		else{
@@ -21,26 +31,18 @@ task shoot(){
 	}
 }
 
-
-task arcadeDrive(){
-	while (true){
-		int btnTogl = vexRT[Btn5U];
-		if (btnTogl){
-			driveTypeArcade = !driveTypeArcade;
-		}
-		if (driveTypeArcade){
-			int y = vexRT[Ch3];
-			int x = vexRT[Ch4];
-			motor[leftMotor] = (x + y)/2;
-			motor[rightMotor] = (y - x)/2;
-		}
-	}
-}
-
 task grabber(){
 	while(true){
 		motor[grabMotor] = vexRT[grabButton] ? 127
 										 : vexRT[releaseButton] ? -127
+										 : 0;
+	}
+}
+
+task claw(){
+	while(true){
+		motor[clawMotor] = vexRT[clawBtn] ? 127
+										 : vexRT[clawRevBtn] ? -127
 										 : 0;
 	}
 }
