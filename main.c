@@ -10,9 +10,10 @@
 
 task main()
 {
+	//Initiates tasks
 	startTask(drive);
 	startTask(shoot);
 	startTask(grabber);
 	startTask(claw);
-	while(1);
+	while(1);	//Makes sure that robot does not shut off
 }

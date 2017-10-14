@@ -17,6 +17,6 @@
 #define clawBtn Btn7L
 #define clawRevBtn Btn7R
 
-bool driveTypeArcade = false;
+bool driveTypeArcade = false;	//Toggle button state
 
 #endif
