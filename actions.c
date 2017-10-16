@@ -1,14 +1,27 @@
+/*
+ * check the state of the drive toggle button
+ * and assign the drive state variable appropriately
+ */
+void checkDrive(){
+	if(vexRT[btnToggle]){
+		driveTypeArcade = !driveTypeArcade; // Switches the drive variable
+		while(vexRT[btnToggle]);						// Wait for the button to be released
+	}
+}
+
+/*
+ * drive the robot either in arcade or tank mode
+ */
 task drive(){
 	while (true){
+		wait1Msec(5); // Keep the processor from being overwhelmed (just in case)
+
 		//Toggle Button
-		if (vexRT[btnToggle]){
-			driveTypeArcade = !driveTypeArcade;	//Switches button
-			while(vexRT[btnToggle]);	//Loop holds true until button is released
-		}
+		checkDrive();
 
 		//Drive Process
 		if(driveTypeArcade){
-			//Arcade Drive
+			//Arcade Drive - One vertical axis, one horizontal axis
 			int y = vexRT[Ch3];	//Y Axis (vertical) - Forward and Backward
 			int x = vexRT[Ch4];	//X Axis (horizontal) - Turn Left and Right
 			motor[leftMotor] = (x + y)/2;
@@ -22,11 +35,16 @@ task drive(){
 	}
 }
 
+/*
+ * Release the catapult if the button is pressed
+ */
 task shoot(){
 	while (true){
+		wait1Msec(5); // Keep the processor from being overwhelmed (just in case)
+
 		if (vexRT[shootBtn]){
 			motor[shootServo] = maxShootAngle;	//Shooter fires water
-			delay(1000);
+			wait1Msec(1000);										//Wait before resetting
 		}
 		else{
 			motor[shootServo] = minShootAngle;	//Shooter resets to original position
@@ -34,18 +52,28 @@ task shoot(){
 	}
 }
 
+/*
+ * Move the large grabber motor based on button input
+ */
 task grabber(){
 	while(true){
-		motor[grabMotor] = vexRT[grabButton] ? 127	//Grabber drops down around Manny
-		: vexRT[releaseButton] ? -127	//Grabber moves up to original position
-		: 0;	//Grabber does nothing
+		wait1Msec(5); // Keep the processor from being overwhelmed (just in case)
+
+		motor[grabMotor] = vexRT[grabBtn] ? 127			//Grabber drops down around Manny
+										 : vexRT[releaseBtn] ? -127	//Grabber moves up to original position
+										 : 0;														//Grabber does nothing
 	}
 }
 
+/*
+ * Move the claw motor based on button input
+ */
 task claw(){
 	while(true){
-		motor[clawMotor] = vexRT[clawBtn] ? 127	//Claw clutches chemical can
-		: vexRT[clawRevBtn] ? -127	//Claw releases chemical can
-		: 0;	//Claw does nothing
+		wait1Msec(5); // Keep the processor from being overwhelmed (just in case)
+
+		motor[clawMotor] = vexRT[clawBtn] ? 127			//Claw clutches chemical can
+										 : vexRT[clawRevBtn] ? -127	//Claw releases chemical can
+										 : 0;												//Claw does nothing
 	}
 }

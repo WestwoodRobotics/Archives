@@ -11,9 +11,9 @@
 task main()
 {
 	//Initiates tasks
-	startTask(drive);
-	startTask(shoot);
-	startTask(grabber);
-	startTask(claw);
+	startTask(drive);		// Robot drive task
+	startTask(shoot);		// Robot shooter task
+	startTask(grabber); // Robot grabber task
+	startTask(claw);		// Robot claw task
 	while(1);	//Makes sure that robot does not shut off
 }
