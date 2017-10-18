@@ -22,8 +22,8 @@ task drive(){
 		//Drive Process
 		if(driveTypeArcade){
 			//Arcade Drive - One vertical axis, one horizontal axis
-			int y = vexRT[Ch3];	//Y Axis (vertical) - Forward and Backward
-			int x = vexRT[Ch4];	//X Axis (horizontal) - Turn Left and Right
+			int y = vexRT[leftYAxis];	//Y Axis (vertical) - Forward and Backward
+			int x = vexRT[leftXAxis];	//X Axis (horizontal) - Turn Left and Right
 			motor[leftMotor] = (x + y)/2;
 			motor[rightMotor] = (y - x)/2;
 		}
@@ -61,7 +61,7 @@ task grabber(){
 
 		motor[grabMotor] = vexRT[grabBtn] ? 127			//Grabber drops down around Manny
 										 : vexRT[releaseBtn] ? -127	//Grabber moves up to original position
-										 : 0;														//Grabber does nothing
+										 : 0;												//Grabber does nothing
 	}
 }
 

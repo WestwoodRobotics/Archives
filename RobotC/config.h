@@ -8,6 +8,7 @@
 #define grabBtn Btn6U
 #define releaseBtn Btn6D
 
+#define leftXAxis Ch4
 #define leftYAxis Ch3
 #define rightYAxis Ch2
 
