@@ -33,7 +33,7 @@ task shoot(){
 
 		if (vexRT[shootBtn] && vexRT[shootBtn2]){
 			motor[shootServo] = maxShootAngle;	//Shooter fires water
-			wait1Msec(1000);										//Wait before resetting
+			wait1Msec(10000);										//Wait before resetting
 		}
 		else{
 			motor[shootServo] = minShootAngle;	//Shooter resets to original position
@@ -49,7 +49,7 @@ task grabber(){
 		wait1Msec(5); // Keep the processor from being overwhelmed (just in case)
 
 		motor[grabMotor] = vexRT[grabBtn] ? 127			//Grabber drops down around Manny
-										 : vexRT[releaseBtn] ? -127	//Grabber moves up to original position
+										 : vexRT[releaseBtn] ? -100	//Grabber moves up to original position
 										 : motor[grabMotor];			//Grabber does nothing
 	}
 }
