@@ -7,13 +7,14 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2583.robot.commands.ExampleCommand;
-import org.usfirst.frc.team2583.robot.subsystems.ExampleSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,9 +24,8 @@ import org.usfirst.frc.team2583.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final ExampleSubsystem kExampleSubsystem
-			= new ExampleSubsystem();
 	public static OI m_oi;
+	public static DriveTrain dt_s;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -37,7 +37,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
+		dt_s = new DriveTrain();
+		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		
 	}
 
 	@Override
@@ -70,7 +71,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		m_autonomousCommand = m_chooser.getSelected();
+		// Get and store the results of the randomizations of the switches and scales
+		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		FieldMap.homeSwitch = gameData.charAt(0);
+		FieldMap.scale = gameData.charAt(1);
+		FieldMap.farSwitch = gameData.charAt(2);
+		
+		m_autonomousCommand = m_chooser.getSelected(); // needs to be replaced
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
