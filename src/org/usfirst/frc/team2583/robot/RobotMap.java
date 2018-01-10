@@ -15,4 +15,8 @@ package org.usfirst.frc.team2583.robot;
  */
 public class RobotMap {
 	
+	public static final double encoderPulses = 4096;
+	public static final double wheelDiameter = 0; // Diameter in inches
+	public static final double pulsesPerFoot = encoderPulses / ((wheelDiameter / 12.0) * 2 * Math.PI);
+	
 }

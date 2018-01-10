@@ -8,6 +8,8 @@
 package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2583.robot.subsystems.Intake;
+import org.usfirst.frc.team2583.robot.subsystems.ScissorLift;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -26,6 +28,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static DriveTrain dt_s;
+	public static Intake in_s;
+	public static ScissorLift sl_s;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -38,6 +42,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		m_oi = new OI();
 		dt_s = new DriveTrain();
+		in_s = new Intake();
+		sl_s = new ScissorLift();
 		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
