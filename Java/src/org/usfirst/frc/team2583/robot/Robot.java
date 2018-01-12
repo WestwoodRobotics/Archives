@@ -83,6 +83,27 @@ public class Robot extends TimedRobot {
 		FieldMap.scale = gameData.charAt(1);
 		FieldMap.farSwitch = gameData.charAt(2);
 		
+		if (FieldMap.homeSwitch == 'L' || FieldMap.homeSwitch == 'l'){
+			SmartDashboard.putString("Home Switch", "Left");
+		}
+		else{
+			SmartDashboard.putString("Home Switch", "Right");
+		}
+		
+		if (FieldMap.scale == 'L' || FieldMap.scale == 'l'){
+			SmartDashboard.putString("Scale", "Left");
+		}
+		else{
+			SmartDashboard.putString("Scale", "Right");
+		}
+		
+		if (FieldMap.farSwitch == 'L' || FieldMap.farSwitch == 'l'){
+			SmartDashboard.putString("Far Switch", "Left");
+		}
+		else{
+			SmartDashboard.putString("Far Switch", "Right");
+		}
+		
 		m_autonomousCommand = m_chooser.getSelected(); // needs to be replaced
 
 		/*
