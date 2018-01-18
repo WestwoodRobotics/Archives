@@ -7,6 +7,10 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -39,4 +43,22 @@ public class OI {
 	// Start the command when the button is released and let it run the command
 	// until it is finished as determined by it's isFinished method.
 	// button.whenReleased(new ExampleCommand());
+	
+	//0 as start of index
+	//a - 0; b - 1; x - 2; y - 3; 
+	//lBump - 4; rBump - 5; select - 6; start - 7; LeftJoystickDown - 8; rightJoysticDown - 9
+	
+	XboxController x1 = new XboxController(0);
+	Button aIndex = new JoystickButton(x1, 0);
+	Button bIndex = new JoystickButton(x1, 1);
+	Button xIndex = new JoystickButton(x1, 2);
+	Button yIndex = new JoystickButton(x1, 3);
+	Button leftBumper = new JoystickButton(x1, 4);
+	Button rightBumper = new JoystickButton(x1, 5);
+	Button selectIndex = new JoystickButton(x1, 6);
+	Button startIndex = new JoystickButton(x1, 7);
+	Button leftJoystickPress = new JoystickButton(x1, 8);
+	Button rightJoystickPress = new JoystickButton(x1, 9);
+	
+	
 }
