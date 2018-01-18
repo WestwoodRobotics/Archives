@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class OperateLift extends Command {
 
-    public OperateLift() {
+    public OperateLift(String upOrDown) {
         requires(Robot.sl_s);
     }
 

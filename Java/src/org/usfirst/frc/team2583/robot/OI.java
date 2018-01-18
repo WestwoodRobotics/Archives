@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import org.usfirst.frc.team2583.robot.commands.OperateLift;
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -59,6 +61,12 @@ public class OI {
 	Button startIndex = new JoystickButton(x1, 7);
 	Button leftJoystickPress = new JoystickButton(x1, 8);
 	Button rightJoystickPress = new JoystickButton(x1, 9);
+	
+	public OI() {
+		
+		aIndex.whenPressed(new OperateLift("down"));
+		
+	}
 	
 	
 }
