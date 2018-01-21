@@ -25,4 +25,7 @@ public class RobotMap {
 	public static final int backLeftTalon = 2;
 	public static final int backRightTalon = 3;
 	
+	public static final int forwardChannel = 0;
+	public static final int backwardChannel = 7;
+	public static final boolean closedLoopControl = true;
 }

@@ -8,26 +8,40 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class OperateLift extends Command {
-
+	
+	boolean isUp;
+	
     public OperateLift(String upOrDown) {
-        requires(Robot.sl_s);
+        if(upOrDown == "up")
+        	isUp = true;
+        else if (upOrDown == "down")
+        	isUp = false;
+    	requires(Robot.sl_s);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	if(isUp){
+    		Robot.sl_s.toTop();
+    	}
+    	else if(!isUp){
+    		Robot.sl_s.toBot();
+    	}
     }
 
     // Called when another command which requires one or more of the same

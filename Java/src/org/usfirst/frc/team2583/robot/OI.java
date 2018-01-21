@@ -65,7 +65,7 @@ public class OI {
 	public OI() {
 		
 		aIndex.whenPressed(new OperateLift("down"));
-		
+		yIndex.whenPressed(new OperateLift("up"));
 	}
 	
 	
