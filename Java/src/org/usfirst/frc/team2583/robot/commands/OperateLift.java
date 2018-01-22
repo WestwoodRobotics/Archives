@@ -9,13 +9,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class OperateLift extends Command {
 	
-	boolean isUp;
+	boolean isUp = false;
 	
-    public OperateLift(String upOrDown) {
-        if(upOrDown == "up")
-        	isUp = true;
-        else if (upOrDown == "down")
-        	isUp = false;
+    public OperateLift(String pos) {
+    	if(pos == "u")
+    		isUp = true;
+    	else if (pos == "d")
+    		isUp = false;
     	requires(Robot.sl_s);
     }
 

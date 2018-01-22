@@ -20,10 +20,12 @@ public class RobotMap {
 	public static final double pulsesPerFoot = encoderPulses / ((wheelDiameter / 12.0) * 2 * Math.PI);
 	
 	//Talon motors
-	public static final int frontLeftTalon = 0;
-	public static final int frontRightTalon = 1;
-	public static final int backLeftTalon = 2;
-	public static final int backRightTalon = 3;
+	public static final int leftTalon1  = 0;
+	public static final int leftTalon2	= 1;
+	public static final int leftTalon3 	= 2;
+	public static final int rightTalon1 = 3;
+	public static final int rightTalon2 = 4;
+	public static final int rightTalon3 = 5;
 	
 	public static final int forwardChannel = 0;
 	public static final int backwardChannel = 7;

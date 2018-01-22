@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2583.robot.commands;
 
+import org.usfirst.frc.team2583.robot.OI;
 import org.usfirst.frc.team2583.robot.Robot;
+import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,6 +11,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TankDrive extends Command {
 
+	OI m_oi = Robot.m_oi;
+	DriveTrain dt_s = Robot.dt_s;
+	
     public TankDrive() {
         requires(Robot.dt_s);
     }
@@ -19,6 +24,7 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	dt_s.driveWheels(m_oi.getJLY(), m_oi.getJRY());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -28,10 +34,12 @@ public class TankDrive extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	dt_s.driveWheels(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	dt_s.driveWheels(0, 0);
     }
 }
