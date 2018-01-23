@@ -33,7 +33,18 @@ public class DriveTrain extends Subsystem {
 	// Gyro, Accelerometer, Magnometer, and Pressure Sensor
 	private ADIS16448_IMU imu = new ADIS16448_IMU();
 	
+<<<<<<< Updated upstream
 	
+=======
+	public DriveTrain(){
+		left1.setInverted(true);
+		left2.setInverted(true);
+		left3.setInverted(true);
+		right1.setInverted(true);
+		right2.setInverted(true);
+		right3.setInverted(true);
+	}
+>>>>>>> Stashed changes
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new TankDrive());

@@ -7,10 +7,12 @@
 
 package org.usfirst.frc.team2583.robot;
 
-import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2583.robot.subsystems.Arm;
+import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2583.robot.subsystems.ScissorLift;
 
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -30,7 +32,9 @@ public class Robot extends TimedRobot {
 	public static DriveTrain dt_s;
 	public static Arm ar_s;
 	public static ScissorLift sl_s;
-
+	public static Compressor comp = new Compressor();
+	
+	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -46,8 +50,9 @@ public class Robot extends TimedRobot {
 		m_oi = new OI();
 		dt_s = new DriveTrain();
 		
-		
+		CameraServer.getInstance().startAutomaticCapture();
 		// chooser.addObject("My Auto", new MyAutoCommand());
+		comp.setClosedLoopControl(RobotMap.closedLoopControl);
 		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 

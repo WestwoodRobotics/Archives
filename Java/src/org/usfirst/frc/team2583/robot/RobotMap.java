@@ -37,6 +37,8 @@ public class RobotMap {
 	//Pneumatics control variables
 	public static final int forwardChannel = 0;
 	public static final int backwardChannel = 7;
+	public static final int forwardChannel2 = 0;
+	public static final int backwardChannel2 = 7;
 	public static final boolean closedLoopControl = true;
 	
 	public static final double deadbandLimit = 0.05;
