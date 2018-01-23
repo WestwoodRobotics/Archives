@@ -2,6 +2,7 @@ package org.usfirst.frc.team2583.robot.commands;
 
 import org.usfirst.frc.team2583.robot.OI;
 import org.usfirst.frc.team2583.robot.Robot;
+import org.usfirst.frc.team2583.robot.RobotMap;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -24,7 +25,9 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt_s.driveWheels(m_oi.getJLY(), m_oi.getJRY());
+    	dt_s.driveWheels(
+    			deadband(m_oi.getJLY()), 
+    			deadband(m_oi.getJRY()));
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -41,5 +44,9 @@ public class TankDrive extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     	dt_s.driveWheels(0, 0);
+    }
+    
+    private double deadband(double x) {
+    	return x > RobotMap.deadbandLimit ? x : 0;
     }
 }

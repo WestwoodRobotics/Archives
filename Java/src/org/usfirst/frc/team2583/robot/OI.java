@@ -39,8 +39,8 @@ public class OI {
 	
 	public OI() {	
 		// Operate the scissor lift
-		buttonA.whenPressed(new OperateLift("d"));
-		buttonY.whenPressed(new OperateLift("u"));
+		buttonA.whenPressed(new OperateLift(RobotMap.Dir.DOWN));
+		buttonY.whenPressed(new OperateLift(RobotMap.Dir.UP));
 		
 		buttonX.whileHeld(new OperateArm(RobotMap.Dir.UP));
 		buttonB.whileHeld(new OperateArm(RobotMap.Dir.DOWN));

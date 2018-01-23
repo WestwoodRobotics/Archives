@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2583.robot.commands;
 
 import org.usfirst.frc.team2583.robot.Robot;
+import org.usfirst.frc.team2583.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -9,13 +10,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class OperateLift extends Command {
 	
-	boolean isUp = false;
+	private RobotMap.Dir dir;
 	
-    public OperateLift(String pos) {
-    	if(pos == "u")
-    		isUp = true;
-    	else if (pos == "d")
-    		isUp = false;
+    public OperateLift(RobotMap.Dir d) {
+    	dir = d;
     	
     	requires(Robot.sl_s);
     }
@@ -37,11 +35,15 @@ public class OperateLift extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	if(isUp){
+    	switch(dir) {
+    	case UP:
     		Robot.sl_s.toTop();
-    	}
-    	else if(!isUp){
+    		break;
+    	case DOWN:
     		Robot.sl_s.toBot();
+    		break;
+    	default:
+    		System.out.println("Invalid argument to OperateLift!");
     	}
     }
 

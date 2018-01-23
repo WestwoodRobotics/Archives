@@ -33,7 +33,7 @@ public class ScissorLift extends Subsystem {
 	}
 	
     public void initDefaultCommand() {
-        setDefaultCommand(new OperateLift(""));
+        setDefaultCommand(new OperateLift(RobotMap.Dir.NOWHERE));
     }
 }
 

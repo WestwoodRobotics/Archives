@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2583.robot.subsystems;
 
-import org.usfirst.frc.team2583.robot.commands.StopArm;
+import org.usfirst.frc.team2583.robot.RobotMap;
+import org.usfirst.frc.team2583.robot.commands.OperateArm;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -17,7 +18,7 @@ public class Arm extends Subsystem {
 	 * Initialize StopArm as the default command
 	 */
     public void initDefaultCommand() {
-        setDefaultCommand(new StopArm()); // Simply turns the motors off if nothing is supposed to be happening
+        setDefaultCommand(new OperateArm(RobotMap.Dir.NOWHERE)); // Simply turns the motors off if nothing is supposed to be happening
     }
     
     /**

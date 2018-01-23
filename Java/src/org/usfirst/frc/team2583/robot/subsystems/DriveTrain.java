@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class DriveTrain extends Subsystem {
 
+	// Talons for the drivetrain
 	private WPI_TalonSRX left1  = new WPI_TalonSRX(RobotMap.leftTalon1);
 	private WPI_TalonSRX left2 	= new WPI_TalonSRX(RobotMap.leftTalon2);
 	private WPI_TalonSRX left3	= new WPI_TalonSRX(RobotMap.leftTalon3);
@@ -22,12 +23,17 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX right2 = new WPI_TalonSRX(RobotMap.rightTalon2);
 	private WPI_TalonSRX right3 = new WPI_TalonSRX(RobotMap.rightTalon3);
 	
+	// Speed controllers group the Talons into the individual gear boxes (sides of the robot)
 	private SpeedControllerGroup leftGroup  = new SpeedControllerGroup(left1, left2, left3);
 	private SpeedControllerGroup rightGroup = new SpeedControllerGroup(right1, right2, right3);
 	
+	// DifferentialDrive is a drive class for Tank
 	private DifferentialDrive drive = new DifferentialDrive(leftGroup, rightGroup);
 	
+	// Gyro, Accelerometer, Magnometer, and Pressure Sensor
 	private ADIS16448_IMU imu = new ADIS16448_IMU();
+	
+	
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new TankDrive());
@@ -39,6 +45,13 @@ public class DriveTrain extends Subsystem {
     
     public void calibrate() {
     	imu.calibrate();
+    }
+    
+    /**
+     * Toggle the gear of the drivetrain (on both sides) using pneumatic controls
+     */
+    public void shiftGear() {
+    	
     }
 }
 

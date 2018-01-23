@@ -39,6 +39,8 @@ public class RobotMap {
 	public static final int backwardChannel = 7;
 	public static final boolean closedLoopControl = true;
 	
+	public static final double deadbandLimit = 0.05;
+	
 	/**
 	 * Provides constants for directions that things might want to move
 	 */
