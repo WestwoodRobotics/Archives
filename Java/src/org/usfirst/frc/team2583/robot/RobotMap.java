@@ -28,11 +28,11 @@ public class RobotMap {
 	public static final int rightTalon2 = 4;
 	public static final int rightTalon3 = 5;
 	//Arm
-	public static final int fulcrumTalon = 8;
+	public static final int fulcrumTalon = 6;
+
 	
-	//PDP & PCM: Pretty sure that this is right, but I could be wrong and have these switched.
-	public static final int PDPIndex = 7;
-	public static final int PCMIndex = 6;
+	public static final int PDPIndex = 0;
+	public static final int PCMIndex = 1;
 	
 	//Pneumatics control variables
 	public static final int forwardChannel = 0;
