@@ -8,7 +8,7 @@
 package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team2583.robot.subsystems.Intake;
+import org.usfirst.frc.team2583.robot.subsystems.Arm;
 import org.usfirst.frc.team2583.robot.subsystems.ScissorLift;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -28,7 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 	public static OI m_oi;
 	public static DriveTrain dt_s;
-	public static Intake in_s;
+	public static Arm ar_s;
 	public static ScissorLift sl_s;
 
 	Command m_autonomousCommand;
@@ -40,10 +40,12 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// The order of these initializations are very important: any subsystems referenced in one initializer must be initialized already
+		ar_s = new Arm();
+		sl_s = new ScissorLift();
 		m_oi = new OI();
 		dt_s = new DriveTrain();
-		in_s = new Intake();
-		sl_s = new ScissorLift();
+		
 		
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);

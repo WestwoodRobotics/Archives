@@ -5,12 +5,12 @@ import org.usfirst.frc.team2583.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- *
+ * Stops the arm from moving
  */
-public class OperateIntake extends Command {
+public class StopArm extends Command {
 
-    public OperateIntake() {
-        requires(Robot.in_s);
+    public StopArm() {
+        requires(Robot.ar_s);
     }
 
     // Called just before this Command runs the first time
@@ -23,11 +23,12 @@ public class OperateIntake extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.ar_s.setSpeed(0);
     }
 
     // Called when another command which requires one or more of the same

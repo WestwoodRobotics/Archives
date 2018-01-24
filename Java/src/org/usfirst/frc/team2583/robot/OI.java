@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import org.usfirst.frc.team2583.robot.commands.OperateArm;
 import org.usfirst.frc.team2583.robot.commands.OperateLift;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -23,22 +24,26 @@ public class OI {
 	Joystick jRight = new Joystick(1);
 	Joystick jLeft	= new Joystick(2);
 	
-	// Xbox Controller buttons and stuff
-	XboxController x1 = new XboxController(0);
-	Button buttonA = new JoystickButton(x1, 0);
-	Button buttonB = new JoystickButton(x1, 1);
-	Button buttonX = new JoystickButton(x1, 2);
-	Button buttonY = new JoystickButton(x1, 3);
-	Button leftBumper = new JoystickButton(x1, 4);
-	Button rightBumper = new JoystickButton(x1, 5);
-	Button buttonSelect = new JoystickButton(x1, 6);
-	Button buttonStart = new JoystickButton(x1, 7);
-	Button leftJoystickPress = new JoystickButton(x1, 8);
-	Button rightJoystickPress = new JoystickButton(x1, 9);
+	// Xbox Controller and buttons and stuff
+	XboxController x1 			= new XboxController(0);
+	Button buttonA 				= new JoystickButton(x1, 1);
+	Button buttonB 				= new JoystickButton(x1, 2);
+	Button buttonX 				= new JoystickButton(x1, 3);
+	Button buttonY 				= new JoystickButton(x1, 4);
+	Button leftBumper 			= new JoystickButton(x1, 5);
+	Button rightBumper 			= new JoystickButton(x1, 6);
+	Button buttonSelect 		= new JoystickButton(x1, 7);
+	Button buttonStart 			= new JoystickButton(x1, 8);
+	Button leftJoystickPress 	= new JoystickButton(x1, 9);
+	Button rightJoystickPress 	= new JoystickButton(x1, 10);
 	
 	public OI() {	
+		// Operate the scissor lift
 		buttonA.whenPressed(new OperateLift("d"));
 		buttonY.whenPressed(new OperateLift("u"));
+		
+		buttonX.whileHeld(new OperateArm(RobotMap.Dir.UP));
+		buttonB.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
 	}
 	
 	public double getJLY() {

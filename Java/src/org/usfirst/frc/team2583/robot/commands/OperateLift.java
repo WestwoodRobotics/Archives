@@ -16,6 +16,7 @@ public class OperateLift extends Command {
     		isUp = true;
     	else if (pos == "d")
     		isUp = false;
+    	
     	requires(Robot.sl_s);
     }
 

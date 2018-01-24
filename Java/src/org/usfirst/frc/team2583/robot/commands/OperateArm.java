@@ -1,45 +1,51 @@
 package org.usfirst.frc.team2583.robot.commands;
 
-import org.usfirst.frc.team2583.robot.OI;
 import org.usfirst.frc.team2583.robot.Robot;
-import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2583.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Drives the robot based on input from the joysticks
+ * Moves the arm based on the input provided through the constructor method
  */
-public class TankDrive extends Command {
-
-	OI m_oi = Robot.m_oi;
-	DriveTrain dt_s = Robot.dt_s;
+public class OperateArm extends Command {
 	
-    public TankDrive() {
-        requires(Robot.dt_s);
+	RobotMap.Dir dir;
+	
+    public OperateArm(RobotMap.Dir d) {
+        requires(Robot.ar_s);
+        dir = d;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	switch(dir) {
+    	case UP:
+    		Robot.ar_s.setSpeed(1);
+    		break;
+    	case DOWN:
+    		Robot.ar_s.setSpeed(-1);
+    		break;
+    	default:
+    		Robot.ar_s.setSpeed(0);	
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt_s.driveWheels(m_oi.getJLY(), m_oi.getJRY());
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	dt_s.driveWheels(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	dt_s.driveWheels(0, 0);
     }
 }
