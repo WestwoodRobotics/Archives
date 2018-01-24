@@ -14,8 +14,8 @@ public class ScissorLift extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	DoubleSolenoid sol = new DoubleSolenoid(RobotMap.forwardChannel, RobotMap.backwardChannel);
-	DoubleSolenoid sol2 = new DoubleSolenoid(RobotMap.forwardChannel2, RobotMap.backwardChannel2);
+	DoubleSolenoid sol = new DoubleSolenoid(RobotMap.scissorLiftChannel, RobotMap.scissorLiftChannel);
+	DoubleSolenoid sol2 = new DoubleSolenoid(RobotMap.scissorLiftChannel2, RobotMap.scissorLiftChannel2);
 	
 	//takes scissor lift to top
 	public void toTop() {

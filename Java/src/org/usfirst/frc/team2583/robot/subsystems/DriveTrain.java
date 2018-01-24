@@ -6,6 +6,7 @@ import org.usfirst.frc.team2583.robot.commands.TankDrive;
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -33,9 +34,8 @@ public class DriveTrain extends Subsystem {
 	// Gyro, Accelerometer, Magnometer, and Pressure Sensor
 	private ADIS16448_IMU imu = new ADIS16448_IMU();
 	
-<<<<<<< Updated upstream
+	private DoubleSolenoid sol = new DoubleSolenoid(RobotMap.gearShiftChannel, RobotMap.gearShiftChannel);
 	
-=======
 	public DriveTrain(){
 		left1.setInverted(true);
 		left2.setInverted(true);
@@ -44,7 +44,6 @@ public class DriveTrain extends Subsystem {
 		right2.setInverted(true);
 		right3.setInverted(true);
 	}
->>>>>>> Stashed changes
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new TankDrive());
@@ -62,7 +61,7 @@ public class DriveTrain extends Subsystem {
      * Toggle the gear of the drivetrain (on both sides) using pneumatic controls
      */
     public void shiftGear() {
-    	
+    	sol.set(DoubleSolenoid.Value.kForward);
     }
 }
 

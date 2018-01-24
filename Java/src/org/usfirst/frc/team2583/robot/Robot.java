@@ -9,6 +9,7 @@ package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.subsystems.Arm;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team2583.robot.subsystems.Output;
 import org.usfirst.frc.team2583.robot.subsystems.ScissorLift;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
 	public static DriveTrain dt_s;
 	public static Arm ar_s;
 	public static ScissorLift sl_s;
+	public static Output o_s;
 	public static Compressor comp = new Compressor();
 	
 	
@@ -49,6 +51,7 @@ public class Robot extends TimedRobot {
 		sl_s = new ScissorLift();
 		m_oi = new OI();
 		dt_s = new DriveTrain();
+		o_s = new Output();
 		
 		CameraServer.getInstance().startAutomaticCapture();
 		// chooser.addObject("My Auto", new MyAutoCommand());

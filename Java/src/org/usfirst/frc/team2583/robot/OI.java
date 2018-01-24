@@ -9,6 +9,7 @@ package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.commands.OperateArm;
 import org.usfirst.frc.team2583.robot.commands.OperateLift;
+import org.usfirst.frc.team2583.robot.commands.OperateOutput;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -44,6 +45,13 @@ public class OI {
 		
 		buttonX.whileHeld(new OperateArm(RobotMap.Dir.UP));
 		buttonB.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
+		
+		leftJoystickPress.whenPressed(new OperateOutput(RobotMap.Dir.UP));
+		rightJoystickPress.whenPressed(new OperateOutput(RobotMap.Dir.DOWN));
+		
+		if(rightBumper.get() == true){
+			Robot.dt_s.shiftGear();
+		}
 	}
 	
 	public double getJLY() {
