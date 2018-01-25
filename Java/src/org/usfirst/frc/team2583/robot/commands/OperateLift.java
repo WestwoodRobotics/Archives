@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2583.robot.commands;
 
-import org.usfirst.frc.team2583.robot.Robot;
 import org.usfirst.frc.team2583.robot.RobotMap;
+import org.usfirst.frc.team2583.robot.subsystems.ScissorLift;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,7 +15,7 @@ public class OperateLift extends Command {
     public OperateLift(RobotMap.Dir d) {
     	dir = d;
     	
-    	requires(Robot.sl_s);
+    	requires(ScissorLift.getInstance());
     }
 
     // Called just before this Command runs the first time
@@ -37,13 +37,13 @@ public class OperateLift extends Command {
     protected void end() {
     	switch(dir) {
     	case UP:
-    		Robot.sl_s.toTop();
+    		ScissorLift.getInstance().toTop();
     		break;
     	case DOWN:
-    		Robot.sl_s.toBot();
+    		ScissorLift.getInstance().toBot();
     		break;
-    	default:
-    		System.out.println("Invalid argument to OperateLift!");
+		default:
+			break;
     	}
     }
 

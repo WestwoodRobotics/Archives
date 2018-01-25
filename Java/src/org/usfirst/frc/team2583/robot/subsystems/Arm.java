@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Arm extends Subsystem {
 
-	private WPI_TalonSRX fulcrum = new WPI_TalonSRX(8);
+	private WPI_TalonSRX fulcrum = new WPI_TalonSRX(6);
 
 	/**
 	 * Initialize StopArm as the default command
@@ -28,6 +28,15 @@ public class Arm extends Subsystem {
      */
     public void setSpeed(double speed) {
     	fulcrum.set(speed);
+    }
+    
+    private static Arm instance;
+    public static Arm getInstance() {
+    	if(instance == null) {
+    		instance = new Arm();
+    	}
+    	
+    	return instance;
     }
 }
 

@@ -1,22 +1,16 @@
 package org.usfirst.frc.team2583.robot.commands;
 
-import org.usfirst.frc.team2583.robot.RobotMap;
-import org.usfirst.frc.team2583.robot.subsystems.Output;
+import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class OperateOutput extends Command {
-	
-	private Output o_s = Output.getInstance();
-	
-	private RobotMap.Dir dir;
-    public OperateOutput(RobotMap.Dir d) {
-        dir = d;
-    	
-        requires(o_s);
+public class ShiftGears extends Command {
+
+    public ShiftGears() {
+        requires(DriveTrain.getInstance());
     }
 
     // Called just before this Command runs the first time
@@ -34,16 +28,7 @@ public class OperateOutput extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	switch(dir){
-    	case UP:
-    		o_s.pushOut();
-    		break;
-    	case DOWN:
-    		o_s.pullIn();
-    		break;
-		default:
-			break;
-    	}
+    	DriveTrain.getInstance().shiftGear();
     }
 
     // Called when another command which requires one or more of the same

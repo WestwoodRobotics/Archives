@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2583.robot.commands;
 
-import org.usfirst.frc.team2583.robot.Robot;
 import org.usfirst.frc.team2583.robot.RobotMap;
+import org.usfirst.frc.team2583.robot.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -11,9 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
 public class OperateArm extends Command {
 	
 	RobotMap.Dir dir;
+	Arm ar = Arm.getInstance();
 	
     public OperateArm(RobotMap.Dir d) {
-        requires(Robot.ar_s);
+        requires(ar);
         dir = d;
     }
 
@@ -21,13 +22,13 @@ public class OperateArm extends Command {
     protected void initialize() {
     	switch(dir) {
     	case UP:
-    		Robot.ar_s.setSpeed(1);
+    		ar.setSpeed(1);
     		break;
     	case DOWN:
-    		Robot.ar_s.setSpeed(-1);
+    		ar.setSpeed(-1);
     		break;
     	default:
-    		Robot.ar_s.setSpeed(0);	
+    		ar.setSpeed(0);	
     	}
     }
 

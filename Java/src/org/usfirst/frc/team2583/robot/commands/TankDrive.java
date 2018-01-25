@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2583.robot.commands;
 
 import org.usfirst.frc.team2583.robot.OI;
-import org.usfirst.frc.team2583.robot.Robot;
 import org.usfirst.frc.team2583.robot.RobotMap;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
@@ -12,11 +11,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TankDrive extends Command {
 
-	OI m_oi = Robot.m_oi;
-	DriveTrain dt_s = Robot.dt_s;
+	OI m_oi = OI.getInstance();
+	DriveTrain dt_s = DriveTrain.getInstance();
 	
     public TankDrive() {
-        requires(Robot.dt_s);
+        requires(dt_s);
+        
+        setInterruptible(true);
     }
 
     // Called just before this Command runs the first time
@@ -47,6 +48,6 @@ public class TankDrive extends Command {
     }
     
     private double deadband(double x) {
-    	return x > RobotMap.deadbandLimit ? x : 0;
+    	return Math.abs(x) > RobotMap.deadbandLimit ? x : 0;
     }
 }

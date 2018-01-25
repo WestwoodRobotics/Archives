@@ -6,7 +6,7 @@ import org.usfirst.frc.team2583.robot.commands.TankDrive;
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -34,7 +34,7 @@ public class DriveTrain extends Subsystem {
 	// Gyro, Accelerometer, Magnometer, and Pressure Sensor
 	private ADIS16448_IMU imu = new ADIS16448_IMU();
 	
-	private DoubleSolenoid sol = new DoubleSolenoid(RobotMap.gearShiftChannel, RobotMap.gearShiftChannel);
+	private Solenoid sol = new Solenoid(RobotMap.gearShiftChannel);
 	
 	public DriveTrain(){
 		left1.setInverted(true);
@@ -43,6 +43,8 @@ public class DriveTrain extends Subsystem {
 		right1.setInverted(true);
 		right2.setInverted(true);
 		right3.setInverted(true);
+		
+		System.out.println("Drivetrain initialized");
 	}
 	
     public void initDefaultCommand() {
@@ -61,7 +63,24 @@ public class DriveTrain extends Subsystem {
      * Toggle the gear of the drivetrain (on both sides) using pneumatic controls
      */
     public void shiftGear() {
-    	sol.set(DoubleSolenoid.Value.kForward);
+    	sol.set(!sol.get());
+    }
+    
+    public void setGear(RobotMap.Gear g) {
+    	sol.set(g == RobotMap.Gear.LOW);
+    }
+    
+    public boolean getGear() {
+    	return sol.get();
+    }
+    
+    private static DriveTrain instance;
+    public static DriveTrain getInstance() {
+    	if(instance == null) {
+    		instance = new DriveTrain();
+    	}
+    	
+    	return instance;
     }
 }
 

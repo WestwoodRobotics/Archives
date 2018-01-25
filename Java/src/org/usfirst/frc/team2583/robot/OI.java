@@ -7,9 +7,12 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import org.usfirst.frc.team2583.robot.commands.EnterHighGear;
 import org.usfirst.frc.team2583.robot.commands.OperateArm;
 import org.usfirst.frc.team2583.robot.commands.OperateLift;
 import org.usfirst.frc.team2583.robot.commands.OperateOutput;
+import org.usfirst.frc.team2583.robot.commands.ShiftGears;
+import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -38,6 +41,9 @@ public class OI {
 	Button leftJoystickPress 	= new JoystickButton(x1, 9);
 	Button rightJoystickPress 	= new JoystickButton(x1, 10);
 	
+	// Joystick Buttons
+	Button jRightTrigg			= new JoystickButton(jRight, 1);
+	
 	public OI() {	
 		// Operate the scissor lift
 		buttonA.whenPressed(new OperateLift(RobotMap.Dir.DOWN));
@@ -46,11 +52,14 @@ public class OI {
 		buttonX.whileHeld(new OperateArm(RobotMap.Dir.UP));
 		buttonB.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
 		
+		jRightTrigg.whenPressed(new EnterHighGear());
+		jRightTrigg.whenReleased(new ShiftGears());
+		
 		leftJoystickPress.whenPressed(new OperateOutput(RobotMap.Dir.UP));
 		rightJoystickPress.whenPressed(new OperateOutput(RobotMap.Dir.DOWN));
 		
 		if(rightBumper.get() == true){
-			Robot.dt_s.shiftGear();
+			DriveTrain.getInstance().shiftGear();
 		}
 	}
 	
@@ -60,5 +69,14 @@ public class OI {
 	
 	public double getJRY() {
 		return jRight.getY();
+	}
+	
+	private static OI instance;
+	public static OI getInstance() {
+		if(instance == null) {
+			instance = new OI();
+		}
+		
+		return instance;
 	}
 }

@@ -1,6 +1,6 @@
 package org.usfirst.frc.team2583.robot.commands;
 
-import org.usfirst.frc.team2583.robot.Robot;
+import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,7 +13,7 @@ public class TurnTo extends Command {
 	
     public TurnTo(double degrees) {
         targetAngle = degrees;
-        requires(Robot.dt_s);
+        requires(DriveTrain.getInstance());
     }
 
     // Called just before this Command runs the first time

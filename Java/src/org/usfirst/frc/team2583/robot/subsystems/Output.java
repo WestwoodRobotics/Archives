@@ -27,5 +27,14 @@ public class Output extends Subsystem {
     public void pullIn(){
     	sol.set(false);
     }
+    
+    private static Output instance;
+    public static Output getInstance() {
+    	if(instance == null) {
+    		instance = new Output();
+    	}
+    	
+    	return instance;
+    }
 }
 

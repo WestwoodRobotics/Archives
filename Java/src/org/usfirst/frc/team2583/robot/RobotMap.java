@@ -51,4 +51,9 @@ public class RobotMap {
 		DOWN,	// To be used when we need things to move DOWN
 		NOWHERE;// To be used when we need things to NOT move
 	}
+	
+	public enum Gear{
+		HIGH,
+		LOW;
+	}
 }

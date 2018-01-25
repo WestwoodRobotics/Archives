@@ -7,10 +7,7 @@
 
 package org.usfirst.frc.team2583.robot;
 
-import org.usfirst.frc.team2583.robot.subsystems.Arm;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team2583.robot.subsystems.Output;
-import org.usfirst.frc.team2583.robot.subsystems.ScissorLift;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
@@ -29,12 +26,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static OI m_oi;
-	public static DriveTrain dt_s;
-	public static Arm ar_s;
-	public static ScissorLift sl_s;
-	public static Output o_s;
-	public static Compressor comp = new Compressor();
+
+	public static Compressor comp = new Compressor(0);
 	
 	
 	Command m_autonomousCommand;
@@ -46,17 +39,14 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		// The order of these initializations are very important: any subsystems referenced in one initializer must be initialized already
-		ar_s = new Arm();
-		sl_s = new ScissorLift();
-		m_oi = new OI();
-		dt_s = new DriveTrain();
-		o_s = new Output();
 		
 		CameraServer.getInstance().startAutomaticCapture();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		comp.setClosedLoopControl(RobotMap.closedLoopControl);
+		
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
+		DriveTrain.getInstance().setGear(RobotMap.Gear.LOW); // Start out in low gear
 	}
 
 	/**
@@ -66,7 +56,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		dt_s.calibrate();	// Calibrate the imu
+		DriveTrain.getInstance().calibrate();	// Calibrate the imu
 	}
 
 	@Override
@@ -146,6 +136,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		SmartDashboard.putBoolean("DB/Button 0", true);
 	}
 
 	/**
@@ -154,6 +145,8 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+
+		SmartDashboard.putBoolean("DB/LED 0", DriveTrain.getInstance().getGear());
 	}
 
 	/**
