@@ -18,6 +18,10 @@ public class RobotMap {
 	public static final double encoderPulses = 4096;
 	public static final double wheelDiameter = 0; // Diameter in inches
 	public static final double pulsesPerFoot = encoderPulses / ((wheelDiameter / 12.0) * 2 * Math.PI);
+	public static final int    rightEncA 	 = 0;
+	public static final int	   rightEncB	 = 1;
+	public static final int    leftEncA		 = 2;
+	public static final int    leftEncB		 = 3;
 	
 	//Talon motors
 	//Drivetrain

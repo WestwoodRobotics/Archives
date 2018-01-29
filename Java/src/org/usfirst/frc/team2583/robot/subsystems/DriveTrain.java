@@ -6,6 +6,7 @@ import org.usfirst.frc.team2583.robot.commands.TankDrive;
 import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -36,6 +37,9 @@ public class DriveTrain extends Subsystem {
 	
 	private Solenoid sol = new Solenoid(RobotMap.gearShiftChannel);
 	
+	private Encoder rightEnc = new Encoder(RobotMap.rightEncA, RobotMap.rightEncB, false, Encoder.EncodingType.k4X);
+	private Encoder leftEnc  = new Encoder(RobotMap.leftEncA,  RobotMap.leftEncB,  false, Encoder.EncodingType.k4X);
+	
 	public DriveTrain(){
 		left1.setInverted(true);
 		left2.setInverted(true);
@@ -44,7 +48,8 @@ public class DriveTrain extends Subsystem {
 		right2.setInverted(true);
 		right3.setInverted(true);
 		
-		System.out.println("Drivetrain initialized");
+		rightEnc.reset();
+		leftEnc.reset();
 	}
 	
     public void initDefaultCommand() {
@@ -72,6 +77,64 @@ public class DriveTrain extends Subsystem {
     
     public boolean getGear() {
     	return sol.get();
+    }
+    
+    /**
+     * 
+     * @return a list enc[], where enc[0] is the right encoder value and enc[1] is the left
+     */
+    public double[] getEncoders() {
+    	double[] enc = {rightEnc.getRaw(), leftEnc.getRaw()};
+    	return enc;
+    }
+    
+    public void resetEncoders() {
+    	rightEnc.reset();
+    	leftEnc.reset();
+    }
+    
+    public double getXHeading() {
+    	return imu.getAngleX();
+    }
+    
+    public double getYHeading() {
+    	return imu.getAngleY();
+    }
+    
+    public double getZHeading() {
+    	return imu.getAngleZ();
+    }
+    
+    public double getXAccel() {
+    	return imu.getAccelX();
+    }
+    
+    public double getYAccel() {
+    	return imu.getAccelY();
+    }
+    
+    public double getZAccel() {
+    	return imu.getAccelZ();
+    }
+    
+    public double getTemp() {
+    	return imu.getTemperature();
+    }
+    
+    public double getXMag() {
+    	return imu.getMagX();
+    }
+    
+    public double getYMag() {
+    	return imu.getMagY();
+    }
+    
+    public double getZMag() {
+    	return imu.getMagZ();
+    }
+    
+    public double getPressure() {
+    	return imu.getBarometricPressure();
     }
     
     private static DriveTrain instance;

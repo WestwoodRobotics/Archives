@@ -49,8 +49,8 @@ public class OI {
 		buttonA.whenPressed(new OperateLift(RobotMap.Dir.DOWN));
 		buttonY.whenPressed(new OperateLift(RobotMap.Dir.UP));
 		
-		buttonX.whileHeld(new OperateArm(RobotMap.Dir.UP));
-		buttonB.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
+//		buttonX.whileHeld(new OperateArm(RobotMap.Dir.UP));
+//		buttonB.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
 		
 		jRightTrigg.whenPressed(new EnterHighGear());
 		jRightTrigg.whenReleased(new ShiftGears());

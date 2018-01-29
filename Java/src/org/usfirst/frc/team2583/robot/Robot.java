@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import org.usfirst.frc.team2583.robot.commands.UpdateDash;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -27,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends TimedRobot {
 
+	private UpdateDash ud = new UpdateDash();
 	public static Compressor comp = new Compressor(0);
 	
 	
@@ -47,6 +49,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
 		DriveTrain.getInstance().setGear(RobotMap.Gear.LOW); // Start out in low gear
+		
+		ud.start();
 	}
 
 	/**
@@ -117,6 +121,8 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
 		}
+		
+		if (!ud.isRunning()) ud.start();
 	}
 
 	/**
@@ -136,7 +142,10 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		SmartDashboard.putBoolean("DB/Button 0", true);
+		
+		DriveTrain.getInstance().resetEncoders();
+		
+		if (!ud.isRunning()) ud.start();
 	}
 
 	/**
@@ -145,8 +154,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-
-		SmartDashboard.putBoolean("DB/LED 0", DriveTrain.getInstance().getGear());
 	}
 
 	/**
