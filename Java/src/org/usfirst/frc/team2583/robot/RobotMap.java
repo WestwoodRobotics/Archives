@@ -34,6 +34,10 @@ public class RobotMap {
 	//Arm
 	public static final int fulcrumTalon = 6;
 
+	//Spark motors
+	//Intake
+	public static final int leftIntakeSpark = 0;
+	public static final int rightIntakeSpark = 1;
 	
 	public static final int PDPIndex = 0;
 	public static final int PCMIndex = 1;

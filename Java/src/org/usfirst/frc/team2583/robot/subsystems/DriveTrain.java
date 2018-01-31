@@ -37,8 +37,8 @@ public class DriveTrain extends Subsystem {
 	
 	private Solenoid sol = new Solenoid(RobotMap.gearShiftChannel);
 	
-	private Encoder rightEnc = new Encoder(RobotMap.rightEncA, RobotMap.rightEncB, false, Encoder.EncodingType.k4X);
-	private Encoder leftEnc  = new Encoder(RobotMap.leftEncA,  RobotMap.leftEncB,  false, Encoder.EncodingType.k4X);
+	private Encoder rightEnc = new Encoder(RobotMap.rightEncA, RobotMap.rightEncB, false, Encoder.EncodingType.k1X);
+	private Encoder leftEnc  = new Encoder(RobotMap.leftEncA,  RobotMap.leftEncB,  false, Encoder.EncodingType.k1X);
 	
 	public DriveTrain(){
 		left1.setInverted(true);
@@ -72,11 +72,11 @@ public class DriveTrain extends Subsystem {
     }
     
     public void setGear(RobotMap.Gear g) {
-    	sol.set(g == RobotMap.Gear.LOW);
+    	sol.set(g == RobotMap.Gear.HIGH);
     }
     
     public boolean getGear() {
-    	return sol.get();
+    	return !sol.get();
     }
     
     /**
@@ -84,7 +84,7 @@ public class DriveTrain extends Subsystem {
      * @return a list enc[], where enc[0] is the right encoder value and enc[1] is the left
      */
     public double[] getEncoders() {
-    	double[] enc = {rightEnc.getRaw(), leftEnc.getRaw()};
+    	double[] enc = {rightEnc.get(), leftEnc.get()};
     	return enc;
     }
     
