@@ -34,6 +34,10 @@ public class RobotMap {
 	//Arm
 	public static final int fulcrumTalon = 6;
 
+	public static final int pulsesPerRev = 256 * 9;
+	public static final double wheelCircumference = 2 * Math.PI * 3;
+	public static final double distancePerPulse = wheelCircumference / pulsesPerRev;
+	
 	//Spark motors
 	//Intake
 	public static final int leftIntakeSpark = 0;

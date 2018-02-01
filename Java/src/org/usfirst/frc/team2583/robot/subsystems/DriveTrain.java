@@ -48,6 +48,9 @@ public class DriveTrain extends Subsystem {
 		right2.setInverted(true);
 		right3.setInverted(true);
 		
+		rightEnc.setDistancePerPulse(RobotMap.distancePerPulse);
+		leftEnc.setDistancePerPulse(RobotMap.distancePerPulse);
+		
 		rightEnc.reset();
 		leftEnc.reset();
 	}
@@ -56,8 +59,8 @@ public class DriveTrain extends Subsystem {
     	setDefaultCommand(new TankDrive());
     }
     
-    public void driveWheels(double left, double right) {
-    	drive.tankDrive(left, right);
+    public void driveWheels(double leftSpd, double rightSpd) {
+    	drive.tankDrive(leftSpd, rightSpd);
     }
     
     public void calibrate() {
@@ -85,6 +88,11 @@ public class DriveTrain extends Subsystem {
      */
     public double[] getEncoders() {
     	double[] enc = {rightEnc.get(), leftEnc.get()};
+    	return enc;
+    }
+    
+    public double[] getEncoderDist() {
+    	double[] enc = {rightEnc.getDistance(), leftEnc.getDistance()};
     	return enc;
     }
     

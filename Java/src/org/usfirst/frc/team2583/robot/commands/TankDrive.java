@@ -14,21 +14,37 @@ public class TankDrive extends Command {
 	OI m_oi = OI.getInstance();
 	DriveTrain dt_s = DriveTrain.getInstance();
 	
+	private double leftSpd = deadband(m_oi.getJLY());
+	private double rightSpd = deadband(m_oi.getJRY());
+	private double setpoint;
+	
     public TankDrive() {
         requires(dt_s);
         
         setInterruptible(true);
     }
+    
+    public TankDrive(double leftSpd, double rightSpd, double setpoint) {
+    	requires(dt_s);
+        this.leftSpd = leftSpd;
+        this.rightSpd = rightSpd;
+        
+        //Setpoint is in inches
+        this.setpoint = setpoint;
+        
+        setInterruptible(true);
+    }
+    
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt_s.driveWheels(
-    			deadband(m_oi.getJLY()), 
-    			deadband(m_oi.getJRY()));
+    	dt_s.driveWheels(leftSpd, rightSpd);
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -50,4 +66,5 @@ public class TankDrive extends Command {
     private double deadband(double x) {
     	return Math.abs(x) > RobotMap.deadbandLimit ? x : 0;
     }
+    
 }
