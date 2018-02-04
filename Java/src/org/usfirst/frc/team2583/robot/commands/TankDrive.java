@@ -41,12 +41,13 @@ public class TankDrive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	this.dt_s.pidEnable();
+    	this.dt_s.resetEncoders();
     	this.dt_s.pidSetpoint(this.setpoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt_s.driveWheels(leftSpd, rightSpd);
+    	//dt_s.driveWheels(leftSpd, rightSpd);
     	
     }
 

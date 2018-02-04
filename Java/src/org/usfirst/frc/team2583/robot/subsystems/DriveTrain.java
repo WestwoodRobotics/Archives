@@ -42,7 +42,7 @@ public class DriveTrain extends Subsystem {
 	private Encoder leftEnc  = new Encoder(RobotMap.leftEncA,  RobotMap.leftEncB,  false, Encoder.EncodingType.k1X);
 	
 	private PIDController pidLeft = new PIDController(0.3, 0, 0, leftEnc, leftGroup);
-	private PIDController pidRight = new PIDController(0.3, 0, 0, rightEnc, rightGroup);
+	//private PIDController pidRight = new PIDController(0.3, 0, 0, rightEnc, rightGroup);
 	
 	public DriveTrain(){
 		
@@ -80,6 +80,7 @@ public class DriveTrain extends Subsystem {
     }
     
     public void setGear(RobotMap.Gear g) {
+    	
     	sol.set(g == RobotMap.Gear.HIGH);
     }
     
@@ -108,19 +109,24 @@ public class DriveTrain extends Subsystem {
     
     public void pidEnable(){
 		pidLeft.enable();
-		pidRight.enable();
+		//pidRight.enable();
     }
     
     public void pidDisable(){
 		pidLeft.disable();
-		pidRight.disable();
+		//pidRight.disable();
     }
     
     public void pidSetpoint(double setpoint){
     	pidLeft.setSetpoint(setpoint * RobotMap.pulsesPerInch);
-    	pidRight.setSetpoint(setpoint * RobotMap.pulsesPerInch);
+    	//pidRight.setSetpoint(setpoint * RobotMap.pulsesPerInch);
     	
     	pidLeft.setOutputRange(-0.7, 0.7);
+    	//pidRight.setOutputRange(-0.7, 0.7);
+    }
+    
+    public boolean pidOnTarget(){
+    	return pidLeft.onTarget();
     }
     
     public double getXHeading() {
