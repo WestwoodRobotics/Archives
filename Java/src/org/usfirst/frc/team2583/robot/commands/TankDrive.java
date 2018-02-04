@@ -14,8 +14,9 @@ public class TankDrive extends Command {
 	OI m_oi = OI.getInstance();
 	DriveTrain dt_s = DriveTrain.getInstance();
 	
-	private double leftSpd = deadband(m_oi.getJLY());
-	private double rightSpd = deadband(m_oi.getJRY());
+	private double leftSpd;
+	private double rightSpd;
+	
 	private double setpoint;
 	
     public TankDrive() {
@@ -26,9 +27,10 @@ public class TankDrive extends Command {
     
     public TankDrive(double leftSpd, double rightSpd, double setpoint) {
     	requires(dt_s);
-        this.leftSpd = leftSpd;
-        this.rightSpd = rightSpd;
         
+    	this.leftSpd = leftSpd;
+    	this.rightSpd = rightSpd;
+    	
         //Setpoint is in inches
         this.setpoint = setpoint;
         
@@ -38,7 +40,8 @@ public class TankDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	this.dt_s.pidEnable();
+    	this.dt_s.pidSetpoint(this.setpoint);
     }
 
     // Called repeatedly when this Command is scheduled to run

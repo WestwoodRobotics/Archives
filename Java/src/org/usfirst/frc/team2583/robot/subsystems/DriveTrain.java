@@ -7,6 +7,7 @@ import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -40,7 +41,11 @@ public class DriveTrain extends Subsystem {
 	private Encoder rightEnc = new Encoder(RobotMap.rightEncA, RobotMap.rightEncB, false, Encoder.EncodingType.k1X);
 	private Encoder leftEnc  = new Encoder(RobotMap.leftEncA,  RobotMap.leftEncB,  false, Encoder.EncodingType.k1X);
 	
+	private PIDController pidLeft = new PIDController(0.3, 0, 0, leftEnc, leftGroup);
+	private PIDController pidRight = new PIDController(0.3, 0, 0, rightEnc, rightGroup);
+	
 	public DriveTrain(){
+		
 		left1.setInverted(true);
 		left2.setInverted(true);
 		left3.setInverted(true);
@@ -99,6 +104,23 @@ public class DriveTrain extends Subsystem {
     public void resetEncoders() {
     	rightEnc.reset();
     	leftEnc.reset();
+    }
+    
+    public void pidEnable(){
+		pidLeft.enable();
+		pidRight.enable();
+    }
+    
+    public void pidDisable(){
+		pidLeft.disable();
+		pidRight.disable();
+    }
+    
+    public void pidSetpoint(double setpoint){
+    	pidLeft.setSetpoint(setpoint * RobotMap.pulsesPerInch);
+    	pidRight.setSetpoint(setpoint * RobotMap.pulsesPerInch);
+    	
+    	pidLeft.setOutputRange(-0.7, 0.7);
     }
     
     public double getXHeading() {
