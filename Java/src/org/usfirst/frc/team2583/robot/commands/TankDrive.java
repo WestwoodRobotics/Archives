@@ -40,9 +40,9 @@ public class TankDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	this.dt_s.pidEnable();
     	this.dt_s.resetEncoders();
     	this.dt_s.pidSetpoint(this.setpoint);
+    	this.dt_s.pidEnable();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -53,7 +53,7 @@ public class TankDrive extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return dt_s.pidOnTarget();
     }
 
     // Called once after isFinished returns true
