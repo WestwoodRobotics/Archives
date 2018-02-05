@@ -34,6 +34,7 @@ public class RobotMap {
 	//Arm
 	public static final int fulcrumTalon = 6;
 
+	//Drivetrain encoders
 	public static final int pulsesPerRev = 256 * 9;
 	public static final double wheelCircumference = Math.PI * wheelDiameter;
 	public static final double distancePerPulse = wheelCircumference / pulsesPerRev;
@@ -55,6 +56,9 @@ public class RobotMap {
 	
 	public static final double deadbandLimit = 0.05;
 	
+	public static final double maxIntakeSpeedL = 0.6;
+	public static final double maxIntakeSpeedR = 0.6;
+	
 	/**
 	 * Provides constants for directions that things might want to move
 	 */
@@ -67,5 +71,11 @@ public class RobotMap {
 	public enum Gear{
 		HIGH,
 		LOW;
+	}
+	
+	public enum Take{
+		IN,
+		OUT,
+		NOWHERE;
 	}
 }

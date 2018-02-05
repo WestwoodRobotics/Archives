@@ -8,6 +8,7 @@
 package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.commands.UpdateDash;
+import org.usfirst.frc.team2583.robot.commands.auto.ForwardLong;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -108,7 +109,7 @@ public class Robot extends TimedRobot {
 			SmartDashboard.putString("Far Switch", "Right");
 		}
 		
-		m_autonomousCommand = m_chooser.getSelected(); // needs to be replaced
+		m_autonomousCommand = new ForwardLong(); // needs to be replaced
 
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
