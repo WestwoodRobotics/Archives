@@ -10,14 +10,18 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  *
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends PIDSubsystem {
 
+	public static final double P = 0.3;
+	public static final double I = 0;
+	public static final double D = 0;
+	
 	// Talons for the drivetrain
 	private WPI_TalonSRX left1  = new WPI_TalonSRX(RobotMap.leftTalon1);
 	private WPI_TalonSRX left2 	= new WPI_TalonSRX(RobotMap.leftTalon2);
@@ -41,10 +45,16 @@ public class DriveTrain extends Subsystem {
 	private Encoder rightEnc = new Encoder(RobotMap.rightEncA, RobotMap.rightEncB, false, Encoder.EncodingType.k1X);
 	private Encoder leftEnc  = new Encoder(RobotMap.leftEncA,  RobotMap.leftEncB,  false, Encoder.EncodingType.k1X);
 	
+	//TODO remove these
 	private PIDController pidLeft = new PIDController(0.3, 0, 0, leftEnc, leftGroup);
 	private PIDController pidRight = new PIDController(0.3, 0, 0, rightEnc, rightGroup);
 	
 	public DriveTrain(){
+		
+		super("DriveTrain", P, I, D);
+		
+		setOutputRange(-0.7, 0.7);
+    	getPIDController().setContinuous(true);
 		
 		left1.setInverted(true);
 		left2.setInverted(true);
@@ -92,7 +102,7 @@ public class DriveTrain extends Subsystem {
      * @return a list enc[], where enc[0] is the right encoder value and enc[1] is the left
      */
     public double[] getEncoders() {
-    	double[] enc = {rightEnc.get(), leftEnc.get()};
+    	double[] enc = {rightEnc.getDistance(), leftEnc.getDistance()};
     	return enc;
     }
     
@@ -104,23 +114,6 @@ public class DriveTrain extends Subsystem {
     public void resetEncoders() {
     	rightEnc.reset();
     	leftEnc.reset();
-    }
-    
-    public void pidEnable(){
-		pidLeft.enable();
-		pidRight.enable();
-    }
-    
-    public void pidDisable(){
-		pidLeft.disable();
-		pidRight.disable();
-    }
-    
-    public void pidSetpoint(double setpoint){
-    	pidLeft.setSetpoint(setpoint * RobotMap.pulsesPerInch);
-    	pidRight.setSetpoint(setpoint * RobotMap.pulsesPerInch);
-    	
-    	pidLeft.setOutputRange(-0.7, 0.7);
     }
     
     public double getXHeading() {
@@ -175,5 +168,16 @@ public class DriveTrain extends Subsystem {
     	
     	return instance;
     }
+
+	@Override
+	protected double returnPIDInput() {
+		double encoderAverage = (rightEnc.getDistance() + leftEnc.getDistance()) / 2;
+		return encoderAverage;
+	}
+
+	@Override
+	protected void usePIDOutput(double output) {
+		driveWheels(output, output);
+	}
 }
 

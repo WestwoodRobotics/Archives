@@ -11,6 +11,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TankDrive extends Command {
 
+	// Probably a good idea to change this to only be auto
+	
+	final boolean auto;
+	
 	OI m_oi = OI.getInstance();
 	DriveTrain dt_s = DriveTrain.getInstance();
 	
@@ -21,6 +25,8 @@ public class TankDrive extends Command {
 	
     public TankDrive() {
         requires(dt_s);
+        
+        auto = false;
         
         setInterruptible(true);
     }
@@ -34,20 +40,24 @@ public class TankDrive extends Command {
         //Setpoint is in inches
         this.setpoint = setpoint;
         
+        auto = true;
+        
         setInterruptible(true);
     }
     
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	this.dt_s.pidEnable();
-    	this.dt_s.pidSetpoint(this.setpoint);
+    	this.dt_s.enable();
+    	this.dt_s.setSetpoint(this.setpoint);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	dt_s.driveWheels(leftSpd, rightSpd);
+    	leftSpd = deadband(OI.getInstance().getJLY());
+    	rightSpd = deadband(OI.getInstance().getJRY());
     	
+    	dt_s.driveWheels(leftSpd, rightSpd);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -57,17 +67,18 @@ public class TankDrive extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	this.dt_s.disable();
     	dt_s.driveWheels(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	this.dt_s.disable();
     	dt_s.driveWheels(0, 0);
     }
     
     private double deadband(double x) {
     	return Math.abs(x) > RobotMap.deadbandLimit ? x : 0;
     }
-    
 }
