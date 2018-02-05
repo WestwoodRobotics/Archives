@@ -17,7 +17,7 @@ public class RobotMap {
 	
 	public static final double encoderPulses = 4096;
 	public static final double wheelDiameter = 6; // Diameter in inches
-	public static final double pulsesPerInch = encoderPulses / ((wheelDiameter / 12.0) * 2 * Math.PI);
+	public static final double pulsesPerInch = encoderPulses / ((wheelDiameter) * 2 * Math.PI);
 	public static final int    rightEncA 	 = 0;
 	public static final int	   rightEncB	 = 1;
 	public static final int    leftEncA		 = 2;
@@ -35,8 +35,8 @@ public class RobotMap {
 	public static final int fulcrumTalon = 6;
 
 	//Drivetrain encoders
-	public static final int    pulsesPerRev = 256 * 9;
-	public static final double wheelCircumference = 2 * Math.PI * 3;
+	public static final int pulsesPerRev = 256 * 9;
+	public static final double wheelCircumference = Math.PI * wheelDiameter;
 	public static final double distancePerPulse = wheelCircumference / pulsesPerRev;
 	
 	//Spark motors
