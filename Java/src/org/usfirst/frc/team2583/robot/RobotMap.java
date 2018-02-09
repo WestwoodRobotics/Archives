@@ -24,13 +24,13 @@ public class RobotMap {
 	public static final int    leftEncB		 = 3;
 	
 	//Talon motors
-	//Drivetrain
 	public static final int leftTalon1  = 0;
 	public static final int leftTalon2	= 1;
 	public static final int leftTalon3 	= 2;
 	public static final int rightTalon1 = 3;
 	public static final int rightTalon2 = 4;
 	public static final int rightTalon3 = 5;
+	
 	//Arm
 	public static final int fulcrumTalon = 6;
 

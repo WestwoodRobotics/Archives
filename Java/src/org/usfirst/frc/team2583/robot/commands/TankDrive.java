@@ -13,34 +13,14 @@ public class TankDrive extends Command {
 
 	// Probably a good idea to change this to only be auto
 	
-	final boolean auto;
-	
 	OI m_oi = OI.getInstance();
 	DriveTrain dt_s = DriveTrain.getInstance();
 	
 	private double leftSpd;
 	private double rightSpd;
-	
-	private double setpoint;
-	
+		
     public TankDrive() {
         requires(dt_s);
-        
-        auto = false;
-        
-        setInterruptible(true);
-    }
-    
-    public TankDrive(double leftSpd, double rightSpd, double setpoint) {
-    	requires(dt_s);
-        
-    	this.leftSpd = leftSpd;
-    	this.rightSpd = rightSpd;
-    	
-        //Setpoint is in inches
-        this.setpoint = setpoint;
-        
-        auto = true;
         
         setInterruptible(true);
     }
@@ -49,22 +29,20 @@ public class TankDrive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	this.dt_s.resetEncoders();
-    	this.dt_s.pidSetpoint(this.setpoint);
-    	this.dt_s.pidEnable();
+    	this.dt_s.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-	if(!auto){
-    		leftSpd = deadband(OI.getInstance().getJLY());
-    		rightSpd = deadband(OI.getInstance().getJRY());
-    	}
+    	leftSpd = deadband(OI.getInstance().getJLY());
+    	rightSpd = deadband(OI.getInstance().getJRY());
+    	
     	dt_s.driveWheels(leftSpd, rightSpd);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return dt_s.pidOnTarget();
+        return false;
     }
 
     // Called once after isFinished returns true

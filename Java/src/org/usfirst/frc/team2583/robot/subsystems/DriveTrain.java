@@ -46,7 +46,7 @@ public class DriveTrain extends PIDSubsystem {
 	private Encoder leftEnc  = new Encoder(RobotMap.leftEncA,  RobotMap.leftEncB,  false, Encoder.EncodingType.k1X);
 	
 	//TODO remove these
-	private PIDController pidLeft = new PIDController(0.3, 0, 0, leftEnc, leftGroup);
+	//private PIDController pidLeft = new PIDController(0.3, 0, 0, leftEnc, leftGroup);
 	//private PIDController pidRight = new PIDController(0.3, 0, 0, rightEnc, rightGroup);
 	
 	public DriveTrain(){
@@ -82,7 +82,7 @@ public class DriveTrain extends PIDSubsystem {
     	imu.calibrate();
     }
     
-    /**
+     /**
      * Toggle the gear of the drivetrain (on both sides) using pneumatic controls
      */
     public void shiftGear() {
@@ -117,6 +117,8 @@ public class DriveTrain extends PIDSubsystem {
     	leftEnc.reset();
     }
     
+    
+    /*
     public void pidEnable(){
 		pidLeft.enable();
 		//pidRight.enable();
@@ -138,7 +140,7 @@ public class DriveTrain extends PIDSubsystem {
     public boolean pidOnTarget(){
     	return pidLeft.onTarget();
     }
-    
+    */
     public double getXHeading() {
     	return imu.getAngleX();
     }

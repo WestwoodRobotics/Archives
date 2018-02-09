@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2583.robot.commands.auto;
 
+import org.usfirst.frc.team2583.robot.commands.DriveDistance;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
-import org.usfirst.frc.team2583.robot.commands.TankDrive;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -34,7 +34,7 @@ public class ForwardLong extends CommandGroup {
     		addSequential(new ShiftGears());
     	}
     	
-    	addSequential(new TankDrive(1, 1, 10));
+    	addSequential(new DriveDistance(10.0));
     	
     	
     }
