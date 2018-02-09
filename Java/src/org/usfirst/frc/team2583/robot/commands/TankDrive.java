@@ -21,7 +21,7 @@ public class TankDrive extends Command {
 		
     public TankDrive() {
         requires(dt_s);
-        
+              
         setInterruptible(true);
     }
     
@@ -29,7 +29,6 @@ public class TankDrive extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
     	this.dt_s.resetEncoders();
-    	this.dt_s.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -37,6 +36,8 @@ public class TankDrive extends Command {
     	leftSpd = deadband(OI.getInstance().getJLY());
     	rightSpd = deadband(OI.getInstance().getJRY());
     	
+    	//leftSpd = 0;
+    	//rightSpd = 0;
     	dt_s.driveWheels(leftSpd, rightSpd);
     }
 
@@ -47,14 +48,12 @@ public class TankDrive extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	this.dt_s.disable();
     	dt_s.driveWheels(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	this.dt_s.disable();
     	dt_s.driveWheels(0, 0);
     }
     

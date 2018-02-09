@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveDistance extends Command {
 
 	DriveTrain dt_s = DriveTrain.getInstance();
-	double inches = 0;
+	private double inches = 0;
 	
     public DriveDistance(double inches) {
         requires(dt_s);

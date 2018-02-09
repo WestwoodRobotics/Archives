@@ -19,7 +19,7 @@ public class Intake extends Subsystem {
     }
     
     public void initDefaultCommand() {
-//        setDefaultCommand(new OperateIntake(RobotMap.Take.NOWHERE));
+    	setDefaultCommand(new OperateIntake(RobotMap.Take.NOWHERE));
     }
     
     public void setSpeed(double speedL, double speedR) {

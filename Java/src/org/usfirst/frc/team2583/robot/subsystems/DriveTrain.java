@@ -7,7 +7,7 @@ import com.analog.adis16448.frc.ADIS16448_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PIDController;
+//import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -53,8 +53,8 @@ public class DriveTrain extends PIDSubsystem {
 		
 		super("DriveTrain", P, I, D);
 		
-		setOutputRange(-0.7, 0.7);
-    	getPIDController().setContinuous(true);
+		//SsetOutputRange(-0.7, 0.7);
+    	//getPIDController().setContinuous(true);
 		
 		left1.setInverted(true);
 		left2.setInverted(true);
