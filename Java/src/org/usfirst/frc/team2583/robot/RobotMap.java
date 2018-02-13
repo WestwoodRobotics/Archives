@@ -59,6 +59,9 @@ public class RobotMap {
 	public static final double maxIntakeSpeedL = 0.6;
 	public static final double maxIntakeSpeedR = 0.6;
 	
+	public static final double armSpeedUp = 0.5;
+	public static final double armSpeedDown = -0.5;
+	
 	/**
 	 * Provides constants for directions that things might want to move
 	 */
