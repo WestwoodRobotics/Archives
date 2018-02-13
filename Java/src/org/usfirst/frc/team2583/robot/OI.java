@@ -9,7 +9,6 @@ package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.commands.EnterHighGear;
 import org.usfirst.frc.team2583.robot.commands.OperateArm;
-import org.usfirst.frc.team2583.robot.commands.OperateLift;
 import org.usfirst.frc.team2583.robot.commands.OperateOutput;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
@@ -46,8 +45,8 @@ public class OI {
 	
 	public OI() {	
 		// Operate the scissor lift
-		buttonA.whenPressed(new OperateLift(RobotMap.Dir.DOWN));
-		buttonY.whenPressed(new OperateLift(RobotMap.Dir.UP));
+		//buttonA.whenPressed(new OperateLift(RobotMap.Dir.DOWN));
+		//buttonY.whenPressed(new OperateLift(RobotMap.Dir.UP));
 		
 //		buttonX.whileHeld(new OperateArm(RobotMap.Dir.UP));
 //		buttonB.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
