@@ -24,5 +24,9 @@ public class SwitchCR extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	
+    		//break past the base line
+    		new ForwardLong();//makes robot go forward(Change distance so it reaches auto line)
+    	
     }
 }
