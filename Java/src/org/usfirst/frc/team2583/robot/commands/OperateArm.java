@@ -22,10 +22,10 @@ public class OperateArm extends Command {
     protected void initialize() {
     	switch(dir) {
     	case UP:
-    		ar.setSpeed(1);
+    		ar.setSpeed(RobotMap.armSpeedUp);
     		break;
     	case DOWN:
-    		ar.setSpeed(-1);
+    		ar.setSpeed(RobotMap.armSpeedDown);
     		break;
     	default:
     		ar.setSpeed(0);	
