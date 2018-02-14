@@ -24,6 +24,7 @@ public class DriveDistance extends Command {
     protected void initialize() {
     	this.dt_s.resetEncoders();
     	this.dt_s.setSetpoint(this.inches);
+    	this.dt_s.setPercentTolerance(8.0);
     	this.dt_s.enable();
     }
 

@@ -22,6 +22,8 @@ public class DriveTrain extends PIDSubsystem {
 	public static final double I = 0;
 	public static final double D = 0;
 	
+	public static final double ramp = 0.1;  // acceleration of drive motors in sec
+	
 	// Talons for the drivetrain
 	private WPI_TalonSRX left1  = new WPI_TalonSRX(RobotMap.leftTalon1);
 	private WPI_TalonSRX left2 	= new WPI_TalonSRX(RobotMap.leftTalon2);
@@ -55,16 +57,24 @@ public class DriveTrain extends PIDSubsystem {
 		
 		//SsetOutputRange(-0.7, 0.7);
     	//getPIDController().setContinuous(true);
-		
+/*		
 		left1.setInverted(true);
 		left2.setInverted(true);
 		left3.setInverted(true);
 		right1.setInverted(true);
 		right2.setInverted(true);
-		right3.setInverted(true);
+		right3.setInverted(true);*/
+		
+		left1.configOpenloopRamp(ramp, 25);
+		left2.configOpenloopRamp(ramp, 25);
+		left3.configOpenloopRamp(ramp, 25);
+		right1.configOpenloopRamp(ramp, 25);
+		right2.configOpenloopRamp(ramp, 25);
+		right3.configOpenloopRamp(ramp, 25);
 		
 		rightEnc.setDistancePerPulse(RobotMap.distancePerPulse);
 		leftEnc.setDistancePerPulse(RobotMap.distancePerPulse);
+		leftEnc.setReverseDirection(true);
 		
 		rightEnc.reset();
 		leftEnc.reset();
