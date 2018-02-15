@@ -28,7 +28,6 @@ public class TankDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	this.dt_s.setmode(DriveTrain.PIDMode.DISABLED);
     }
 
     // Called repeatedly when this Command is scheduled to run

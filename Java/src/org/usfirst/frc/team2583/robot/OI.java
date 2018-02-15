@@ -9,6 +9,7 @@ package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.commands.EnterHighGear;
 import org.usfirst.frc.team2583.robot.commands.OperateArm;
+import org.usfirst.frc.team2583.robot.commands.OperateIntake;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
@@ -48,6 +49,9 @@ public class OI {
 		
 		jRightTrigg.whenPressed(new EnterHighGear());
 		jRightTrigg.whenReleased(new ShiftGears());
+		
+		leftBumper.whileHeld(new OperateIntake(RobotMap.Take.IN));
+		rightBumper.whileHeld(new OperateIntake(RobotMap.Take.OUT));
 		
 		if(rightBumper.get() == true){
 			DriveTrain.getInstance().shiftGear();

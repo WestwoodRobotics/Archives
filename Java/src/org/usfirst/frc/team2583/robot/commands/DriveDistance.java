@@ -2,6 +2,9 @@ package org.usfirst.frc.team2583.robot.commands;
 
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -9,23 +12,48 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class DriveDistance extends Command {
 
+	private static final double P = 0.21,
+								I = 0,
+								D = 0.05,
+								tolerance = 0.2;
+	
 	DriveTrain dt_s = DriveTrain.getInstance();
-	private double inches = 0;
+	private PIDController pid;
 	
     public DriveDistance(double inches) {
         requires(dt_s);
         
-        this.inches = inches;
+        pid = new PIDController(P, I, D, new PIDSource() {
+			PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
+
+			@Override
+			public double pidGet() {
+				double[] dists = dt_s.getEncoderDist();
+				return (dists[0] + dists[1]) / 2;
+			}
+
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {
+				m_sourceType = pidSource;
+			}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return m_sourceType;
+			}
+		}, d -> dt_s.driveWheels(d, d));
+        
+        pid.setPercentTolerance(tolerance);
+        pid.setSetpoint(inches);
         
         setInterruptible(true);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	this.dt_s.resetEncoders();
-    	this.dt_s.setSetpoint(this.inches);
-    	this.dt_s.setPercentTolerance(8.0);
-    	this.dt_s.enable();
+    	dt_s.resetEncoders();
+    	pid.reset();
+    	pid.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -35,19 +63,19 @@ public class DriveDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return this.dt_s.onTarget();
+        return pid.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	this.dt_s.disable();
+    	pid.disable();
     	dt_s.driveWheels(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	this.dt_s.disable();
+    	pid.disable();
     	dt_s.driveWheels(0, 0);
     }
 }

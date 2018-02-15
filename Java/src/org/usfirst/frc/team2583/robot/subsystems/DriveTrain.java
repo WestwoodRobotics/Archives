@@ -11,25 +11,13 @@ import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
  *
  */
-public class DriveTrain extends PIDSubsystem {
-
-	public static final double P = 0.3;
-	public static final double I = 0;
-	public static final double D = 0;
-	
-	public enum PIDMode{
-		DISABLED,
-		TURNING,
-		STRAIGHT,
-		ARC;
-	}
-	PIDMode mode = PIDMode.DISABLED;
+public class DriveTrain extends Subsystem {
 	
 	public static final double ramp = 0.1;  // acceleration of drive motors in sec
 	
@@ -58,8 +46,6 @@ public class DriveTrain extends PIDSubsystem {
 	
 	public DriveTrain(){
 		
-		super("DriveTrain", P, I, D);
-
 		left2.set(ControlMode.Follower, RobotMap.leftTalon1);
 		left3.set(ControlMode.Follower, RobotMap.leftTalon1);
 		right2.set(ControlMode.Follower, RobotMap.rightTalon1);
@@ -179,39 +165,6 @@ public class DriveTrain extends PIDSubsystem {
     	
     	return instance;
     }
-    
-    private double encoderAverage() {
-    	return (rightEnc.getDistance() + leftEnc.getDistance()) / 2;
-    }
-
-	@Override
-	protected double returnPIDInput() {
-		switch(mode) {
-		case STRAIGHT:
-			return encoderAverage();
-		case TURNING:
-			return getZHeading();
-		case ARC:
-			return getZHeading();
-		default:
-			return encoderAverage();
-		}
-	}
-
-	@Override
-	protected void usePIDOutput(double output) {
-		driveWheels(output, output);
-	}
 	
-	public synchronized void setmode(PIDMode mode) {
-		switch(mode) {
-		case DISABLED:
-			this.disable();
-			break;
-		default:
-			this.enable();
-		}
-		this.mode = mode;
-	}
 }
 
