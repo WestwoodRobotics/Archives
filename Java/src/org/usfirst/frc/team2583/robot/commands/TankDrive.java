@@ -28,7 +28,7 @@ public class TankDrive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	this.dt_s.resetEncoders();
+    	this.dt_s.setmode(DriveTrain.PIDMode.DISABLED);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -36,8 +36,6 @@ public class TankDrive extends Command {
     	leftSpd = deadband(OI.getInstance().getJLY());
     	rightSpd = deadband(OI.getInstance().getJRY());
     	
-    	//leftSpd = 0;
-    	//rightSpd = 0;
     	dt_s.driveWheels(leftSpd, rightSpd);
     }
 

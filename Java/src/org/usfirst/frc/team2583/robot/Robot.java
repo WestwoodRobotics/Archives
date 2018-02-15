@@ -84,9 +84,11 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		// Get and store the results of the randomizations of the switches and scales
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
-		FieldMap.homeSwitch = gameData.charAt(0);
-		FieldMap.scale = gameData.charAt(1);
-		FieldMap.farSwitch = gameData.charAt(2);
+		if(gameData.length() > 0) {
+			FieldMap.homeSwitch = gameData.charAt(0);
+			FieldMap.scale = gameData.charAt(1);
+			FieldMap.farSwitch = gameData.charAt(2);
+		}
 		
 		if (FieldMap.homeSwitch == 'L' || FieldMap.homeSwitch == 'l'){
 			SmartDashboard.putString("Home Switch", "Left");

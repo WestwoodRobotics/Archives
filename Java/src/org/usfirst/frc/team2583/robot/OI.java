@@ -9,7 +9,6 @@ package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.commands.EnterHighGear;
 import org.usfirst.frc.team2583.robot.commands.OperateArm;
-import org.usfirst.frc.team2583.robot.commands.OperateOutput;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
@@ -43,19 +42,12 @@ public class OI {
 	// Joystick Buttons
 	Button jRightTrigg			= new JoystickButton(jRight, 1);
 	
-	public OI() {	
-		// Operate the scissor lift
-		//buttonA.whenPressed(new OperateLift(RobotMap.Dir.DOWN));
-		//buttonY.whenPressed(new OperateLift(RobotMap.Dir.UP));
-		
-//		buttonX.whileHeld(new OperateArm(RobotMap.Dir.UP));
-//		buttonB.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
+	public OI() {
+		buttonY.whileHeld(new OperateArm(RobotMap.Dir.UP));
+		buttonA.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
 		
 		jRightTrigg.whenPressed(new EnterHighGear());
 		jRightTrigg.whenReleased(new ShiftGears());
-		
-		leftJoystickPress.whenPressed(new OperateOutput(RobotMap.Dir.UP));
-		rightJoystickPress.whenPressed(new OperateOutput(RobotMap.Dir.DOWN));
 		
 		if(rightBumper.get() == true){
 			DriveTrain.getInstance().shiftGear();

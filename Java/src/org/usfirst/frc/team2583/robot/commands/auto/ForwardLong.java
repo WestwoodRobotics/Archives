@@ -34,7 +34,7 @@ public class ForwardLong extends CommandGroup {
     		addSequential(new ShiftGears());
     	}
     	
-    	addSequential(new DriveDistance(10.0));
+    	addSequential(new DriveDistance(60.0));
     	
     	
     }
