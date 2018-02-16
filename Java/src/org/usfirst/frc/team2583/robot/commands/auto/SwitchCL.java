@@ -25,8 +25,8 @@ public class SwitchCL extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
     	
-    		//break past the base line
-    		new ForwardLong();//makes robot go forward(Change distance so it reaches auto line)
+    	//break past the base line
+    	addSequential(new ForwardLong());//makes robot go forward(Change distance so it reaches auto line)
     	
     }
 }

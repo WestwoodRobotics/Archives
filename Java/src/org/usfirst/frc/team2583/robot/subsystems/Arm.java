@@ -5,6 +5,7 @@ import org.usfirst.frc.team2583.robot.commands.OperateArm;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -12,13 +13,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Arm extends Subsystem {
 
-	private WPI_TalonSRX fulcrum = new WPI_TalonSRX(6);
-
+	private WPI_TalonSRX armMotor = new WPI_TalonSRX(6);
+	
+	private DigitalInput limitSwitchUpper;
+	private DigitalInput limitSwitchLower;
+	
 	/**
 	 * Initialize StopArm as the default command
 	 */
     public void initDefaultCommand() {
         setDefaultCommand(new OperateArm(RobotMap.Dir.NOWHERE)); // Simply turns the motors off if nothing is supposed to be happening
+        limitSwitchUpper = new DigitalInput(1);
     }
     
     /**
@@ -27,7 +32,25 @@ public class Arm extends Subsystem {
      * @param speed the speed for the motor to turn
      */
     public void setSpeed(double speed) {
-    	fulcrum.set(speed);
+    	armMotor.set(speed);
+    }
+    
+    public boolean switchClosedUpper(){
+    	if(!limitSwitchUpper.get()){
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
+    }
+    
+    public boolean switchClosedLower(){
+    	if(!limitSwitchLower.get()){
+    		return true;
+    	}
+    	else{
+    		return false;
+    	}
     }
     
     private static Arm instance;

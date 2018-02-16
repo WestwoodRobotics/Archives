@@ -38,11 +38,19 @@ public class OperateArm extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+    	switch(dir){
+    	case UP:
+    		return ar.switchClosedUpper();
+    	case DOWN:
+    		return ar.switchClosedLower();
+    	default:
+    		return false;
+    	}
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	ar.setSpeed(0);
     }
 
     // Called when another command which requires one or more of the same
