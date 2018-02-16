@@ -111,6 +111,8 @@ public class Robot extends TimedRobot {
 			SmartDashboard.putString("Far Switch", "Right");
 		}
 		
+		DriveTrain.getInstance().setDeadband(0);
+		
 		m_autonomousCommand = new ForwardLong(); // needs to be replaced
 
 		/*
@@ -147,6 +149,7 @@ public class Robot extends TimedRobot {
 		}
 		
 		DriveTrain.getInstance().resetEncoders();
+		DriveTrain.getInstance().setDeadband(RobotMap.deadbandLimit);
 		
 		if (!ud.isRunning()) ud.start();
 	}

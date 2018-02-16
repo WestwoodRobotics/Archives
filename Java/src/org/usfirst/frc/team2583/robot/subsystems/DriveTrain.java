@@ -70,12 +70,24 @@ public class DriveTrain extends Subsystem {
     	setDefaultCommand(new TankDrive());
     }
     
+    public void setDeadband(double band) {
+		drive.setDeadband(band);
+	}
+    
     public void driveWheels(double leftSpd, double rightSpd) {
     	drive.tankDrive(leftSpd, rightSpd);
     }
     
+    public void turnRate(double rate) {
+    	drive.curvatureDrive(0, rate, true);
+    }
+    
     public void calibrate() {
     	imu.calibrate();
+    }
+    
+    public void resetIMU() {
+    	imu.reset();
     }
     
      /**
@@ -86,7 +98,6 @@ public class DriveTrain extends Subsystem {
     }
     
     public void setGear(RobotMap.Gear g) {
-    	
     	sol.set(g == RobotMap.Gear.HIGH);
     }
     
@@ -155,6 +166,18 @@ public class DriveTrain extends Subsystem {
     
     public double getPressure() {
     	return imu.getBarometricPressure();
+    }
+    
+    public double getYaw() {
+    	return imu.getYaw();
+    }
+    
+    public double getPitch() {
+    	return imu.getPitch();
+    }
+    
+    public double getRoll() {
+    	return imu.getRoll();
     }
     
     private static DriveTrain instance;

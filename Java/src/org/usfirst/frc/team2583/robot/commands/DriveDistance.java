@@ -43,6 +43,7 @@ public class DriveDistance extends Command {
 			}
 		}, d -> dt_s.driveWheels(d, d));
         
+        pid.setOutputRange(-1, 1);
         pid.setPercentTolerance(tolerance);
         pid.setSetpoint(inches);
         

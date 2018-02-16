@@ -2,6 +2,9 @@ package org.usfirst.frc.team2583.robot.commands;
 
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -9,16 +12,45 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TurnTo extends Command {
 
-	public final double targetAngle;
+	public static final double P = 0.3,
+							   I = 0.0,
+							   D = 0.0,
+							   percentTolerance = 0.1;
+	
+	private PIDController pid;
 	
     public TurnTo(double degrees) {
-        targetAngle = degrees;
         requires(DriveTrain.getInstance());
+    	
+    	pid = new PIDController(P, I, D, new PIDSource() {
+    		PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
+    		
+			@Override
+			public double pidGet() {
+				return DriveTrain.getInstance().getYaw();
+			}
+
+			@Override
+			public void setPIDSourceType(PIDSourceType pidSource) {
+				m_sourceType = pidSource;
+			}
+
+			@Override
+			public PIDSourceType getPIDSourceType() {
+				return m_sourceType;
+			}
+    	}, d -> DriveTrain.getInstance().turnRate(d));
+        
+    	pid.setOutputRange(-1, 1);
+    	pid.setPercentTolerance(percentTolerance);
+    	pid.setSetpoint(degrees);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	DriveTrain.getInstance().resetIMU();
+    	pid.reset();
+    	pid.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -27,15 +59,19 @@ public class TurnTo extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return pid.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	pid.disable();
+    	DriveTrain.getInstance().driveWheels(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	pid.disable();
+    	DriveTrain.getInstance().driveWheels(0, 0);
     }
 }
