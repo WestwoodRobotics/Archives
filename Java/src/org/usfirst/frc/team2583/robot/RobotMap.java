@@ -23,6 +23,8 @@ public class RobotMap {
 	public static final int    leftEncA		 = 2;
 	public static final int    leftEncB		 = 3;
 	
+	public static final int	   armUpperLimit = 4;
+	
 	//Talon motors
 	public static final int leftTalon1  = 0;
 	public static final int leftTalon2	= 1;
@@ -56,8 +58,8 @@ public class RobotMap {
 	
 	public static final double deadbandLimit = 0.05;
 	
-	public static final double maxIntakeSpeedL = 0.6;
-	public static final double maxIntakeSpeedR = 0.6;
+	public static final double maxIntakeSpeedL = 0.9;
+	public static final double maxIntakeSpeedR = 0.9;
 	
 	public static final double armSpeedUp = 0.5;
 	public static final double armSpeedDown = -0.5;

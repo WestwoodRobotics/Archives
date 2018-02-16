@@ -10,7 +10,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 //import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -29,12 +28,8 @@ public class DriveTrain extends Subsystem {
 	private WPI_TalonSRX right2 		= new WPI_TalonSRX(RobotMap.rightTalon2);
 	private WPI_TalonSRX right3 		= new WPI_TalonSRX(RobotMap.rightTalon3);
 	
-	// Speed controllers group the Talons into the individual gear boxes (sides of the robot)
-	private SpeedControllerGroup leftGroup  = new SpeedControllerGroup(leftMaster, left2, left3);
-	private SpeedControllerGroup rightGroup = new SpeedControllerGroup(rightMaster, right2, right3);
-	
 	// DifferentialDrive is a drive class for Tank
-	private DifferentialDrive drive = new DifferentialDrive(leftGroup, rightGroup);
+	private DifferentialDrive drive = new DifferentialDrive(leftMaster, rightMaster);
 	
 	// Gyro, Accelerometer, Magnometer, and Pressure Sensor
 	private ADIS16448_IMU imu = new ADIS16448_IMU();

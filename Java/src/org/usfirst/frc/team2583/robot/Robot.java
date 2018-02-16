@@ -7,8 +7,8 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import org.usfirst.frc.team2583.robot.commands.TurnTo;
 import org.usfirst.frc.team2583.robot.commands.UpdateDash;
-import org.usfirst.frc.team2583.robot.commands.auto.ForwardLong;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -113,8 +113,9 @@ public class Robot extends TimedRobot {
 		
 		DriveTrain.getInstance().setDeadband(0);
 		
-		m_autonomousCommand = new ForwardLong(); // needs to be replaced
-
+//		m_autonomousCommand = new ForwardLong(); // needs to be replaced
+		m_autonomousCommand = new TurnTo(180);
+		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
 		 * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

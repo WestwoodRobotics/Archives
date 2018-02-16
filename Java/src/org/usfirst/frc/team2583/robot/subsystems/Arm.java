@@ -23,7 +23,7 @@ public class Arm extends Subsystem {
 	 */
     public void initDefaultCommand() {
         setDefaultCommand(new OperateArm(RobotMap.Dir.NOWHERE)); // Simply turns the motors off if nothing is supposed to be happening
-        limitSwitchUpper = new DigitalInput(1);
+        limitSwitchUpper = new DigitalInput(RobotMap.armUpperLimit);
     }
     
     /**

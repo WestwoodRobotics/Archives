@@ -12,10 +12,10 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TurnTo extends Command {
 
-	public static final double P = 0.3,
-							   I = 0.0,
-							   D = 0.0,
-							   percentTolerance = 0.1;
+	public static final double P = 0.9,
+							   I = 2.0,
+							   D = 1.0,
+							   absoluteTolerance = 0.6;
 	
 	private PIDController pid;
 	
@@ -27,7 +27,7 @@ public class TurnTo extends Command {
     		
 			@Override
 			public double pidGet() {
-				return DriveTrain.getInstance().getYaw();
+				return DriveTrain.getInstance().getZHeading();
 			}
 
 			@Override
@@ -42,7 +42,7 @@ public class TurnTo extends Command {
     	}, d -> DriveTrain.getInstance().turnRate(d));
         
     	pid.setOutputRange(-1, 1);
-    	pid.setPercentTolerance(percentTolerance);
+    	pid.setAbsoluteTolerance(absoluteTolerance);
     	pid.setSetpoint(degrees);
     }
 

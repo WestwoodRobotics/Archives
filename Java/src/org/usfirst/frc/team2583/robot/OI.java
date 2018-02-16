@@ -59,11 +59,11 @@ public class OI {
 	}
 	
 	public double getJLY() {
-		return jLeft.getY();
+		return -jLeft.getY();
 	}
 	
 	public double getJRY() {
-		return jRight.getY();
+		return -jRight.getY();
 	}
 	
 	private static OI instance;
