@@ -59,6 +59,8 @@ public class DriveTrain extends Subsystem {
 		
 		rightEnc.reset();
 		leftEnc.reset();
+		
+		drive.setDeadband(0.05);
 	}
 	
     public void initDefaultCommand() {
@@ -71,6 +73,7 @@ public class DriveTrain extends Subsystem {
     
     public void driveWheels(double leftSpd, double rightSpd) {
     	drive.tankDrive(leftSpd, rightSpd);
+    	
     }
     
     public void turnRate(double rate) {

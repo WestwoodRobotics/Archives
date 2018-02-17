@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class EnterHighGear extends Command {
+	
+	DriveTrain dt_s = DriveTrain.getInstance();
 
     public EnterHighGear() {
-        
+        requires(dt_s);
     }
 
     // Called just before this Command runs the first time
@@ -30,7 +32,7 @@ public class EnterHighGear extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	DriveTrain.getInstance().setGear(RobotMap.Gear.HIGH);
+    	dt_s.setGear(RobotMap.Gear.HIGH);
     }
 
     // Called when another command which requires one or more of the same

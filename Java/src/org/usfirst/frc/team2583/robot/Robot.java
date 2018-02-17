@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
 			SmartDashboard.putString("Far Switch", "Right");
 		}
 		
-		DriveTrain.getInstance().setDeadband(0);
+		//DriveTrain.getInstance().setDeadband(0.05); // moved to drive init
 		
 //		m_autonomousCommand = new ForwardLong(); // needs to be replaced
 		m_autonomousCommand = new TurnTo(180);
