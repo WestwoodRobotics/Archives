@@ -11,6 +11,7 @@ import org.usfirst.frc.team2583.robot.commands.EnterHighGear;
 import org.usfirst.frc.team2583.robot.commands.OperateArm;
 import org.usfirst.frc.team2583.robot.commands.OperateIntake;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
+import org.usfirst.frc.team2583.robot.commands.StopArm;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -46,6 +47,7 @@ public class OI {
 	public OI() {
 		buttonY.whileHeld(new OperateArm(RobotMap.Dir.UP));
 		buttonA.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
+		buttonB.whenPressed(new StopArm());
 		
 		jRightTrigg.whenPressed(new EnterHighGear());
 		jRightTrigg.whenReleased(new ShiftGears());

@@ -53,6 +53,10 @@ public class Arm extends Subsystem {
     	}
     }
     
+    public void stopArm() {
+    	armMotor.set(0.0);
+    }
+    
     private static Arm instance;
     public static Arm getInstance() {
     	if(instance == null) {
