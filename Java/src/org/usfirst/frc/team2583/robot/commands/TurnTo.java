@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class TurnTo extends Command {
+	
+	private DriveTrain dt = DriveTrain.getInstance();
 
 	public static final double P = 0.9,
 							   I = 2.0,
@@ -20,14 +22,14 @@ public class TurnTo extends Command {
 	private PIDController pid;
 	
     public TurnTo(double degrees) {
-        requires(DriveTrain.getInstance());
+        requires(dt);
     	
     	pid = new PIDController(P, I, D, new PIDSource() {
     		PIDSourceType m_sourceType = PIDSourceType.kDisplacement;
     		
 			@Override
 			public double pidGet() {
-				return DriveTrain.getInstance().getZHeading();
+				return dt.getZHeading();
 			}
 
 			@Override
@@ -39,16 +41,17 @@ public class TurnTo extends Command {
 			public PIDSourceType getPIDSourceType() {
 				return m_sourceType;
 			}
-    	}, d -> DriveTrain.getInstance().turnRate(d));
+    	}, d -> dt.turnRate(d));
         
     	pid.setOutputRange(-1, 1);
     	pid.setAbsoluteTolerance(absoluteTolerance);
     	pid.setSetpoint(degrees);
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	DriveTrain.getInstance().resetIMU();
+    	dt.resetIMU();		// reset gyros
     	pid.reset();
     	pid.enable();
     }
@@ -65,13 +68,13 @@ public class TurnTo extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	pid.disable();
-    	DriveTrain.getInstance().driveWheels(0, 0);
+    	dt.driveWheels(0, 0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
     	pid.disable();
-    	DriveTrain.getInstance().driveWheels(0, 0);
+    	dt.driveWheels(0, 0);
     }
 }

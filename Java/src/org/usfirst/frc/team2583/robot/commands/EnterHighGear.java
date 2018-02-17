@@ -18,7 +18,7 @@ public class EnterHighGear extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	dt_s.setGear(RobotMap.Gear.HIGH);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -32,7 +32,7 @@ public class EnterHighGear extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	dt_s.setGear(RobotMap.Gear.HIGH);
+    	
     }
 
     // Called when another command which requires one or more of the same

@@ -84,6 +84,10 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		// Get and store the results of the randomizations of the switches and scales
 		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		if (gameData.length() == 0) {
+			gameData = "LRL";  // in case we don't get it e.g. in testing
+		}
+		
 		if(gameData.length() > 0) {
 			FieldMap.homeSwitch = gameData.charAt(0);
 			FieldMap.scale = gameData.charAt(1);
