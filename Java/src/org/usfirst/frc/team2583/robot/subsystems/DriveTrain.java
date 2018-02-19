@@ -20,6 +20,8 @@ public class DriveTrain extends Subsystem {
 	
 	public static final double ramp = 0.1;  // acceleration of drive motors in sec
 	
+	private boolean squaredInputs = false;
+	
 	// Talons for the drivetrain
 	private WPI_TalonSRX leftMaster  	= new WPI_TalonSRX(RobotMap.leftTalon1);
 	private WPI_TalonSRX left2 			= new WPI_TalonSRX(RobotMap.leftTalon2);
@@ -60,11 +62,15 @@ public class DriveTrain extends Subsystem {
 		rightEnc.reset();
 		leftEnc.reset();
 		
-		drive.setDeadband(0.05);
+		setDeadband(0.05);
 	}
 	
     public void initDefaultCommand() {
     	setDefaultCommand(new TankDrive());
+    }
+    
+    public void setSquaredInputs(boolean squaredInputs) {
+    	this.squaredInputs = squaredInputs;
     }
     
     public void setDeadband(double band) {
@@ -72,8 +78,7 @@ public class DriveTrain extends Subsystem {
 	}
     
     public void driveWheels(double leftSpd, double rightSpd) {
-    	drive.tankDrive(leftSpd, rightSpd);
-    	
+    	drive.tankDrive(leftSpd, rightSpd, this.squaredInputs);
     }
     
     public void turnRate(double rate) {

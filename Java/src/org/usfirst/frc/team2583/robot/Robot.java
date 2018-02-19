@@ -7,8 +7,14 @@
 
 package org.usfirst.frc.team2583.robot;
 
-import org.usfirst.frc.team2583.robot.commands.TurnTo;
 import org.usfirst.frc.team2583.robot.commands.UpdateDash;
+import org.usfirst.frc.team2583.robot.commands.auto.ForwardLong;
+import org.usfirst.frc.team2583.robot.commands.auto.SwitchCL;
+import org.usfirst.frc.team2583.robot.commands.auto.SwitchCR;
+import org.usfirst.frc.team2583.robot.commands.auto.SwitchLL;
+import org.usfirst.frc.team2583.robot.commands.auto.SwitchLR;
+import org.usfirst.frc.team2583.robot.commands.auto.SwitchRL;
+import org.usfirst.frc.team2583.robot.commands.auto.SwitchRR;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -94,31 +100,7 @@ public class Robot extends TimedRobot {
 			FieldMap.farSwitch = gameData.charAt(2);
 		}
 		
-		if (FieldMap.homeSwitch == 'L' || FieldMap.homeSwitch == 'l'){
-			SmartDashboard.putString("Home Switch", "Left");
-		}
-		else{
-			SmartDashboard.putString("Home Switch", "Right");
-		}
-		
-		if (FieldMap.scale == 'L' || FieldMap.scale == 'l'){
-			SmartDashboard.putString("Scale", "Left");
-		}
-		else{
-			SmartDashboard.putString("Scale", "Right");
-		}
-		
-		if (FieldMap.farSwitch == 'L' || FieldMap.farSwitch == 'l'){
-			SmartDashboard.putString("Far Switch", "Left");
-		}
-		else{
-			SmartDashboard.putString("Far Switch", "Right");
-		}
-		
-		//DriveTrain.getInstance().setDeadband(0.05); // moved to drive init
-		
-//		m_autonomousCommand = new ForwardLong(); // needs to be replaced
-		m_autonomousCommand = new TurnTo(180);
+		m_autonomousCommand = selectAuto();
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -133,6 +115,40 @@ public class Robot extends TimedRobot {
 		}
 		
 		if (!ud.isRunning()) ud.start();
+	}
+	
+	private Command selectAuto() {
+		
+		String position = SmartDashboard.getString("StartPos", "Left");
+		String strategy = SmartDashboard.getString("Strategy", "Do nothing");
+		
+		// TODO comment this massive block of horribleness below
+		switch(strategy) {
+		case RobotMap.strategyBreak:
+			if(position.equals(RobotMap.positionC)) {
+				return new ForwardLong();	//TODO change this to the appropriate command
+			}else {
+				return new ForwardLong();
+			}
+		case RobotMap.strategyAny:	// Pay attention to fall-through
+			if(position == RobotMap.positionC) {
+				return
+						FieldMap.homeSwitch == 'L'
+							? new SwitchCL()
+							: new SwitchCR();
+			}
+			else if(position == RobotMap.positionL && FieldMap.homeSwitch == 'R') return new SwitchLR();
+			else if(position == RobotMap.positionR && FieldMap.homeSwitch == 'L') return new SwitchRL();
+		case RobotMap.strategyOurs:
+			return
+					position == RobotMap.positionC ? null
+				  :	position == RobotMap.positionL ?
+						  FieldMap.homeSwitch == 'L' ? new SwitchLL() : new ForwardLong() //TODO might need to change the name from ForwardLong
+				  : FieldMap.homeSwitch == 'R' ? new SwitchRR() : new ForwardLong(); //TODO might need to change the name from ForwardLong
+		case RobotMap.strategyNothing:
+		default:
+			return null;
+		}
 	}
 
 	/**

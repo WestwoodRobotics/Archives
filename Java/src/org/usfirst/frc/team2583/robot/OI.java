@@ -49,7 +49,7 @@ public class OI {
 		buttonA.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
 		buttonB.whenPressed(new StopArm());
 		
-		jRightTrigg.whenPressed(new EnterHighGear());
+		jRightTrigg.whileHeld(new EnterHighGear());
 		jRightTrigg.whenReleased(new ShiftGears());
 		
 		leftBumper.whileHeld(new OperateIntake(RobotMap.Take.IN));
@@ -58,6 +58,7 @@ public class OI {
 		if(rightBumper.get() == true){
 			DriveTrain.getInstance().shiftGear();
 		}
+		
 	}
 	
 	public double getJLY() {

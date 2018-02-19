@@ -67,6 +67,17 @@ public class RobotMap {
 	public static final double autoLineDistance = 0;
 	public static final double switchDistance = autoLineDistance;
 	
+	// These values appear in the DriverStation for human input
+	// These are for comparison to the Networktables values
+	public static final String
+		positionL 		= "Left",
+		positionC 		= "Center",
+		positionR 		= "Right",
+		strategyNothing	= "Do nothing",
+		strategyBreak 	= "Break the baseline",
+		strategyAny		= "Go for the switch on any side",
+		strategyOurs	= "Go for the switch if it is on our side";
+	
 	/**
 	 * Provides constants for directions that things might want to move
 	 */
