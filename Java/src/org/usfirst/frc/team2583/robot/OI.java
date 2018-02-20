@@ -49,7 +49,7 @@ public class OI {
 		buttonA.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
 		buttonB.whenPressed(new StopArm());
 		
-		jRightTrigg.whileHeld(new EnterHighGear());
+		jRightTrigg.whenPressed(new EnterHighGear());
 		jRightTrigg.whenReleased(new ShiftGears());
 		
 		leftBumper.whileHeld(new OperateIntake(RobotMap.Take.IN));

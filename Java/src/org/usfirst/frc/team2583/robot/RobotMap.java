@@ -78,6 +78,19 @@ public class RobotMap {
 		strategyAny		= "Go for the switch on any side",
 		strategyOurs	= "Go for the switch if it is on our side";
 	
+	// These values appear in the Driverstation for human input
+	// These are for the override autonomous capability
+	public static final String
+		overFL			= "ForwardLong",
+		overCL			= "SwitchCL",
+		overCR			= "SwitchCR",
+		overLL			= "SwitchLL",
+		overLR			= "SwitchLR",
+		overRL			= "SwitchRL",
+		overRR			= "SwitchRR",
+		overTurn		= "TurnTo",
+		overNothing		= "Nothing";
+	
 	/**
 	 * Provides constants for directions that things might want to move
 	 */

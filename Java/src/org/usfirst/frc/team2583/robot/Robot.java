@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import org.usfirst.frc.team2583.robot.commands.TurnTo;
 import org.usfirst.frc.team2583.robot.commands.UpdateDash;
 import org.usfirst.frc.team2583.robot.commands.auto.ForwardLong;
 import org.usfirst.frc.team2583.robot.commands.auto.SwitchCL;
@@ -101,6 +102,7 @@ public class Robot extends TimedRobot {
 		}
 		
 		m_autonomousCommand = selectAuto();
+		System.out.println("The auto command selected: " + m_autonomousCommand);
 		
 		/*
 		 * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -117,7 +119,40 @@ public class Robot extends TimedRobot {
 		if (!ud.isRunning()) ud.start();
 	}
 	
+	/**
+	 * Purely for testing purposes
+	 * 
+	 * @return The auto command to run based on the override values
+	 */
+	private Command autoOverride() {
+		String dashIn = SmartDashboard.getString("Override Select", RobotMap.overNothing);
+		
+		switch(dashIn) {
+		case RobotMap.overFL:
+			return new ForwardLong();
+		case RobotMap.overCL:
+			return new SwitchCL();
+		case RobotMap.overCR:
+			return new SwitchCR();
+		case RobotMap.overLL:
+			return new SwitchLL();
+		case RobotMap.overLR:
+			return new SwitchLR();
+		case RobotMap.overRL:
+			return new SwitchRL();
+		case RobotMap.overRR:
+			return new SwitchRR();
+		case RobotMap.overTurn:
+			return new TurnTo(SmartDashboard.getNumber("AutoArg", 0));
+		case RobotMap.overNothing:
+		default:
+			return null;			
+		}
+	}
+	
 	private Command selectAuto() {
+		
+		if(SmartDashboard.getBoolean("Override", false)) return autoOverride();
 		
 		String position = SmartDashboard.getString("StartPos", "Left");
 		String strategy = SmartDashboard.getString("Strategy", "Do nothing");
@@ -149,6 +184,7 @@ public class Robot extends TimedRobot {
 		default:
 			return null;
 		}
+		
 	}
 
 	/**
