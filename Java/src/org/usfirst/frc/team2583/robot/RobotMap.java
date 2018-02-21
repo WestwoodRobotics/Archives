@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -34,7 +36,7 @@ public class RobotMap {
 	public static final int rightTalon3 = 5;
 	
 	//Arm
-	public static final int fulcrumTalon = 6;
+	public static final int armTalon = 6;
 
 	//Drivetrain encoders
 	public static final int pulsesPerRev = 256 * 9;
@@ -43,17 +45,29 @@ public class RobotMap {
 	
 	//Spark motors
 	//Intake
-	public static final int leftIntakeSpark = 0;
-	public static final int rightIntakeSpark = 1;
+	public static final int 
+				leftIntakeSpark = 0,
+				rightIntakeSpark = 1,
+				rampReleaseSpark = 2;
+	
+	public static final Value
+				leftRampDownState  = Value.kReverse,
+				rightRampDownState = Value.kReverse,
+				leftRampUpState    = leftRampDownState == Value.kReverse ? Value.kForward : Value.kReverse,
+				rightRampUpState   = rightRampDownState == Value.kReverse ? Value.kForward : Value.kReverse;
 	
 	public static final int PDPIndex = 0;
 	public static final int PCMIndex = 1;
 	
 	//Pneumatics control variables
-	public static final int scissorLiftChannel = 0;
-	public static final int scissorLiftChannel2 = 1;
-	public static final int outputChannel = 2;
-	public static final int gearShiftChannel = 7;
+	public static final int 
+				armLockChannelA   = 0,
+				armLockChannelB   = 1,
+				leftRampChannelA  = 2,
+				leftRampChannelB  = 3,
+				rightRampChannelA = 4,
+				rightRampChannelB = 5,
+				gearShiftChannel  = 7;
 	public static final boolean closedLoopControl = true;
 	
 	public static final double deadbandLimit = 0.05;

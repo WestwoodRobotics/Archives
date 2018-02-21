@@ -6,6 +6,7 @@ import org.usfirst.frc.team2583.robot.commands.OperateArm;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -13,7 +14,9 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class Arm extends Subsystem {
 
-	private WPI_TalonSRX armMotor = new WPI_TalonSRX(6);
+	private WPI_TalonSRX armMotor = new WPI_TalonSRX(RobotMap.armTalon);
+	
+	private DoubleSolenoid lock = new DoubleSolenoid(RobotMap.armLockChannelA, RobotMap.armLockChannelB);
 	
 	private DigitalInput limitSwitchUpper;
 	private DigitalInput limitSwitchLower;
