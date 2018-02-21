@@ -30,11 +30,11 @@ public class ForwardLong extends CommandGroup {
         // arm.
     	
     	//Check if gear shift is in fast mode
-    	if(DriveTrain.getInstance().getGear() == false){
+    	if(DriveTrain.getInstance().getGear() == true){
     		addSequential(new ShiftGears());
     	}
     	
-    	addSequential(new DriveDistance(60.0));
+    	addSequential(new DriveDistance(168));
     	
     	
     }

@@ -1,5 +1,12 @@
 package org.usfirst.frc.team2583.robot.commands.auto;
 
+import org.usfirst.frc.team2583.robot.RobotMap;
+import org.usfirst.frc.team2583.robot.commands.DriveDistance;
+import org.usfirst.frc.team2583.robot.commands.OperateIntake;
+import org.usfirst.frc.team2583.robot.commands.ShiftGears;
+import org.usfirst.frc.team2583.robot.commands.TurnTo;
+import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -24,9 +31,17 @@ public class SwitchCR extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	if(DriveTrain.getInstance().getGear() == true){
+    		addSequential(new ShiftGears());
+    	}
     	
-    		//break past the base line
-    		new ForwardLong();//makes robot go forward(Change distance so it reaches auto line)
+    	addSequential(new DriveDistance(84)); //Drive half the distance towards the switch
+    	addSequential(new TurnTo(90)); //Turn RIght
+    	addSequential(new DriveDistance(86.5)); //Drive a bit past end of switch
+    	addSequential(new TurnTo(-90)); //Turn Left
+    	addSequential(new DriveDistance(84)); //Drive to switch
+    	addSequential(new TurnTo(-90)); // Turn Left
+    	addSequential(new OperateIntake(RobotMap.Take.OUT)); //Push PowerCube(tm) Out
     	
     }
 }

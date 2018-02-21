@@ -1,5 +1,11 @@
 package org.usfirst.frc.team2583.robot.commands.auto;
 
+import org.usfirst.frc.team2583.robot.RobotMap;
+import org.usfirst.frc.team2583.robot.commands.OperateIntake;
+import org.usfirst.frc.team2583.robot.commands.ShiftGears;
+import org.usfirst.frc.team2583.robot.commands.TurnTo;
+import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
+
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -24,5 +30,12 @@ public class SwitchRR extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+    	if(DriveTrain.getInstance().getGear() == true){
+    		addSequential(new ShiftGears());
+    	}
+    	
+    	addSequential(new ForwardLong());
+    	addSequential(new TurnTo(-90));
+    	addSequential(new OperateIntake(RobotMap.Take.OUT));
     }
 }
