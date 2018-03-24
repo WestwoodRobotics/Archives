@@ -9,6 +9,8 @@ package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.commands.TurnTo;
 import org.usfirst.frc.team2583.robot.commands.UpdateDash;
+import org.usfirst.frc.team2583.robot.commands.auto.BreakCL;
+import org.usfirst.frc.team2583.robot.commands.auto.BreakCR;
 import org.usfirst.frc.team2583.robot.commands.auto.ForwardLong;
 import org.usfirst.frc.team2583.robot.commands.auto.SwitchCL;
 import org.usfirst.frc.team2583.robot.commands.auto.SwitchCR;
@@ -120,7 +122,8 @@ public class Robot extends TimedRobot {
 	}
 	
 	/**
-	 * Purely for testing purposes
+	 * Purely for testing purposes or last-resort type thing.
+	 * Please don't use this at competition unless really required.
 	 * 
 	 * @return The auto command to run based on the override values
 	 */
@@ -142,6 +145,10 @@ public class Robot extends TimedRobot {
 			return new SwitchRL();
 		case RobotMap.overRR:
 			return new SwitchRR();
+		case RobotMap.overBreakCL:
+			return new BreakCL();
+		case RobotMap.overBreakCR:
+			return new BreakCR();
 		case RobotMap.overTurn:
 			return new TurnTo(SmartDashboard.getNumber("AutoArg", 0));
 		case RobotMap.overNothing:
@@ -150,6 +157,15 @@ public class Robot extends TimedRobot {
 		}
 	}
 	
+	/**
+	 * Select the autonomous command best fitting to the circumstances
+	 * based on driver settings, position on the field, and the random
+	 * state of the nearest switch.
+	 * 
+	 * Meant to be run at the beginning of autonomous period.
+	 * 
+	 * @return The autonomous command found
+	 */
 	private Command selectAuto() {
 		
 		if(SmartDashboard.getBoolean("Override", false)) return autoOverride();
@@ -161,22 +177,19 @@ public class Robot extends TimedRobot {
 		switch(strategy) {
 		case RobotMap.strategyBreak:
 			if(position.equals(RobotMap.positionC)) {
-				return new ForwardLong();	//TODO change this to the appropriate command
+				return new BreakCR();
 			}else {
 				return new ForwardLong();
 			}
 		case RobotMap.strategyAny:	// Pay attention to fall-through
-			if(position == RobotMap.positionC) {
-				return
-						FieldMap.homeSwitch == 'L'
-							? new SwitchCL()
-							: new SwitchCR();
-			}
-			else if(position == RobotMap.positionL && FieldMap.homeSwitch == 'R') return new SwitchLR();
+			     if(position == RobotMap.positionL && FieldMap.homeSwitch == 'R') return new SwitchLR();
 			else if(position == RobotMap.positionR && FieldMap.homeSwitch == 'L') return new SwitchRL();
-		case RobotMap.strategyOurs:
+		case RobotMap.strategyOurs: // Including either side if we are center
 			return
-					position == RobotMap.positionC ? null
+					position == RobotMap.positionC ?
+							FieldMap.homeSwitch == 'L'
+								? new SwitchCL()
+								: new SwitchCR()
 				  :	position == RobotMap.positionL ?
 						  FieldMap.homeSwitch == 'L' ? new SwitchLL() : new ForwardLong() //TODO might need to change the name from ForwardLong
 				  : FieldMap.homeSwitch == 'R' ? new SwitchRR() : new ForwardLong(); //TODO might need to change the name from ForwardLong

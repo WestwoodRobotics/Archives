@@ -17,6 +17,10 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
  */
 public class RobotMap {
 	
+	public static final double robotWidth = 27;	// The width of the robot (from left to right side)
+	public static final double robotLength = 32;	// The length of the robot (from front to back)
+	public static final double bumperMod = 6;	// Difference in dimension after bumpers are added
+	
 	public static final double encoderPulses = 4096;
 	public static final double wheelDiameter = 6; // Diameter in inches
 	public static final double pulsesPerInch = encoderPulses / ((wheelDiameter) * 2 * Math.PI);
@@ -78,8 +82,7 @@ public class RobotMap {
 	public static final double armSpeedUp = 0.5;
 	public static final double armSpeedDown = -0.5;
 	
-	public static final double autoLineDistance = 0;
-	public static final double switchDistance = autoLineDistance;
+	public static final double driveTimeSpeed = 0.4;	// The drive speed of the time-based auto program
 	
 	// These values appear in the DriverStation for human input
 	// These are for comparison to the Networktables values
@@ -102,6 +105,8 @@ public class RobotMap {
 		overLR			= "SwitchLR",
 		overRL			= "SwitchRL",
 		overRR			= "SwitchRR",
+		overBreakCL		= "BreakCL",
+		overBreakCR		= "BreakCR",
 		overTurn		= "TurnTo",
 		overNothing		= "Nothing";
 	
