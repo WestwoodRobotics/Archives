@@ -2,8 +2,10 @@ package org.usfirst.frc.team2583.robot.commands.auto;
 
 import org.usfirst.frc.team2583.robot.FieldMap;
 import org.usfirst.frc.team2583.robot.RobotMap;
+import org.usfirst.frc.team2583.robot.RobotMap.Take;
+import org.usfirst.frc.team2583.robot.commands.AdjustClaw;
 import org.usfirst.frc.team2583.robot.commands.DriveDistance;
-import org.usfirst.frc.team2583.robot.commands.DriveTime;
+import org.usfirst.frc.team2583.robot.commands.Extend;
 import org.usfirst.frc.team2583.robot.commands.OperateIntake;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
 import org.usfirst.frc.team2583.robot.commands.TurnTo;
@@ -31,11 +33,11 @@ public class SwitchCR extends CommandGroup {
     	
     	addSequential(new DriveDistance(FieldMap.switchDistanceClose / 2)); // Drive half the distance towards the switch
     	addSequential(new TurnTo(90)); // Turn Right 90 degrees
-    	addSequential(new DriveDistance((FieldMap.switchLength / 2) - (FieldMap.plateLength / 2)));	// Drive up to align with the center of the plate
+    	addSequential(new DriveDistance((FieldMap.switchLength / 2) - (FieldMap.plateLength / 2) + 12 - (RobotMap.robotWidth / 2)));	// Drive up to align with the center of the plate
     	addSequential(new TurnTo(-90)); // Turn Left 90 degrees
     	addSequential(new DriveDistance(FieldMap.switchDistanceClose / 2)); // Drive the remaining distance to switch
-    	addSequential(new DriveTime(0.25));	// Drive for a bit longer, just to ensure we're touching the target
+    	addSequential(new Extend(Take.OUT));
     	addSequential(new OperateIntake(RobotMap.Take.OUT)); // Push PowerCube out of the robot and onto the switch
-    	
+    	addSequential(new AdjustClaw());
     }
 }

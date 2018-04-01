@@ -2,8 +2,9 @@ package org.usfirst.frc.team2583.robot.commands.auto;
 
 import org.usfirst.frc.team2583.robot.FieldMap;
 import org.usfirst.frc.team2583.robot.RobotMap;
+import org.usfirst.frc.team2583.robot.RobotMap.Take;
 import org.usfirst.frc.team2583.robot.commands.DriveDistance;
-import org.usfirst.frc.team2583.robot.commands.DriveTime;
+import org.usfirst.frc.team2583.robot.commands.Extend;
 import org.usfirst.frc.team2583.robot.commands.OperateIntake;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
 import org.usfirst.frc.team2583.robot.commands.TurnTo;
@@ -20,18 +21,19 @@ public class SwitchRR extends CommandGroup {
 
     public SwitchRR() {
     	
-    	if(DriveTrain.getInstance().getGear() == true){
+    	if(DriveTrain.getInstance().getGear()){
     		addSequential(new ShiftGears());
     	}
     	
-    	addSequential(new ForwardLong());	// Drive up to be parallel to the target
+    	addSequential(new DriveDistance(FieldMap.switchDistanceClose, 0.45));	// Drive up to be parallel to the target
     	addSequential(new TurnTo(-90));		// Turn to the left to face the target
     	
     	// Distance from the target in inches (placed as a separate variable for readability purposes
-    	double distanceFromTarget = FieldMap.scaleSpace - (FieldMap.cornerToSide + (RobotMap.robotLength + RobotMap.bumperMod) / 2);
+    	// Should be ~36.56 inches
+    	double distanceFromTarget = FieldMap.switchSpace - (FieldMap.cornerToSide + (RobotMap.robotLength + RobotMap.bumperMod) / 2);
     	
     	addSequential(new DriveDistance(distanceFromTarget));	// Drive up to the wall
-    	addSequential(new DriveTime(0.25));	// Ensure that we are actually pressing up against the wall
-    	addSequential(new OperateIntake(RobotMap.Take.OUT));	// Shoot out to release the cube
+    	addSequential(new Extend(Take.OUT));
+    	addSequential(new OperateIntake(Take.OUT));	// Shoot out to release the cube
     }
 }

@@ -7,11 +7,13 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import org.usfirst.frc.team2583.robot.commands.AdjustClaw;
 import org.usfirst.frc.team2583.robot.commands.EnterHighGear;
+import org.usfirst.frc.team2583.robot.commands.Extend;
+import org.usfirst.frc.team2583.robot.commands.LockArm;
 import org.usfirst.frc.team2583.robot.commands.OperateArm;
 import org.usfirst.frc.team2583.robot.commands.OperateIntake;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
-import org.usfirst.frc.team2583.robot.commands.StopArm;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -24,12 +26,17 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+	public static final int xBoxPort = 0;
+	public static final int jRightPort = 1;
+	public static final int jLeftPort = 2;
+	public static final int throttlePort = 3;
+	
 	// Joysticks
-	Joystick jRight = new Joystick(1);
-	Joystick jLeft	= new Joystick(2);
+	Joystick jRight = new Joystick(jRightPort);
+	Joystick jLeft	= new Joystick(jLeftPort);
 	
 	// Xbox Controller and buttons and stuff
-	XboxController x1 			= new XboxController(0);
+	XboxController x1 			= new XboxController(xBoxPort);
 	Button buttonA 				= new JoystickButton(x1, 1);
 	Button buttonB 				= new JoystickButton(x1, 2);
 	Button buttonX 				= new JoystickButton(x1, 3);
@@ -41,24 +48,38 @@ public class OI {
 	Button leftJoystickPress 	= new JoystickButton(x1, 9);
 	Button rightJoystickPress 	= new JoystickButton(x1, 10);
 	
+	Joystick throttle = new Joystick(throttlePort);
+	// Three buttons required to release the ramp
+	public final Button rampRelease1 = new JoystickButton(throttle, 1);
+	public final Button rampRelease2 = new JoystickButton(throttle, 2);
+	public final Button rampRelease3 = new JoystickButton(throttle, 3);
+	// Buttons to adjust the height of the ramp
+	public final Button rampUp		 = new JoystickButton(throttle, 4);
+	public final Button rampdown	 = new JoystickButton(throttle, 5);
+	
+	
 	// Joystick Buttons
 	Button jRightTrigg			= new JoystickButton(jRight, 1);
 	
 	public OI() {
 		buttonY.whileHeld(new OperateArm(RobotMap.Dir.UP));
 		buttonA.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
-		buttonB.whenPressed(new StopArm());
+		buttonB.whenPressed(new AdjustClaw());
+		
+		buttonStart.whenPressed(new Extend(RobotMap.Take.OUT));
+		buttonSelect.whenPressed(new Extend(RobotMap.Take.IN));
+		
+		buttonX.whenPressed(new LockArm());
 		
 		jRightTrigg.whenPressed(new EnterHighGear());
 		jRightTrigg.whenReleased(new ShiftGears());
 		
-		leftBumper.whileHeld(new OperateIntake(RobotMap.Take.IN));
-		rightBumper.whileHeld(new OperateIntake(RobotMap.Take.OUT));
+		leftBumper.whileHeld(new OperateIntake(RobotMap.Take.OUT));
+		rightBumper.whileHeld(new OperateIntake(RobotMap.Take.IN));
 		
 		if(rightBumper.get() == true){
 			DriveTrain.getInstance().shiftGear();
 		}
-		
 	}
 	
 	public double getJLY() {

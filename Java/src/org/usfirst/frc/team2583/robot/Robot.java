@@ -9,6 +9,7 @@ package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.commands.TurnTo;
 import org.usfirst.frc.team2583.robot.commands.UpdateDash;
+import org.usfirst.frc.team2583.robot.commands.auto.BackDrive;
 import org.usfirst.frc.team2583.robot.commands.auto.BreakCL;
 import org.usfirst.frc.team2583.robot.commands.auto.BreakCR;
 import org.usfirst.frc.team2583.robot.commands.auto.ForwardLong;
@@ -55,9 +56,7 @@ public class Robot extends TimedRobot {
 		CameraServer.getInstance().startAutomaticCapture();
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		comp.setClosedLoopControl(RobotMap.closedLoopControl);
-		
-		SmartDashboard.putData("Auto mode", m_chooser);
-		
+				
 		DriveTrain.getInstance().setGear(RobotMap.Gear.LOW); // Start out in low gear
 		
 		ud.start();
@@ -65,7 +64,7 @@ public class Robot extends TimedRobot {
 
 	/**
 	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
+  	 * You can use it to reset any subsystem information you want to clear when
 	 * the robot is disabled.
 	 */
 	@Override
@@ -96,11 +95,12 @@ public class Robot extends TimedRobot {
 		if (gameData.length() == 0) {
 			gameData = "LRL";  // in case we don't get it e.g. in testing
 		}
+		System.out.println(gameData);
 		
 		if(gameData.length() > 0) {
-			FieldMap.homeSwitch = gameData.charAt(0);
-			FieldMap.scale = gameData.charAt(1);
-			FieldMap.farSwitch = gameData.charAt(2);
+			FieldMap.homeSwitch = Character.toUpperCase(gameData.charAt(0));
+			FieldMap.scale = Character.toUpperCase(gameData.charAt(1));
+			FieldMap.farSwitch = Character.toUpperCase(gameData.charAt(2));
 		}
 		
 		m_autonomousCommand = selectAuto();
@@ -112,7 +112,7 @@ public class Robot extends TimedRobot {
 		 * = new MyAutoCommand(); break; case "Default Auto": default:
 		 * autonomousCommand = new ExampleCommand(); break; }
 		 */
-
+		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
@@ -130,31 +130,30 @@ public class Robot extends TimedRobot {
 	private Command autoOverride() {
 		String dashIn = SmartDashboard.getString("Override Select", RobotMap.overNothing);
 		
-		switch(dashIn) {
-		case RobotMap.overFL:
-			return new ForwardLong();
-		case RobotMap.overCL:
-			return new SwitchCL();
-		case RobotMap.overCR:
-			return new SwitchCR();
-		case RobotMap.overLL:
-			return new SwitchLL();
-		case RobotMap.overLR:
-			return new SwitchLR();
-		case RobotMap.overRL:
-			return new SwitchRL();
-		case RobotMap.overRR:
-			return new SwitchRR();
-		case RobotMap.overBreakCL:
-			return new BreakCL();
-		case RobotMap.overBreakCR:
-			return new BreakCR();
-		case RobotMap.overTurn:
-			return new TurnTo(SmartDashboard.getNumber("AutoArg", 0));
-		case RobotMap.overNothing:
-		default:
-			return null;			
-		}
+		return 
+		dashIn.equals(RobotMap.overFL) ?
+				new ForwardLong()
+	  :	dashIn.equals(RobotMap.overCL) ?
+				new SwitchCL()
+	  :	dashIn.equals(RobotMap.overCR) ?
+				new SwitchCR()
+	  :	dashIn.equals(RobotMap.overLL) ?
+				new SwitchLL()
+	  :	dashIn.equals(RobotMap.overLR) ?
+				new SwitchLR()
+	  :	dashIn.equals(RobotMap.overRL) ?
+				new SwitchRL()
+	  :	dashIn.equals(RobotMap.overRR) ?
+				new SwitchRR()
+	  :	dashIn.equals(RobotMap.overBreakCL) ?
+				new BreakCL()
+	  :	dashIn.equals(RobotMap.overBreakCR) ?
+				new BreakCR()
+	  :	dashIn.equals(RobotMap.overTurn) ?
+				new TurnTo(SmartDashboard.getNumber("AutoArg", 0))
+	  :	dashIn.equals(RobotMap.overNothing) ?
+			  	null
+	  : new ForwardLong();			
 	}
 	
 	/**
@@ -168,13 +167,22 @@ public class Robot extends TimedRobot {
 	 */
 	private Command selectAuto() {
 		
-		if(SmartDashboard.getBoolean("Override", false)) return autoOverride();
+		System.out.println("Selecting autonomous data...");
 		
-		String position = SmartDashboard.getString("StartPos", "Left");
-		String strategy = SmartDashboard.getString("Strategy", "Do nothing");
+		if(SmartDashboard.getBoolean("Override", false)) {
+			System.out.println("Overriding...");
+			return autoOverride();
+		}
+		
+		String position = SmartDashboard.getString("StartPos", RobotMap.positionL);
+		System.out.println("Our position: " + position);
+		String strategy = SmartDashboard.getString("Strategy", RobotMap.strategyBreak);
+		System.out.println("Our strategy: " + strategy);
 		
 		// TODO comment this massive block of horribleness below
 		switch(strategy) {
+		case RobotMap.strategyBackward:
+			return new BackDrive();
 		case RobotMap.strategyBreak:
 			if(position.equals(RobotMap.positionC)) {
 				return new BreakCR();
@@ -182,20 +190,26 @@ public class Robot extends TimedRobot {
 				return new ForwardLong();
 			}
 		case RobotMap.strategyAny:	// Pay attention to fall-through
-			     if(position == RobotMap.positionL && FieldMap.homeSwitch == 'R') return new SwitchLR();
-			else if(position == RobotMap.positionR && FieldMap.homeSwitch == 'L') return new SwitchRL();
+			     if(position.equals(RobotMap.positionL) && FieldMap.homeSwitch == 'R') return new SwitchLR();
+			else if(position.equals(RobotMap.positionR) && FieldMap.homeSwitch == 'L') return new SwitchRL();
 		case RobotMap.strategyOurs: // Including either side if we are center
-			return
-					position == RobotMap.positionC ?
-							FieldMap.homeSwitch == 'L'
-								? new SwitchCL()
-								: new SwitchCR()
-				  :	position == RobotMap.positionL ?
-						  FieldMap.homeSwitch == 'L' ? new SwitchLL() : new ForwardLong() //TODO might need to change the name from ForwardLong
-				  : FieldMap.homeSwitch == 'R' ? new SwitchRR() : new ForwardLong(); //TODO might need to change the name from ForwardLong
+			System.out.println("Check 0");
+			if(position.equals(RobotMap.positionC)) {
+				System.out.println("Check 1");
+				return FieldMap.homeSwitch == 'L'
+						? new SwitchCL()
+						: new SwitchCR();
+			}else if(position.equals(RobotMap.positionL)) {
+				System.out.println("Check 2");
+				return FieldMap.homeSwitch == 'L' ? new SwitchLL() : new SwitchLR();
+			}else {
+				System.out.println("Check 3");
+				return FieldMap.homeSwitch == 'R' ? new SwitchRR() : new SwitchRL();
+			}
 		case RobotMap.strategyNothing:
-		default:
 			return null;
+		default:
+			return new ForwardLong();
 		}
 		
 	}

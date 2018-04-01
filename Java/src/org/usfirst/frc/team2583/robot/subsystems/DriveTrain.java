@@ -105,7 +105,7 @@ public class DriveTrain extends Subsystem {
     }
     
     public boolean getGear() {
-    	return !sol.get();
+    	return sol.get();
     }
     
     /**

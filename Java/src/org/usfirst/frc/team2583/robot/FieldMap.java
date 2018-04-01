@@ -23,5 +23,5 @@ public class FieldMap {
 	public static final double plateLength = 36;	// Length of the switch's plates, measured parallel to the alliance wall
 	public static final double plateWidth = 48;		// Width of the switch's plates, measured perpendicular to the alliance wall
 	public static final double cornerToSide = 29.69; // The distance of the corner along the alliance wall from the side of the field
-	public static final double scaleSpace = 85.25;	// The space between the scale and the side of the field
+	public static final double switchSpace = 85.25;	// The space between the switch and the side of the field
 }

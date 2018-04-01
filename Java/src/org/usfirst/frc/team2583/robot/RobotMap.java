@@ -65,19 +65,17 @@ public class RobotMap {
 	
 	//Pneumatics control variables
 	public static final int 
-				armLockChannelA   = 0,
-				armLockChannelB   = 1,
-				leftRampChannelA  = 2,
-				leftRampChannelB  = 3,
-				rightRampChannelA = 4,
-				rightRampChannelB = 5,
-				gearShiftChannel  = 7;
+				armLockChannelA   	= 0,
+				armLockChannelB  	= 1,
+				clawChanel  		= 2,
+				extenderChannel  	= 3,
+				gearShiftChannel  	= 7;
 	public static final boolean closedLoopControl = true;
 	
 	public static final double deadbandLimit = 0.05;
 	
-	public static final double maxIntakeSpeedL = 0.9;
-	public static final double maxIntakeSpeedR = 0.9;
+	public static final double maxIntakeSpeedL = 0.7;
+	public static final double maxIntakeSpeedR = 0.7;
 	
 	public static final double armSpeedUp = 0.5;
 	public static final double armSpeedDown = -0.5;
@@ -93,7 +91,8 @@ public class RobotMap {
 		strategyNothing	= "Do nothing",
 		strategyBreak 	= "Break the baseline",
 		strategyAny		= "Go for the switch on any side",
-		strategyOurs	= "Go for the switch if it is on our side";
+		strategyOurs	= "Go for the switch if it is on our side",
+		strategyBackward= "Go backward";
 	
 	// These values appear in the Driverstation for human input
 	// These are for the override autonomous capability

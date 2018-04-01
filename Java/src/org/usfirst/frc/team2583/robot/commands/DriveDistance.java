@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2583.robot.commands;
 
+import org.usfirst.frc.team2583.robot.RobotMap.Gear;
 import org.usfirst.frc.team2583.robot.subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.PIDController;
@@ -15,10 +16,23 @@ public class DriveDistance extends Command {
 	private static final double P = 0.21,
 								I = 0,
 								D = 0.05,
-								tolerance = 0.2;
+								tolerance = 0.2; /* Tolerance in percentage that we will allow for this action;
+												  * Look here if the next action isn't executing.
+												  */
 	
 	DriveTrain dt_s = DriveTrain.getInstance();
 	private PIDController pid;
+	
+	public DriveDistance(double inches, double maxSpeed, boolean highGear) {
+		this(inches);
+		
+		if (highGear) DriveTrain.getInstance().setGear(Gear.HIGH);
+	}
+	
+	public DriveDistance(double inches, double maxSpeed) {
+		this(inches);
+		pid.setOutputRange(-maxSpeed, maxSpeed);
+	}
 	
     public DriveDistance(double inches) {
         requires(dt_s);
@@ -43,7 +57,8 @@ public class DriveDistance extends Command {
 			}
 		}, d -> dt_s.driveWheels(d, d));
         
-        pid.setOutputRange(-1, 1);
+        pid.setInputRange(-2 * inches, 2 * inches);
+        pid.setOutputRange(-0.5, 0.5);
         pid.setPercentTolerance(tolerance);
         pid.setSetpoint(inches);
         
@@ -64,13 +79,14 @@ public class DriveDistance extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return pid.onTarget();
+    	return pid.onTarget();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	pid.disable();
     	dt_s.driveWheels(0, 0);
+    	DriveTrain.getInstance().setGear(Gear.LOW);
     }
 
     // Called when another command which requires one or more of the same
@@ -78,5 +94,6 @@ public class DriveDistance extends Command {
     protected void interrupted() {
     	pid.disable();
     	dt_s.driveWheels(0, 0);
+    	DriveTrain.getInstance().setGear(Gear.LOW);
     }
 }

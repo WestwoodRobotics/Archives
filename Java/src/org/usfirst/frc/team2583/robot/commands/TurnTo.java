@@ -43,7 +43,8 @@ public class TurnTo extends Command {
 			}
     	}, d -> dt.turnRate(d));
         
-    	pid.setOutputRange(-1, 1);
+    	pid.setInputRange(-720, 720);
+    	pid.setOutputRange(-0.5, 0.5);
     	pid.setAbsoluteTolerance(absoluteTolerance);
     	pid.setSetpoint(degrees);
     	

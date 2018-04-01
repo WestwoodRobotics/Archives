@@ -1,41 +1,24 @@
 package org.usfirst.frc.team2583.robot.commands;
 
-import org.usfirst.frc.team2583.robot.RobotMap;
 import org.usfirst.frc.team2583.robot.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Moves the arm based on the input provided through the constructor method
+ *
  */
-public class OperateArm extends Command {
-	
-	RobotMap.Dir dir;
-	Arm ar = Arm.getInstance();
-	
-    public OperateArm(RobotMap.Dir d) {
-        requires(ar);
-        
-        dir = d;
+public class LockArm extends Command {
+
+    public LockArm() {
+        requires(Arm.getInstance());
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	switch(dir) {
-    	case UP:
-    		ar.setSpeed(RobotMap.armSpeedUp);
-    		if(ar.isLocked()) {
-            	ar.unlockArm();
-            }
-    		break;
-    	case DOWN:
-    		ar.setSpeed(RobotMap.armSpeedDown);
-    		if(ar.isLocked()) {
-            	ar.unlockArm();
-            }
-    		break;
-    	default:
-    		ar.setSpeed(0);
+    	if(Arm.getInstance().isLocked()) {
+        	Arm.getInstance().unlockArm();
+    	}else {
+    		Arm.getInstance().lockArm();
     	}
     }
 
@@ -45,7 +28,7 @@ public class OperateArm extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return true;
+        return true;
     }
 
     // Called once after isFinished returns true
