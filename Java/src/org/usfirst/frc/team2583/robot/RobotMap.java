@@ -21,6 +21,7 @@ public class RobotMap {
 	public static final double robotLength = 32;	// The length of the robot (from front to back)
 	public static final double bumperMod = 6;	// Difference in dimension after bumpers are added
 	
+	// Encoder, etc. values related to the wheels of the drivetrain
 	public static final double encoderPulses = 4096;
 	public static final double wheelDiameter = 6; // Diameter in inches
 	public static final double pulsesPerInch = encoderPulses / ((wheelDiameter) * 2 * Math.PI);
@@ -29,7 +30,16 @@ public class RobotMap {
 	public static final int    leftEncA		 = 2;
 	public static final int    leftEncB		 = 3;
 	
-	public static final int	   armUpperLimit = 4;
+	// Potentiometer, etc. values related to the arm
+	public static final double armPotMax 	= -1; // The maximum rotation (in degrees) of the potentiometer's range 
+	public static final double armMax 		= -1; // The maximum rotation (in degrees) of the robot's arm
+	public static final double armMin		= -1; // The minimum rotation (in degrees) of the robot's arm
+	public static final double scaleAngle	= -1; // The angle that the arm has to be at to deposit in the scale
+	public static final double armPotScale 	= -1; // The change in reading per degree of change in the potentiometer
+	public static final double armMaxRead	= armPotScale * armMax;
+	public static final double armMinRead 	= armPotScale * armMin;
+	
+	public static final double armMaxSpeed 	= 0.6;
 	
 	//Talon motors
 	public static final int leftTalon1  = 0;

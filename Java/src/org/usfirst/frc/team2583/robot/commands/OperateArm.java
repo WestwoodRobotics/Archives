@@ -24,15 +24,9 @@ public class OperateArm extends Command {
     	switch(dir) {
     	case UP:
     		ar.setSpeed(RobotMap.armSpeedUp);
-    		if(ar.isLocked()) {
-            	ar.unlockArm();
-            }
     		break;
     	case DOWN:
     		ar.setSpeed(RobotMap.armSpeedDown);
-    		if(ar.isLocked()) {
-            	ar.unlockArm();
-            }
     		break;
     	default:
     		ar.setSpeed(0);

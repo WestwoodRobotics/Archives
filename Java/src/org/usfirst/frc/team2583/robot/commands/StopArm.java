@@ -17,10 +17,6 @@ public class StopArm extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(ar.isLocked()) {
-    		ar.unlockArm();
-    	}
-    	
     	ar.stopArm();
     }
 
@@ -35,7 +31,7 @@ public class StopArm extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	ar.lockArm();
+    	
     }
 
     // Called when another command which requires one or more of the same

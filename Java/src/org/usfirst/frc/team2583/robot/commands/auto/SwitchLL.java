@@ -3,8 +3,8 @@ package org.usfirst.frc.team2583.robot.commands.auto;
 import org.usfirst.frc.team2583.robot.FieldMap;
 import org.usfirst.frc.team2583.robot.RobotMap;
 import org.usfirst.frc.team2583.robot.RobotMap.Take;
+import org.usfirst.frc.team2583.robot.commands.AdjustAngle;
 import org.usfirst.frc.team2583.robot.commands.DriveDistance;
-import org.usfirst.frc.team2583.robot.commands.Extend;
 import org.usfirst.frc.team2583.robot.commands.OperateIntake;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
 import org.usfirst.frc.team2583.robot.commands.TurnTo;
@@ -32,7 +32,7 @@ public class SwitchLL extends CommandGroup {
     	double distanceFromTarget = FieldMap.switchSpace - (FieldMap.cornerToSide + (RobotMap.robotLength + RobotMap.bumperMod) / 2);
     	
     	addSequential(new DriveDistance(distanceFromTarget, 0.9, true));	// Drive up to the wall
-    	addSequential(new Extend(Take.OUT));
+    	addSequential(new AdjustAngle(RobotMap.scaleAngle));
     	addSequential(new OperateIntake(Take.OUT));	// Shoot out to release the cube
     }
 }

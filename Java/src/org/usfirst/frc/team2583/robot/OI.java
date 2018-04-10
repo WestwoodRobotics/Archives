@@ -9,8 +9,6 @@ package org.usfirst.frc.team2583.robot;
 
 import org.usfirst.frc.team2583.robot.commands.AdjustClaw;
 import org.usfirst.frc.team2583.robot.commands.EnterHighGear;
-import org.usfirst.frc.team2583.robot.commands.Extend;
-import org.usfirst.frc.team2583.robot.commands.LockArm;
 import org.usfirst.frc.team2583.robot.commands.OperateArm;
 import org.usfirst.frc.team2583.robot.commands.OperateIntake;
 import org.usfirst.frc.team2583.robot.commands.ShiftGears;
@@ -65,11 +63,6 @@ public class OI {
 		buttonY.whileHeld(new OperateArm(RobotMap.Dir.UP));
 		buttonA.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
 		buttonB.whenPressed(new AdjustClaw());
-		
-		buttonStart.whenPressed(new Extend(RobotMap.Take.OUT));
-		buttonSelect.whenPressed(new Extend(RobotMap.Take.IN));
-		
-		buttonX.whenPressed(new LockArm());
 		
 		jRightTrigg.whenPressed(new EnterHighGear());
 		jRightTrigg.whenReleased(new ShiftGears());

@@ -5,10 +5,12 @@ import org.usfirst.frc.team2583.robot.commands.OperateArm;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 /**
  *
@@ -19,7 +21,8 @@ public class Arm extends Subsystem {
 	
 	final Value lockVal = DoubleSolenoid.Value.kForward;
 	final Value unlockVal = DoubleSolenoid.Value.kReverse;
-	private DoubleSolenoid lock = new DoubleSolenoid(RobotMap.armLockChannelA, RobotMap.armLockChannelB);
+	
+	Potentiometer pot = new AnalogPotentiometer(0, RobotMap.armPotMax, RobotMap.armMin);
 	
 	private Solenoid extender = new Solenoid(RobotMap.extenderChannel);
 	final boolean extendVal = true;
@@ -37,23 +40,21 @@ public class Arm extends Subsystem {
      * @param speed the speed for the motor to turn
      */
     public void setSpeed(double speed) {
+    	
+    	if(pot.get() >= RobotMap.armMax) {
+    		speed = Math.min(speed, 0);
+    	}else if(pot.get() >= RobotMap.armMin) {
+    		speed = Math.max(speed, 0);
+    	}
     	armMotor.set(speed);
+    }
+    
+    public double getPot() {
+    	return pot.get();
     }
     
     public void stopArm() {
     	armMotor.set(0.0);
-    }
-    
-    public boolean isLocked() {
-    	return lock.get() != unlockVal;
-    }
-    
-    public void lockArm() {
-    	lock.set(lockVal);
-    }
-    
-    public void unlockArm() {
-    	lock.set(unlockVal);
     }
     
     public void extend() {
