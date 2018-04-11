@@ -58,6 +58,9 @@ public class Robot extends TimedRobot {
 		comp.setClosedLoopControl(RobotMap.closedLoopControl);
 				
 		DriveTrain.getInstance().setGear(RobotMap.Gear.LOW); // Start out in low gear
+		DriveTrain.getInstance();
+		
+		OI.getInstance();
 		
 		ud.start();
 	}

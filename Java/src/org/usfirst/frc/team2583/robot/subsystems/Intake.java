@@ -3,7 +3,7 @@ package org.usfirst.frc.team2583.robot.subsystems;
 import org.usfirst.frc.team2583.robot.RobotMap;
 import org.usfirst.frc.team2583.robot.commands.OperateIntake;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -15,9 +15,13 @@ public class Intake extends Subsystem {
     private Spark leftWheel = new Spark(RobotMap.leftIntakeSpark);
     private Spark rightWheel = new Spark(RobotMap.rightIntakeSpark);
     
-    private Solenoid open = new Solenoid(RobotMap.clawChanel);
+    private DoubleSolenoid controller = new DoubleSolenoid(RobotMap.clawChannelA, RobotMap.clawChannelB);
+    
+    private static final DoubleSolenoid.Value open  = DoubleSolenoid.Value.kForward;
+    private static final DoubleSolenoid.Value close = DoubleSolenoid.Value.kReverse;
     
     public Intake() {
+    	setState(close);
     }
     
     public void initDefaultCommand() {
@@ -35,12 +39,20 @@ public class Intake extends Subsystem {
     	return leftWheel.get();
     }
     
-    public void toggleState() {
-    	open.set(!open.get());
+    public void setState(DoubleSolenoid.Value state) {
+    	controller.set(state);
     }
     
-    public boolean getState() {
-    	return open.get();
+    public void toggleState() {
+    	if(controller.get() == open) {
+    		controller.set(close);
+    	} else {
+    		controller.set(open);
+    	}
+    }
+    
+    public DoubleSolenoid.Value getState() {
+    	return controller.get();
     }
     
     private static Intake instance;

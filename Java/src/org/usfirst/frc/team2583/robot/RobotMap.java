@@ -77,8 +77,8 @@ public class RobotMap {
 	public static final int 
 				armLockChannelA   	= 0,
 				armLockChannelB  	= 1,
-				clawChanel  		= 2,
-				extenderChannel  	= 3,
+				clawChannelA  		= 2,
+				clawChannelB  		= 3,
 				gearShiftChannel  	= 7;
 	public static final boolean closedLoopControl = true;
 	
