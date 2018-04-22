@@ -54,6 +54,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		
 		CameraServer.getInstance().startAutomaticCapture();
+		CameraServer.getInstance().startAutomaticCapture();
+
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		comp.setClosedLoopControl(RobotMap.closedLoopControl);
 				
@@ -177,9 +179,9 @@ public class Robot extends TimedRobot {
 			return autoOverride();
 		}
 		
-		String position = SmartDashboard.getString("StartPos", RobotMap.positionL);
+		String position = SmartDashboard.getString("SmartDashboard/StartPos", RobotMap.positionL);
 		System.out.println("Our position: " + position);
-		String strategy = SmartDashboard.getString("Strategy", RobotMap.strategyBreak);
+		String strategy = SmartDashboard.getString("SmartDashboard/Strategy", RobotMap.strategyBreak);
 		System.out.println("Our strategy: " + strategy);
 		
 		// TODO comment this massive block of horribleness below

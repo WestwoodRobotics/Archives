@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team2583.robot;
 
+import org.usfirst.frc.team2583.robot.RobotMap.Dir;
+import org.usfirst.frc.team2583.robot.RobotMap.Take;
 import org.usfirst.frc.team2583.robot.commands.AdjustClaw;
 import org.usfirst.frc.team2583.robot.commands.EnterHighGear;
 import org.usfirst.frc.team2583.robot.commands.OperateArm;
@@ -33,6 +35,13 @@ public class OI {
 	Joystick jRight = new Joystick(jRightPort);
 	Joystick jLeft	= new Joystick(jLeftPort);
 	
+	// TODO change these
+	Button rightR = new JoystickButton(jRight, 4);
+	Button rightL = new JoystickButton(jRight, 3);
+	Button leftR = new JoystickButton(jLeft, 4);
+	Button leftLower = new JoystickButton(jLeft, 2);
+	Button rightLower = new JoystickButton(jRight, 2);
+	
 	// Xbox Controller and buttons and stuff
 	XboxController x1 			= new XboxController(xBoxPort);
 	Button buttonA 				= new JoystickButton(x1, 1);
@@ -46,16 +55,6 @@ public class OI {
 	Button leftJoystickPress 	= new JoystickButton(x1, 9);
 	Button rightJoystickPress 	= new JoystickButton(x1, 10);
 	
-	Joystick throttle = new Joystick(throttlePort);
-	// Three buttons required to release the ramp
-	public final Button rampRelease1 = new JoystickButton(throttle, 1);
-	public final Button rampRelease2 = new JoystickButton(throttle, 2);
-	public final Button rampRelease3 = new JoystickButton(throttle, 3);
-	// Buttons to adjust the height of the ramp
-	public final Button rampUp		 = new JoystickButton(throttle, 4);
-	public final Button rampdown	 = new JoystickButton(throttle, 5);
-	
-	
 	// Joystick Buttons
 	Button jRightTrigg			= new JoystickButton(jRight, 1);
 	
@@ -63,6 +62,13 @@ public class OI {
 		buttonY.whileHeld(new OperateArm(RobotMap.Dir.UP));
 		buttonA.whileHeld(new OperateArm(RobotMap.Dir.DOWN));
 		buttonB.whenPressed(new AdjustClaw());
+				
+		// First operator overrides
+		leftLower.whileHeld(new OperateArm(Dir.DOWN));
+		leftR.whileHeld(new OperateArm(Dir.UP));
+		rightR.whileHeld(new OperateIntake(Take.OUT));
+		rightL.whileHeld(new OperateIntake(Take.IN));
+		rightLower.whenPressed(new AdjustClaw());
 		
 		jRightTrigg.whenPressed(new EnterHighGear());
 		jRightTrigg.whenReleased(new ShiftGears());
@@ -81,6 +87,10 @@ public class OI {
 	
 	public double getJRY() {
 		return -jRight.getY();
+	}
+	
+	public boolean getLeftTrigger() {
+		return jLeft.getRawButton(1);
 	}
 	
 	private static OI instance;

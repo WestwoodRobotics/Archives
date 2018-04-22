@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2583.robot.commands;
 
 import org.usfirst.frc.team2583.robot.RobotMap;
+import org.usfirst.frc.team2583.robot.RobotMap.Dir;
 import org.usfirst.frc.team2583.robot.subsystems.Arm;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -13,7 +14,15 @@ public class OperateArm extends Command {
 	RobotMap.Dir dir;
 	Arm ar = Arm.getInstance();
 	
-    public OperateArm(RobotMap.Dir d) {
+	private boolean willTimeout = false;
+	
+	public OperateArm(Dir d, double seconds) {
+		requires(ar);
+		willTimeout = true;
+		setTimeout(seconds);
+	}
+	
+    public OperateArm(Dir d) {
         requires(ar);
         
         dir = d;
@@ -39,7 +48,7 @@ public class OperateArm extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	return true;
+    	return !willTimeout || isTimedOut();
     }
 
     // Called once after isFinished returns true

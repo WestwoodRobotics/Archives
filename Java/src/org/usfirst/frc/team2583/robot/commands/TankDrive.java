@@ -17,6 +17,8 @@ public class TankDrive extends Command {
 	
 	private double leftSpd;
 	private double rightSpd;
+	
+	private boolean reversed;
 		
     public TankDrive() {
         requires(dt_s);
@@ -35,7 +37,9 @@ public class TankDrive extends Command {
     	leftSpd = OI.getInstance().getJLY();
     	rightSpd = OI.getInstance().getJRY();
     	
-    	dt_s.driveWheels(leftSpd, rightSpd);
+    	reversed = OI.getInstance().getLeftTrigger();
+    	
+    	dt_s.driveWheels((reversed ? -rightSpd : leftSpd), (reversed ? -leftSpd : rightSpd));
     }
 
     // Make this return true when this Command no longer needs to run execute()

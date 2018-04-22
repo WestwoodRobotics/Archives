@@ -5,9 +5,7 @@ import org.usfirst.frc.team2583.robot.commands.OperateArm;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 
 /**
  *
@@ -15,9 +13,7 @@ import edu.wpi.first.wpilibj.interfaces.Potentiometer;
 public class Arm extends Subsystem {
 
 	private WPI_TalonSRX armMotor = new WPI_TalonSRX(RobotMap.armTalon);
-	
-	Potentiometer pot = new AnalogPotentiometer(0, RobotMap.armPotMax, RobotMap.armMin);
-	
+		
 	final boolean extendVal = true;
 	
 	/**
@@ -33,17 +29,7 @@ public class Arm extends Subsystem {
      * @param speed the speed for the motor to turn
      */
     public void setSpeed(double speed) {
-    	
-    	if(pot.get() >= RobotMap.armMax) {
-    		speed = Math.min(speed, 0);
-    	}else if(pot.get() >= RobotMap.armMin) {
-    		speed = Math.max(speed, 0);
-    	}
     	armMotor.set(speed);
-    }
-    
-    public double getPot() {
-    	return pot.get();
     }
     
     public void stopArm() {
