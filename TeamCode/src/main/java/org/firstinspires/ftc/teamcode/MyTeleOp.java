@@ -45,64 +45,26 @@ public class MyTeleOp extends OpMode {
     @Override
     public void loop() {
 
-        //first spot is frontLeft's power
-        //second spot is frontRight's power
-        //third spot is backLeft's power
-        //fourth spot is backRight's power
-        double[] powerArray = new double[4];
-
-        //MEASURED IN RADIANS!!
-        double angle = 0;
-cd
         //for simplicity and easier readability
         double leftStickX = gamepad1.left_stick_x;
         double leftStickY = gamepad1.left_stick_y;
-
         double turnNum = 0;
 
-        if (gamepad1.right_bumper && !gamepad1.left_bumper) {
-            turnNum = 1;
-        } else if (!gamepad1.right_bumper && gamepad1.left_bumper) {
+        if (gamepad1.left_bumper && !gamepad1.right_bumper) {
             turnNum = -1;
+        } else if (!gamepad1.left_bumper && gamepad1.right_bumper) {
+            turnNum = 1;
         } else {
             turnNum = 0;
         }
 
-        if (turnNum > 0) {                              //
-            powerArray = new double[] {1, 1, 1, 1};
-        } else if (turnNum < 0) {
-
-        }
-
-        /*
-        if (leftStickX > 0 && leftStickY == 0) {//positive x axis
-            powerArray = new double[] {leftStickX, -leftStickX, -leftStickX, leftStickX};
-        } else if (leftStickX < 0 && leftStickY == 0) {//negative x axis
-            powerArray = new double[] {leftStickX, -leftStickX, -leftStickX, leftStickX};
-        } else if (leftStickX == 0 && leftStickY > 0) {//
-            powerArray = new double[] {-leftStickY, -leftStickY, -leftStickY, -leftStickY};
-        } else if (leftStickX == 0 && leftStickY < 0) {
-            powerArray = new double[] {-leftStickY, -leftStickY, -leftStickY, -leftStickY};
-        } else if (leftStickX > 0 && leftStickY > 0) {
-            angle = Math.atan(-leftStickY / leftStickX) + 2 * Math.PI;
-
-        } else if (leftStickX > 0 && leftStickY < 0) {
-
-        } else if (leftStickX < 0 && leftStickY > 0) {
-
-        } else if (leftStickX < 0 && leftStickY < 0) {
-
-        } else {
-            powerArray = new double[] {0, 0, 0, 0};
-        }
-        */
         //retrieve power values of the motors using the powerArray[] array
-        frontLeft.setPower(powerArray[0]);
-        frontRight.setPower(powerArray[1]);
-        backLeft.setPower(powerArray[2]);
-        backRight.setPower(powerArray[3]);
+        frontLeft.setPower(leftStickY - turnNum - leftStickX);
+        frontRight.setPower(leftStickY - turnNum + leftStickX);
+        backLeft.setPower(leftStickY + turnNum + leftStickX);
+        backRight.setPower(leftStickY + turnNum - leftStickX);
 
-        //show the elapsed game time and wheel power.
+        //show the elapsed game time and wheel power
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.addData("Motors", "left (%.2f), right (%.2f)", leftPower, rightPower);
     }
