@@ -64,7 +64,7 @@ public class OpModeCC extends OpMode
         backRightPower = gamepad1.left_stick_x + (gamepad1.left_stick_y*-1) - gamepad1.right_stick_x;
 
         //Keep the motor powers between -1 and 1 (inclusive) without changing the proportion between the values
-        double greatestPower = Math.abs(FrontLeftPower);
+        double greatestPower = Math.abs(frontLeftPower);
         if (Math.abs(frontRightPower) > greatestPower) {
             greatestPower = Math.abs(frontRightPower);
         }
