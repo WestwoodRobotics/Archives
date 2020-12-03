@@ -8,9 +8,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name = "OpMode", group = "Iterative Opmode")
+@TeleOp(name = "TeleOp2", group = "Iterative Opmode")
 
-public class MyTeleOp extends OpMode {
+public class ArrowheadTeleOp extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //initialize motors
@@ -82,7 +82,13 @@ public class MyTeleOp extends OpMode {
             shooter.setPower(0);
         }
 
-        //intake controls
+        /*
+        intake controls:
+        a -- right forward
+        b -- right backward
+        y -- left forward
+        x -- right forward
+        */
         if (gamepad2.a) {
             intakeRight.setPower(1);
         } else if (gamepad2.b) {
@@ -99,11 +105,11 @@ public class MyTeleOp extends OpMode {
             intakeLeft.setPower(0);
         }
 
-        //set powers for all motors
-        double frontLeftPower = leftStickY + leftStickX + turnNum ;
-        double frontRightPower = leftStickY - leftStickX - turnNum;
-        double backLeftPower = leftStickY - leftStickX + turnNum;
-        double backRightPower = leftStickY + leftStickX - turnNum;
+        //set powers for all motors accounting for weird orientation
+        double frontLeftPower = -leftStickY + leftStickX + turnNum ;
+        double frontRightPower = leftStickY + leftStickX - turnNum;
+        double backLeftPower = leftStickY + leftStickX + turnNum;
+        double backRightPower = -leftStickY + leftStickX - turnNum;
         double maxPower = Math.max(Math.max(Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower)), Math.abs(backLeftPower)), Math.abs(backRightPower));
 
         //scales down power variables to fit within range [-1, 1]
