@@ -70,7 +70,7 @@ public class ArrowheadTeleOp extends OpMode {
         }
 
         //sets power of arm motor to left stick y of controller 2
-        arm.setPower(gamepad1.left_stick_y);
+        arm.setPower(gamepad2.left_stick_y);
 
         //left trigger reverses shooter
         //right trigger shoots
