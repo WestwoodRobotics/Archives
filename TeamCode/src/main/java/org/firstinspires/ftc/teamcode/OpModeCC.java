@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
+@TeleOp(name="Hunga Munga TeleOp", group="Iterative Opmode")
 public class OpModeCC extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
