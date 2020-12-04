@@ -6,8 +6,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import javax.swing.JOptionPane;
-
 @TeleOp(name="Basic: Iterative OpMode", group="Iterative Opmode")
 public class OpModeCC extends OpMode
 {
@@ -25,8 +23,8 @@ public class OpModeCC extends OpMode
 
     @Override
     public void init() {
-        //initialize your motors here using the hardwareMap variable and the .get method within it.
-        //Map the motor objects to the physical motors using the control hub
+        /*initialize your motors here using the hardwareMap variable and the .get method within it.
+        Map the motor objects to the physical motors using the control hub*/
         frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeft");
         frontRightDrive = hardwareMap.get(DcMotor.class,"frontRight");
         backLeftDrive = hardwareMap.get(DcMotor.class,"backLeft");
@@ -53,9 +51,9 @@ public class OpModeCC extends OpMode
 
     @Override
     public void loop() {
-        //use the left stick of gamepad1 in order to find what angle the left stick is at.
-        //use gamepad1.left_stick_x and gamepad1.left_stick_y to get the current x and y positions
-        //of the left stick on the first gamepad.
+        /*use the left stick of gamepad1 in order to find what angle the left stick is at.
+        use gamepad1.left_stick_x and gamepad1.left_stick_y to get the current x and y positions
+        of the left stick on the first gamepad.*/
 
         //Get the values of the joystick input filtered through the corresponding equation for each wheel/motor
         frontLeftPower = gamepad1.left_stick_x + (gamepad1.left_stick_y*-1) + gamepad1.right_stick_x;
