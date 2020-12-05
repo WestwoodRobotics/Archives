@@ -47,6 +47,8 @@ public class OpModeCC extends OpMode
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        stop();
     }
 
     @Override
@@ -56,10 +58,10 @@ public class OpModeCC extends OpMode
         of the left stick on the first gamepad.*/
 
         //Get the values of the joystick input filtered through the corresponding equation for each wheel/motor
-        frontLeftPower = gamepad1.left_stick_x + (gamepad1.left_stick_y*-1) + gamepad1.right_stick_x;
-        frontRightPower = (gamepad1.left_stick_y*-1) - gamepad1.left_stick_x - gamepad1.right_stick_x;
-        backLeftPower = (gamepad1.left_stick_y*-1) - gamepad1.left_stick_x + gamepad1.right_stick_x;
-        backRightPower = gamepad1.left_stick_x + (gamepad1.left_stick_y*-1) - gamepad1.right_stick_x;
+        frontLeftPower = gamepad1.left_stick_x - gamepad1.left_stick_y + gamepad1.right_stick_x;
+        frontRightPower = -gamepad1.left_stick_x - gamepad1.left_stick_y - gamepad1.right_stick_x;
+        backLeftPower = -gamepad1.left_stick_x - gamepad1.left_stick_y + gamepad1.right_stick_x;
+        backRightPower = gamepad1.left_stick_x - gamepad1.left_stick_y - gamepad1.right_stick_x;
 
         //Keep the motor powers between -1 and 1 (inclusive) without changing the proportion between the values
         double greatestPower = Math.abs(frontLeftPower);
@@ -79,14 +81,32 @@ public class OpModeCC extends OpMode
             backRightPower /= greatestPower;
         }
 
+        if (gamepad1.left_bumper){
+            frontLeftPower *= 0.5;
+            frontRightPower *= 0.5;
+            backLeftPower *= 0.5;
+            backRightPower *= 0.5;
+        }
+
         //Set the motor powers to their corresponding values
         frontLeftDrive.setPower(frontLeftPower);
         frontRightDrive.setPower(frontRightPower);
         backLeftDrive.setPower(backLeftPower);
         backRightDrive.setPower(backRightPower);
 
-
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
+    }
+
+    public void stop(){
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        frontLeftDrive.setPower(0);
+        frontLeftDrive.setPower(0);
+        frontLeftDrive.setPower(0);
+        frontLeftDrive.setPower(0);
     }
 }
