@@ -10,10 +10,10 @@ import com.qualcomm.robotcore.util.Range;
 public class OpModeCC extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor frontLeftDrive;
-    private DcMotor frontRightDrive;
-    private DcMotor backLeftDrive;
-    private DcMotor backRightDrive;
+    public DcMotor frontLeftDrive;
+    public DcMotor frontRightDrive;
+    public DcMotor backLeftDrive;
+    public DcMotor backRightDrive;
 
 
     private double frontLeftPower;
@@ -25,10 +25,10 @@ public class OpModeCC extends OpMode
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeft");
-        frontRightDrive = hardwareMap.get(DcMotor.class,"frontRight");
-        backLeftDrive = hardwareMap.get(DcMotor.class,"backLeft");
-        backRightDrive = hardwareMap.get(DcMotor.class,"backRight");
+        frontLeftDrive = hardwareMap.get(DcMotor.class,"leftFront");
+        frontRightDrive = hardwareMap.get(DcMotor.class,"rightFront");
+        backLeftDrive = hardwareMap.get(DcMotor.class,"leftBack");
+        backRightDrive = hardwareMap.get(DcMotor.class,"rightBack");
 
 
         //Set the motor direction
@@ -47,6 +47,8 @@ public class OpModeCC extends OpMode
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        stop();
     }
 
     @Override
@@ -56,10 +58,10 @@ public class OpModeCC extends OpMode
         of the left stick on the first gamepad.*/
 
         //Get the values of the joystick input filtered through the corresponding equation for each wheel/motor
-        frontLeftPower = gamepad1.left_stick_x + (gamepad1.left_stick_y*-1) + gamepad1.right_stick_x;
-        frontRightPower = (gamepad1.left_stick_y*-1) - gamepad1.left_stick_x - gamepad1.right_stick_x;
-        backLeftPower = (gamepad1.left_stick_y*-1) - gamepad1.left_stick_x + gamepad1.right_stick_x;
-        backRightPower = gamepad1.left_stick_x + (gamepad1.left_stick_y*-1) - gamepad1.right_stick_x;
+        frontLeftPower =  gamepad1.left_stick_y - gamepad1.right_stick_x - gamepad1.left_stick_x;
+        frontRightPower=  gamepad1.left_stick_y + gamepad1.right_stick_x + gamepad1.left_stick_x;
+        backLeftPower  = -gamepad1.left_stick_y + gamepad1.right_stick_x - gamepad1.left_stick_x;
+        backRightPower = -gamepad1.left_stick_y - gamepad1.right_stick_x + gamepad1.left_stick_x;
 
         //Keep the motor powers between -1 and 1 (inclusive) without changing the proportion between the values
         double greatestPower = Math.abs(frontLeftPower);
@@ -88,5 +90,17 @@ public class OpModeCC extends OpMode
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
+    }
+
+    public void stop() {
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
     }
 }
