@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -46,7 +47,7 @@ public class OpModeCC extends OpMode
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        intakeMotor.setDirection(DcMotor.Direction.FORWARD);
+        intakeMotor.setDirection(DcMotor.Direction.REVERSE);
 
 
         //Set the motor powers to 0 by default
@@ -114,6 +115,19 @@ public class OpModeCC extends OpMode
         frontRightDrive.setPower(frontRightPower);
         backLeftDrive.setPower(backLeftPower);
         backRightDrive.setPower(backRightPower);
+
+
+        //When LB or RB is pressed turn the intake on or off and change the variable to match the current state
+        if (gamepad2.left_bumper || gamepad2.right_bumper) {
+            if (intakeOn) {
+                intakeMotor.setPower(0);
+                intakeOn = false;
+            } else {
+                intakeMotor.setPower(1);
+                intakeOn = true;
+            }
+        }
+
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
