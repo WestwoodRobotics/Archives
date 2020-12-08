@@ -43,13 +43,13 @@ public class teleop extends OpMode
         rightBackDrive = hardwareMap.get(DcMotor.class, "rightBack");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFront");
         leftFrontDrive = hardwareMap.get(DcMotor.class, "leftFront");
-//        conveyorMotor = hardwareMap.get(DcMotor.class, "conveyorMotor");
-//        shooterMotor = hardwareMap.get(DcMotor.class,"shooterMotor");
-//        intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
-//
-//        wobbleClaw = hardwareMap.get(Servo.class,"wobbleClaw");
-//        wobbleClaw2 = hardwareMap.get(Servo.class,"wobbleClaw2");
-//        shooterAngle = hardwareMap.get(Servo.class,"shooterAngle");
+        conveyorMotor = hardwareMap.get(DcMotor.class, "conveyorMotor");
+        shooterMotor = hardwareMap.get(DcMotor.class,"shooterMotor");
+        intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
+
+        wobbleClaw = hardwareMap.get(Servo.class,"wobbleClaw");
+        wobbleClaw2 = hardwareMap.get(Servo.class,"wobbleClaw2");
+        shooterAngle = hardwareMap.get(Servo.class,"shooterAngle");
 
 
 

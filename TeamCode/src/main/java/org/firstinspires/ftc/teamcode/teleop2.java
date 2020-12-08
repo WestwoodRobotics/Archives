@@ -101,7 +101,7 @@ public class teleop2 extends OpMode
            greatestPower = Math.abs(leftBackPower);
         }
 
-        if (greatestPower != 0) {
+        if (greatestPower !=0) {
             rightBackPower /= greatestPower;
             rightFrontPower /= greatestPower;
             leftBackPower /= greatestPower;
