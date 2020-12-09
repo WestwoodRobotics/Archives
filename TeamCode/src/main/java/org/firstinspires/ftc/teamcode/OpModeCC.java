@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
@@ -24,21 +25,35 @@ public class OpModeCC extends OpMode
     private double backRightPower;
 
     //Initialize intake motor and create the power variable
-    private DcMotor intakeMotor;
+    public DcMotor intakeMotor;
     private double intakeMotorPower;
 
-    private boolean intakeOn;
+    //Initialize the servo for opening and closing the claw
+    public Servo clawServo;
+
+    //Boolean to store if the claw is open or closed as well as a doubles for setting the claw servo's position
+    private boolean isClawOpen;
+    private double clawServoPosition;
+    private double clawOpenPosition;
+    private double clawClosedPosition;
+
+    //Boolean to store if the intake is on or off
+    private boolean isIntakeOn;
+
+
 
     @Override
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotor.class,"leftFront");
-        frontRightDrive = hardwareMap.get(DcMotor.class,"rightFront");
-        backLeftDrive = hardwareMap.get(DcMotor.class,"leftBack");
-        backRightDrive = hardwareMap.get(DcMotor.class,"rightBack");
+        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotor.class,"frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
 
-        intakeMotor = hardwareMap.get(DcMotor.class,"intake");
+        intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
+
+        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
 
         //Set the motor directions
@@ -59,9 +74,15 @@ public class OpModeCC extends OpMode
         //Set the zero power behavior of the motors to stop quickly
         stop();
 
-        //Create a boolean to store rather or not the intake is turned on or off, and set it to false by default
-        intakeOn = false;
+        //Set the default values for toggle control booleans such as if the intake is on or off or if the claw is open or closed
+        isIntakeOn = false;
+        isClawOpen = true;
 
+        //Set the minimum and maximum values for the claw servo and set the claw servo position to the open position by default
+        clawClosedPosition = 0;
+        clawOpenPosition = 0.5;
+
+        //Set up telemetry
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
@@ -119,14 +140,26 @@ public class OpModeCC extends OpMode
 
         //When LB or RB is pressed turn the intake on or off and change the variable to match the current state
         if (gamepad2.left_bumper || gamepad2.right_bumper) {
-            if (intakeOn) {
+            if (isIntakeOn) {
                 intakeMotor.setPower(0);
-                intakeOn = false;
-            } else {
+                isIntakeOn = false;
+            } else if (!isIntakeOn) {
                 intakeMotor.setPower(1);
-                intakeOn = true;
+                isIntakeOn = true;
             }
         }
+
+
+        //When B is pressed open or close the claw
+        if (gamepad2.b && isClawOpen) {
+            clawServoPosition = clawClosedPosition;
+            isClawOpen = false;
+        } else if (gamepad2.b && !isClawOpen) {
+            clawServoPosition = clawOpenPosition;
+            isClawOpen = true;
+        }
+
+        clawServo.setPosition(clawServoPosition);
 
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
