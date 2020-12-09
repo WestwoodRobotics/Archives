@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.ServoImpl;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
-
+//Assumes robot moves 3ft every 5 seconds
 @Autonomous(name="AutoRLWP", group="Linear Opmode")
 public class autoRLWP extends LinearOpMode {
 
@@ -60,11 +60,15 @@ public class autoRLWP extends LinearOpMode {
         shooterAngle.setDirection(CRServoImpl.Direction.FORWARD);
 
         waitForStart();
-        autonfunctionsR functions = new autonfunctionsR("Hello!");
+        autonfunctionsR functions = new autonfunctionsR( leftBackDrive, rightBackDrive, leftFrontDrive,
+                rightFrontDrive, conveyorMotor, shooterMotor,intakeMotor,
+                wobbleClaw, wobbleClaw2, shooterAngle, runtime);
         runtime.reset();
+
 
         while (opModeIsActive()) {
 
+            functions.moveForward(24);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
