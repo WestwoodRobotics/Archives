@@ -39,18 +39,47 @@ public class ArrowheadAuton extends LinearOpMode {
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        //brake
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
 
+        AutonMethods methods = new AutonMethods(frontLeft, frontRight, backLeft, backRight);
+
         while (opModeIsActive()) {
 
+            /*
             //assuming start pos is at
             frontBack(1, 5);
-            rightLeft(1, 5);
+            rightLeft(1, 5);*/
         }
     }
 
-    public void frontBack(double speed, double time) {
+    /*public void frontBackNew(double power, int distance) {
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeft.setTargetPosition(distance);
+        frontRight.setTargetPosition(distance);
+        backLeft.setTargetPosition(distance);
+        backRight.setTargetPosition(distance);
+
+        while (runtime.seconds() < time) {
+            frontLeft.setPower(speed);
+            frontRight.setPower(speed);
+            backLeft.setPower(speed);
+            backRight.setPower(speed);
+        }
+
+        brakeAllMotors();
+    }*/
+
+    /*public void frontBack(double speed, double time) {
         runtime.reset();
 
         while (runtime.seconds() < time) {
@@ -61,7 +90,7 @@ public class ArrowheadAuton extends LinearOpMode {
         }
 
         brakeAllMotors();
-    }
+    }*/
 
     public void rightLeft(double speed, double time) {
         runtime.reset();
