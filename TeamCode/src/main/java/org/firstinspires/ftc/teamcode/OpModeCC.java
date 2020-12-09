@@ -159,6 +159,7 @@ public class OpModeCC extends OpMode
             isClawOpen = true;
         }
 
+        //Set the position of the servo
         clawServo.setPosition(clawServoPosition);
 
 
