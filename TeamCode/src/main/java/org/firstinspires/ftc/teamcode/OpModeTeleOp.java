@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Hunga Munga TeleOp", group="Iterative Opmode")
-public class OpModeCC extends OpMode
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Hunga Munga TeleOp", group="Iterative Opmode")
+public class OpModeTeleOp extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
     //Initialize drive train motors
@@ -39,7 +39,6 @@ public class OpModeCC extends OpMode
 
     //Boolean to store if the intake is on or off
     private boolean isIntakeOn;
-
 
 
     @Override
