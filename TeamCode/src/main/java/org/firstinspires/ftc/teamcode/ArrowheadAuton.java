@@ -55,6 +55,8 @@ public class ArrowheadAuton extends LinearOpMode {
             //assuming start pos is at
             frontBack(1, 5);
             rightLeft(1, 5);*/
+
+            methods.setToUsingEncoders();
         }
     }
 
