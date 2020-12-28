@@ -43,6 +43,11 @@ public class OpModeAuton extends OpMode
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
+        //Set zero power behavior
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //Set the motor powers to 0 by default
         frontLeftPower = 0;
@@ -58,6 +63,8 @@ public class OpModeAuton extends OpMode
         //Set up telemetry
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        AutonFunctions autFunc = new AutonFunctions(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
     }
 
 
@@ -68,15 +75,10 @@ public class OpModeAuton extends OpMode
 
 
     public void stop() {
-        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         frontLeftDrive.setPower(0);
-        frontLeftDrive.setPower(0);
-        frontLeftDrive.setPower(0);
-        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
     }
 
 }

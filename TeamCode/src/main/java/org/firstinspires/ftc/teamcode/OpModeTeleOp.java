@@ -173,8 +173,8 @@ public class OpModeTeleOp extends OpMode
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftDrive.setPower(0);
-        frontLeftDrive.setPower(0);
-        frontLeftDrive.setPower(0);
-        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
     }
 }
