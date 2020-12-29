@@ -26,6 +26,7 @@ public class OpModeAuton extends OpMode
     private double backLeftPower;
     private double backRightPower;
 
+    AutonFunctions autFunc = new AutonFunctions(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
 
     @Override
     public void init() {
@@ -64,13 +65,28 @@ public class OpModeAuton extends OpMode
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        AutonFunctions autFunc = new AutonFunctions(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
     }
 
 
     @Override
     public void loop() {
-
+        //forwards 54 inches; front of the robot will be at the 3rd square line
+        //spin and shoot 3 times
+        //turn 22.28 degrees; 24 - 18.5 + 24 = 29.5, tan^-1(29.5/72) = 22.28
+        //shoot
+        //turn 4.918 degrees; 24 - 11 + 24 = 37, tan^-1(37/72) = 27.198, 27.198 - 22.28 = 4.918
+        //shoot
+        //turn 4.520 degrees; 24 - 3.5 + 24 = 44.5, tan^-1(44.5/72) = 31.718, 31.718 - 27.198 = 4.520
+        //shoot
+        //forwards 12 inches; get on the line
+        autFunc.moveForward(54, 1);
+        autFunc.turnCenterCounterClock(22.28);
+        autFunc.shoot();
+        autFunc.turnCenterCounterClock(4.918);
+        autFunc.shoot();
+        autFunc.turnCenterCounterClock(4.520);
+        autFunc.shoot();
+        autFunc.moveForward(12,1);
     }
 
 
@@ -80,5 +96,4 @@ public class OpModeAuton extends OpMode
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
     }
-
 }
