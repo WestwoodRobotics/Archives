@@ -19,6 +19,11 @@ public class OpModeAuton extends OpMode
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
 
+    //Initialize shooter motors and servos
+    public Servo shooterBlocker;
+    public Servo shooterPusher;
+    public DcMotor shooterMotor;
+    public DcMotor shooterAngler;
 
     //Create motor power variables for drive train motors
     private double frontLeftPower;
@@ -26,7 +31,7 @@ public class OpModeAuton extends OpMode
     private double backLeftPower;
     private double backRightPower;
 
-    AutonFunctions autFunc = new AutonFunctions(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
+    AutonFunctions autFunc = new AutonFunctions(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler);
 
     @Override
     public void init() {
@@ -80,11 +85,11 @@ public class OpModeAuton extends OpMode
         //shoot
         //forwards 12 inches; get on the line
         autFunc.moveForward(54, 1);
-        autFunc.turnCenterCounterClock(22.28);
+        autFunc.turnFrontCenterCounterClock(22.28);
         autFunc.shoot();
-        autFunc.turnCenterCounterClock(4.918);
+        autFunc.turnFrontCenterCounterClock(4.918);
         autFunc.shoot();
-        autFunc.turnCenterCounterClock(4.520);
+        autFunc.turnFrontCenterCounterClock(4.520);
         autFunc.shoot();
         autFunc.moveForward(12,1);
     }
