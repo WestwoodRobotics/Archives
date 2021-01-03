@@ -45,7 +45,7 @@ public class AutonBlue extends LinearOpMode {
         runtime.reset();
 
         //START AUTON CODING
-
-
+        Robot function = new Robot(leftBack, rightBack, leftFront, rightFront);
     }
+
 }
