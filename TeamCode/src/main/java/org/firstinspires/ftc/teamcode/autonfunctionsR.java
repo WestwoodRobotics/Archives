@@ -1,8 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import
+        com.qualcomm.hardware.bosch.BNO055IMU;
+
 import com.qualcomm.robotcore.hardware.CRServoImpl;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
 
 public class autonfunctionsR {
     public ElapsedTime runtime = new ElapsedTime();
@@ -18,12 +23,13 @@ public class autonfunctionsR {
     public CRServoImpl shooterAngle = null;
     public int numberOfRings = -1;
     public final int INCHES_TO_TICKS = 100;
+    BNO055IMU imu;
+    Orientation angles;
+
 
     public autonfunctionsR(DcMotor leftBackDrive, DcMotor rightBackDrive,
                            DcMotor leftFrontDrive, DcMotor rightFrontDrive,
-                           DcMotor conveyorMotor, DcMotor shooterMotor, DcMotor intakeMotor,
-                           CRServoImpl wobbleClaw, CRServoImpl wobbleClaw2, CRServoImpl shooterAngle, ElapsedTime runtime){
-        this.runtime= runtime;
+                           DcMotor conveyorMotor, DcMotor shooterMotor, DcMotor intakeMotor, CRServoImpl shooterAngle ){
         this.leftBackDrive= leftBackDrive;
         this.rightBackDrive= rightBackDrive;
         this.leftFrontDrive= leftFrontDrive;
@@ -76,40 +82,95 @@ public class autonfunctionsR {
         stop();
     }
     public void moveBack(double inches){
-        runtime.reset();
-        double seconds = 5/36 * inches;
+        runEncoders();
+        int ticks =  (int)(INCHES_TO_TICKS * inches);
+        stopAndResetEncoders();
+        leftBackDrive.setTargetPosition(ticks);
+        leftFrontDrive.setTargetPosition(ticks);
+        rightBackDrive.setTargetPosition(ticks);
+        rightFrontDrive.setTargetPosition(ticks);
+        runToPosition();
         leftBackDrive.setPower(-1);
         leftFrontDrive.setPower(-1);
         rightBackDrive.setPower(-1);
         rightFrontDrive.setPower(-1);
-        while (runtime.seconds()< seconds){
+        while (leftBackDrive.isBusy()||leftFrontDrive.isBusy()||rightBackDrive.isBusy()||rightFrontDrive.isBusy()){
+            if (!leftBackDrive.isBusy()){
+                leftBackDrive.setPower(0);
+            }
+            if (!rightBackDrive.isBusy()){
+                rightBackDrive.setPower(0);
+            }
+            if (!leftFrontDrive.isBusy()){
+                leftFrontDrive.setPower(0);
+            }
+            if (!rightFrontDrive.isBusy()){
+                rightFrontDrive.setPower(0);
+            }
         }
         stop();
-
     }
 
     public void moveright(double inches){
-        runtime.reset();
-        double seconds = 5/36 * inches;
+        runEncoders();
+        int ticks =  (int)(INCHES_TO_TICKS * inches);
+        stopAndResetEncoders();
+        leftBackDrive.setTargetPosition(ticks);
+        leftFrontDrive.setTargetPosition(ticks);
+        rightBackDrive.setTargetPosition(ticks);
+        rightFrontDrive.setTargetPosition(ticks);
+        runToPosition();
         leftBackDrive.setPower(-1);
         leftFrontDrive.setPower(1);
         rightBackDrive.setPower(1);
         rightFrontDrive.setPower(-1);
-        while (runtime.seconds()< seconds){
+        while (leftBackDrive.isBusy()||leftFrontDrive.isBusy()||rightBackDrive.isBusy()||rightFrontDrive.isBusy()){
+            if (!leftBackDrive.isBusy()){
+                leftBackDrive.setPower(0);
+            }
+            if (!rightBackDrive.isBusy()){
+                rightBackDrive.setPower(0);
+            }
+            if (!leftFrontDrive.isBusy()){
+                leftFrontDrive.setPower(0);
+            }
+            if (!rightFrontDrive.isBusy()){
+                rightFrontDrive.setPower(0);
+            }
         }
         stop();
+
     }
 
     public void moveleft(double inches){
-        runtime.reset();
-        double seconds = 5/36 * inches;
+        runEncoders();
+        int ticks =  (int)(INCHES_TO_TICKS * inches);
+        stopAndResetEncoders();
+        leftBackDrive.setTargetPosition(ticks);
+        leftFrontDrive.setTargetPosition(ticks);
+        rightBackDrive.setTargetPosition(ticks);
+        rightFrontDrive.setTargetPosition(ticks);
+        runToPosition();
         leftBackDrive.setPower(1);
         leftFrontDrive.setPower(-1);
         rightBackDrive.setPower(-1);
         rightFrontDrive.setPower(1);
-        while (runtime.seconds()< seconds){
+        while (leftBackDrive.isBusy()||leftFrontDrive.isBusy()||rightBackDrive.isBusy()||rightFrontDrive.isBusy()){
+            if (!leftBackDrive.isBusy()){
+                leftBackDrive.setPower(0);
+            }
+            if (!rightBackDrive.isBusy()){
+                rightBackDrive.setPower(0);
+            }
+            if (!leftFrontDrive.isBusy()){
+                leftFrontDrive.setPower(0);
+            }
+            if (!rightFrontDrive.isBusy()){
+                rightFrontDrive.setPower(0);
+            }
         }
         stop();
+
     }
 
 
