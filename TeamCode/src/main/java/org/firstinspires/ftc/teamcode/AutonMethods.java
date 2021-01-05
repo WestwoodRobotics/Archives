@@ -5,15 +5,37 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class AutonMethods {
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor frontLeft, frontRight, backLeft, backRight;
+    private DcMotor frontLeft, frontRight, backLeft, backRight, intakeLeft, intakeRight, shooter, arm;
     private final int INCHES_TO_TICKS = 5;
-    private final int DEGREES_TO_TICKS = 360;
+    private final double DEGREES_TO_TICKS = 0.284;
 
-    public AutonMethods(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight) {
+    public AutonMethods(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, DcMotor intakeLeft, DcMotor intakeRight, DcMotor shooter, DcMotor arm) {
         this.frontLeft = frontLeft;
         this.frontRight = frontRight;
         this.backLeft = backLeft;
         this.backRight = backRight;
+        this.intakeLeft = intakeLeft;
+        this.intakeRight = intakeRight;
+        this.shooter = shooter;
+        this.arm = arm;
+    }
+
+    public void intakesOn() {
+        intakeLeft.setPower(1);
+        intakeRight.setPower(1);
+    }
+
+    public void intakesOff() {
+        intakeLeft.setPower(0);
+        intakeRight.setPower(0);
+    }
+
+    public void shootOn() {
+        shooter.setPower(1);
+    }
+
+    public void shootOff() {
+        shooter.setPower(0);
     }
 
     public void goForward(double inches) {
@@ -30,6 +52,7 @@ public class AutonMethods {
 
         //RUN_TO_POSITION mode
         runToPosition();
+
         //set power
         frontLeft.setPower(1);
         frontRight.setPower(-1);
@@ -37,7 +60,7 @@ public class AutonMethods {
         backRight.setPower(1);
 
         while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached but maybe use PID here?
+            //do nothing until target reached
         }
 
         brakeAllMotors();
@@ -66,7 +89,7 @@ public class AutonMethods {
         backRight.setPower(-1);
 
         while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached but maybe use PID here?
+            //do nothing until target reached
         }
 
         brakeAllMotors();
@@ -91,7 +114,7 @@ public class AutonMethods {
         backRight.setPower(-1);
 
         while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached but maybe use PID here?
+            //do nothing until target reached
         }
 
         brakeAllMotors();
@@ -116,15 +139,16 @@ public class AutonMethods {
         backRight.setPower(1);
 
         while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached but maybe use PID here?
+            //do nothing until target reached
         }
 
         brakeAllMotors();
         setToUsingEncoders();
     }
 
-    public void turnRightCenter(double degrees){
+    public void turnRightCenter(double degrees) {
         int ticks = (int) (degrees * DEGREES_TO_TICKS);
+
         resetAllEncoders();
 
         frontLeft.setTargetPosition(ticks);
@@ -141,7 +165,7 @@ public class AutonMethods {
         backRight.setPower(-1);
 
         while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached but maybe use PID here?
+            //do nothing until target reached
         }
 
         brakeAllMotors();
@@ -150,6 +174,7 @@ public class AutonMethods {
 
     public void turnLeftCenter(double degrees) {
         int ticks = (int) (degrees * DEGREES_TO_TICKS);
+
         resetAllEncoders();
 
         frontLeft.setTargetPosition(-ticks);
@@ -166,18 +191,11 @@ public class AutonMethods {
         backRight.setPower(1);
 
         while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached but maybe use PID here?
+            //do nothing until target reached
         }
 
         brakeAllMotors();
         setToUsingEncoders();
-    }
-
-    private double setPower(double inches) {
-        double power = 0;
-        //PID?
-
-        return power;
     }
 
     public void setToUsingEncoders() {
@@ -211,12 +229,7 @@ public class AutonMethods {
     public void pause(double seconds) {
         runtime.reset();
         while(runtime.seconds() < seconds) {
-
+            //do nothing cause it's a pause
         }
     }
-
-
-
-
-
 }
