@@ -165,7 +165,7 @@ public class AutonFunctions {
             shooterPusher.setPosition(PUSHER_OPEN_POSITION);
             //delay
             pause(1);
-            //
+
             shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         }
         //turn blocker servo 90 degrees counter clockwise
