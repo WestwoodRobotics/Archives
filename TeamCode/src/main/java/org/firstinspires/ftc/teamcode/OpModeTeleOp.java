@@ -26,16 +26,20 @@ public class OpModeTeleOp extends OpMode
 
     //Initialize intake motor and create the power variable
     public DcMotor intakeMotor;
-    private double intakeMotorPower;
 
     //Initialize the servo for opening and closing the claw
-    public Servo clawServo;
+//    public Servo clawServo;
 
     //Boolean to store if the claw is open or closed as well as a doubles for setting the claw servo's position
-    private boolean isClawOpen;
-    private double clawServoPosition;
-    private double clawOpenPosition;
-    private double clawClosedPosition;
+//    private boolean isClawOpen;
+//    private double clawServoPosition;
+//    private double clawOpenPosition;
+//    private double clawClosedPosition;
+
+    public Servo shooterBlocker;
+    public Servo shooterPusher;
+    public DcMotor shooterMotor;
+    public DcMotor shooterAngler;
 
     //Boolean to store if the intake is on or off
     private boolean isIntakeOn;
@@ -52,7 +56,13 @@ public class OpModeTeleOp extends OpMode
 
         intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
 
-        clawServo = hardwareMap.get(Servo.class, "clawServo");
+//        clawServo = hardwareMap.get(Servo.class, "clawServo");
+
+        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
+        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
+
+        shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
+        shooterPusher = hardwareMap.get(Servo.class, "shooterBlocker");
 
 
         //Set the motor directions
@@ -75,11 +85,11 @@ public class OpModeTeleOp extends OpMode
 
         //Set the default values for toggle control booleans such as if the intake is on or off or if the claw is open or closed
         isIntakeOn = false;
-        isClawOpen = true;
+//        isClawOpen = true;
 
         //Set the minimum and maximum values for the claw servo and set the claw servo position to the open position by default
-        clawClosedPosition = 0;
-        clawOpenPosition = 0.5;
+//        clawClosedPosition = 0;
+//        clawOpenPosition = 0.5;
 
         //Set up telemetry
         telemetry.addData("Status", "Initialized");
@@ -150,16 +160,16 @@ public class OpModeTeleOp extends OpMode
 
 
         //When B is pressed open or close the claw
-        if (gamepad2.b && isClawOpen) {
-            clawServoPosition = clawClosedPosition;
-            isClawOpen = false;
-        } else if (gamepad2.b && !isClawOpen) {
-            clawServoPosition = clawOpenPosition;
-            isClawOpen = true;
-        }
-
-        //Set the position of the servo
-        clawServo.setPosition(clawServoPosition);
+//        if (gamepad2.b && isClawOpen) {
+//            clawServoPosition = clawClosedPosition;
+//            isClawOpen = false;
+//        } else if (gamepad2.b && !isClawOpen) {
+//            clawServoPosition = clawOpenPosition;
+//            isClawOpen = true;
+//        }
+//
+//        //Set the position of the servo
+//        clawServo.setPosition(clawServoPosition);
 
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());

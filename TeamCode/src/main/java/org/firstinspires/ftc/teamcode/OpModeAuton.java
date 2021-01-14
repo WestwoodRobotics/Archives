@@ -31,7 +31,7 @@ public class OpModeAuton extends OpMode
     private double backLeftPower;
     private double backRightPower;
 
-    AutonFunctions autFunc = new AutonFunctions(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler);
+    AutonFunctionsTwo autFunc;
 
     @Override
     public void init() {
@@ -42,6 +42,11 @@ public class OpModeAuton extends OpMode
         backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
 
+        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
+        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
+
+        shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
+        shooterPusher = hardwareMap.get(Servo.class, "shooterBlocker");
 
         //Set the motor directions
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
@@ -65,11 +70,11 @@ public class OpModeAuton extends OpMode
         //Set the zero power behavior of the motors to stop quickly
         stop();
 
-
         //Set up telemetry
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler);
     }
 
 
@@ -84,14 +89,14 @@ public class OpModeAuton extends OpMode
         //turn 4.520 degrees; 24 - 3.5 + 24 = 44.5, tan^-1(44.5/72) = 31.718, 31.718 - 27.198 = 4.520
         //shoot
         //forwards 12 inches; get on the line
-        autFunc.moveForward(54, 1);
-        autFunc.turnFrontCenterCounterClock(22.28);
+        autFunc.moveForward(54);
+        autFunc.turnClockwise(22.28);
         autFunc.shoot();
-        autFunc.turnFrontCenterCounterClock(4.918);
+        autFunc.turnCounterClockwise(4.918);
         autFunc.shoot();
-        autFunc.turnFrontCenterCounterClock(4.520);
+        autFunc.turnCounterClockwise(4.520);
         autFunc.shoot();
-        autFunc.moveForward(12,1);
+        autFunc.moveForward(12);
     }
 
 
