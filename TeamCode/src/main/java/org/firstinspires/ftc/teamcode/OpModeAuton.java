@@ -31,6 +31,7 @@ public class OpModeAuton extends OpMode
     private double backLeftPower;
     private double backRightPower;
 
+    //Assign the auton functions class to a variable name
     AutonFunctionsTwo autFunc;
 
     @Override
@@ -54,18 +55,11 @@ public class OpModeAuton extends OpMode
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        //Set zero power behavior
-        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         //Set the motor powers to 0 by default
         frontLeftPower = 0;
         frontRightPower = 0;
         backLeftPower = 0;
         backRightPower = 0;
-
 
         //Set the zero power behavior of the motors to stop quickly
         stop();
@@ -74,13 +68,19 @@ public class OpModeAuton extends OpMode
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
+        //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler);
     }
 
 
     @Override
-    public void loop() {
-        //forwards 54 inches; front of the robot will be at the 3rd square line
+    public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
+        autFunc.moveForward(54); //Might should be re-calculated distance from start to right behind launch line for shooting
+        autFunc.moveLeft(0); //Needs to be calculated to line up straight with high goal
+        autFunc.shoot3Times();
+        autFunc.moveForward(12);//Might should be re-calculated distance to get onto launch line for parking points
+
+        /*//forwards 54 inches; front of the robot will be at the 3rd square line
         //spin and shoot 3 times
         //turn 22.28 degrees; 24 - 18.5 + 24 = 29.5, tan^-1(29.5/72) = 22.28
         //shoot
@@ -96,7 +96,7 @@ public class OpModeAuton extends OpMode
         autFunc.shoot();
         autFunc.turnCounterClockwise(4.520);
         autFunc.shoot();
-        autFunc.moveForward(12);
+        autFunc.moveForward(12);*/
     }
 
 

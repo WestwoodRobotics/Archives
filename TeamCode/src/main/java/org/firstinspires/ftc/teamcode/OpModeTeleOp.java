@@ -36,10 +36,17 @@ public class OpModeTeleOp extends OpMode
 //    private double clawOpenPosition;
 //    private double clawClosedPosition;
 
+    //Initialize motors and servos for the shooter
     public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
     public DcMotor shooterAngler;
+
+    //Constants representing the servo positions for the shooter blocker and pusher (needs testing for accurate positions)
+    public final double BLOCKER_OPEN_POSITION = .5;
+    public final double BLOCKER_CLOSED_POSITION = 0;
+    public final double PUSHER_OPEN_POSITION = 0.333;
+    public final double PUSHER_CLOSED_POSITION = 0;
 
     //Boolean to store if the intake is on or off
     private boolean isIntakeOn;
@@ -62,7 +69,7 @@ public class OpModeTeleOp extends OpMode
         shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
-        shooterPusher = hardwareMap.get(Servo.class, "shooterBlocker");
+        shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
 
 
         //Set the motor directions
@@ -159,6 +166,41 @@ public class OpModeTeleOp extends OpMode
         }
 
 
+        if (gamepad2.right_trigger > 0) {
+            //Turn on the flywheel for the shooter
+            shooterMotor.setPower(1);
+            //Move the blocker out of the way to the ring can leave the magazine
+            shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+            //Move the pusher to push the ring
+            shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+
+            pause(0.5);
+            shooterPusher.setPosition(PUSHER_CLOSED_POSITION); //Pull the pusher back allowing another ring to fall into the magazine
+            //Move the blocker back into place to prevent rings from leaving the magazine
+            shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
+            //Turn off the flywheel
+            shooterMotor.setPower(0);
+        }
+
+        if (gamepad2.left_trigger > 0) {
+            //Turn on the flywheel for the shooter
+            shooterMotor.setPower(1);
+            //Move the blocker out of the way to the ring can leave the magazine
+            shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+            //Move the pusher to push the ring and bring it back to allow another ring in 3 times
+            for (int i = 0; i < 3; i++ ) {
+                shooterPusher.setPosition(PUSHER_OPEN_POSITION); //Pushes the ring
+                //delay
+                pause(1);
+                shooterPusher.setPosition(PUSHER_CLOSED_POSITION); //Pulls back the pusher so another ring can fall into the magazine
+            }
+            //Move the blocker back into place to prevent rings from leaving the magazine
+            shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
+            //Turn off the flywheel
+            shooterMotor.setPower(0);
+        }
+
+
         //When B is pressed open or close the claw
 //        if (gamepad2.b && isClawOpen) {
 //            clawServoPosition = clawClosedPosition;
@@ -186,5 +228,12 @@ public class OpModeTeleOp extends OpMode
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
+    }
+
+    //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
+    public void pause(double seconds) {
+        double startTime = runtime.seconds();
+
+        while(runtime.seconds() - startTime < seconds) {}
     }
 }

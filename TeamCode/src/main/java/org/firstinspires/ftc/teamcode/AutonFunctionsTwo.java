@@ -5,32 +5,35 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class AutonFunctionsTwo {
+    //Drive train motors
     public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
 
+    //Servos and motors involving the shooter
     public DcMotor shooterMotor;
     public DcMotor shooterAngler;
 
     public Servo shooterBlocker;
     public Servo shooterPusher;
 
-    public int encoderCounts;
-    public int encoderCountsTurning;
-    public int encoderCountsCircle;
+    public int encoderCounts; //Variable we use in our move functions to store what the encoder counts should be at once we finish moving the desired distance
 
     public final int ENCODER_COUNTS_WHEEL_ROTATION = 28;
     public double wheelCircumference;
 
-    public final double BLOCKER_OPEN_POSITION;
-    public final double BLOCKER_CLOSED_POSITION;
-    public final double PUSHER_OPEN_POSITION;
-    public final double PUSHER_CLOSED_POSITION;
+    //Constants representing the servo positions for the shooter blocker and pusher (needs testing for accurate positions)
+    public final double BLOCKER_OPEN_POSITION = .5;
+    public final double BLOCKER_CLOSED_POSITION = 0;
+    public final double PUSHER_OPEN_POSITION = 0.333;
+    public final double PUSHER_CLOSED_POSITION = 0;
 
     public ElapsedTime runtime = new ElapsedTime();
 
 
+    /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
+    and allows us to access the motors and servos on the robot from this file*/
     public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, DcMotor shootA){
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
@@ -42,16 +45,11 @@ public class AutonFunctionsTwo {
         shooterAngler = shootA;
 
 
-        encoderCountsCircle = 10; //Will change once we do some testing for actual value
-        wheelCircumference = 9.435;
-
-        BLOCKER_OPEN_POSITION = 0.5;
-        BLOCKER_CLOSED_POSITION = 0;
-        PUSHER_OPEN_POSITION = 0.333;
-        PUSHER_CLOSED_POSITION = 0;
+        wheelCircumference = 9.435; //Circumference of our mecanum wheels may be subject to change
     }
 
 
+    //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
     public void pause(double seconds) {
         double startTime = runtime.seconds();
 
@@ -59,6 +57,7 @@ public class AutonFunctionsTwo {
     }
 
 
+    //Turn off all drive train motors
     public void stop() {
         frontLeftDrive.setPower(0);
         frontRightDrive.setPower(0);
@@ -66,10 +65,18 @@ public class AutonFunctionsTwo {
         backRightDrive.setPower(0);
     }
 
-    public void move(double in, double fL, double fR, double bL, double bR) {//When motors go backwards encoder values decrease instead of increasing
-        encoderCounts = (int) frontLeftDrive.getCurrentPosition() +
-                (int) Math.rint(ENCODER_COUNTS_WHEEL_ROTATION * in / wheelCircumference);
+    //Used in the different move functions to decrease redundancy (so we don't type the same thing over and over; Abstraction)
+    public void move(double in, double fL, double fR, double bL, double bR) {
+        if (fL > 0) {
+            encoderCounts = (int) frontLeftDrive.getCurrentPosition() +
+                    (int) Math.rint(ENCODER_COUNTS_WHEEL_ROTATION * in / wheelCircumference);
+        } else if (fL < 0) { //Since we are tracking movement to know when to stop using only the FL motor we can just check if it is going forward or backwards
+                             // and account for that in our encoder count equations
+            encoderCounts = (int) frontLeftDrive.getCurrentPosition() -
+                    (int) Math.rint(ENCODER_COUNTS_WHEEL_ROTATION * in / wheelCircumference);
+        }
 
+        //Uses a while loop (similar to the pause function) to keep the motors running until the FL motor reaches the expected amount of encoder counts
         while (frontLeftDrive.getCurrentPosition() < encoderCounts) {
             frontLeftDrive.setPower(fL);
             frontRightDrive.setPower(fR);
@@ -77,27 +84,32 @@ public class AutonFunctionsTwo {
             frontLeftDrive.setPower(bR);
         }
 
+        //Stop the robot after it has finished moving
         stop();
     }
 
 
+    //Move forward a desired amount of inches
     public void moveForward(double inches) {
-        move(inches,1,1,1,1);
+        move(inches, 1, 1, 1, 1);
     }
 
+    //Move backwards a desired amount of inches
     public void moveBackwards(double inches) {
-        move(inches,-1,-1,-1,-1);
+        move(inches, -1, -1, -1, -1);
     }
 
+    //Move left a desired amount of inches
     public void moveLeft(double inches) {
-        move(inches,-1,1,1,-1);
+        move(inches, -1, 1, 1, -1);
     }
 
+    //Move right a desired amount of inches
     public void moveRight(double inches) {
-        move(inches,1,-1,-1,1);
+        move(inches, 1, -1, -1, 1);
     }
 
-    public void moveFL(double inches) { //Will not work because encoder checks are based on front left motor which is not moving
+    /*public void moveFL(double inches) { //Will not work because encoder checks are based on front left motor which is not moving
         move(inches,0,1,1,0); //For diagonal movement unsure if motors set to 0 will brake and break something
     }
 
@@ -111,9 +123,9 @@ public class AutonFunctionsTwo {
 
     public void moveBR(double inches) {
         move(inches,0,-1,-1,0);
-    }
+    }*/
 
-    public void turnClockwise(double deg) {
+    /*public void turnClockwise(double deg) {
         encoderCountsTurning = (int) frontLeftDrive.getCurrentPosition() + (int) (encoderCountsCircle * (deg/360));
 
         while(frontLeftDrive.getCurrentPosition() < encoderCountsTurning) {
@@ -133,40 +145,41 @@ public class AutonFunctionsTwo {
             backLeftDrive.setPower(-1);
             backRightDrive.setPower(1);
         }
-    }
+    }*/
 
+    //Shoot once
     public void shoot() {
-        //start spinning the shooter motor
+        //Turn on the flywheel for the shooter
         shooterMotor.setPower(1);
-        //turn blocker servo 90 degrees
+        //Move the blocker out of the way to the ring can leave the magazine
         shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
-        //turn the shooter push servo 60 degrees and then back 60 degrees
+        //Move the pusher to push the ring
         shooterPusher.setPosition(PUSHER_OPEN_POSITION);
-        //delay
+
         pause(0.5);
-        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
-        //turn blocker servo 90 degrees counter clockwise
+        shooterPusher.setPosition(PUSHER_CLOSED_POSITION); //Pull the pusher back allowing another ring to fall into the magazine
+        //Move the blocker back into place to prevent rings from leaving the magazine
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-        //stop spinning the shooter motor
+        //Turn off the flywheel
         shooterMotor.setPower(0);
     }
 
+    //Shoot 3 times
     public void shoot3Times() {
-        //start spinning the shooter motor
+        //Turn on the flywheel for the shooter
         shooterMotor.setPower(1);
-        //turn blocker servo 90 degrees
+        //Move the blocker out of the way to the ring can leave the magazine
         shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
-        //turn the shooter push servo 60 degrees and then back 60 degrees
-        for (int i = 0; i < 3 ; i++ ) {
-            shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+        //Move the pusher to push the ring and bring it back to allow another ring in 3 times
+        for (int i = 0; i < 3; i++ ) {
+            shooterPusher.setPosition(PUSHER_OPEN_POSITION); //Pushes the ring
             //delay
             pause(1);
-
-            shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
+            shooterPusher.setPosition(PUSHER_CLOSED_POSITION); //Pulls back the pusher so another ring can fall into the magazine
         }
-        //turn blocker servo 90 degrees counter clockwise
+        //Move the blocker back into place to prevent rings from leaving the magazine
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-        //stop spinning the shooter motor
+        //Turn off the flywheel
         shooterMotor.setPower(0);
     }
 
