@@ -36,6 +36,10 @@ public class AutonFunctionsTwo {
     public final double PUSHER_OPEN_POSITION = 0.333;
     public final double PUSHER_CLOSED_POSITION = 0;
 
+    private double currentShooterHeight;
+    private double newShooterHeight;
+    private double heightDifference;
+
     public ElapsedTime runtime = new ElapsedTime();
 
 
@@ -191,8 +195,11 @@ public class AutonFunctionsTwo {
         shooterMotor.setPower(0);
     }
 
-    public void angleShooter(double degrees) {
-        //Method to angle the shooter to a desired angle
+    public void angleShooter(int angle) {
+        newShooterHeight = angleToHeight(angle);
+        heightDifference = newShooterHeight - currentShooterHeight;
+
+        //Translate heightDifference into encoder counts and use PID to move the motor correctly in order to angle the shooter
     }
 
     public void toggleClaw() {
@@ -211,5 +218,10 @@ public class AutonFunctionsTwo {
 
     public void angleClaw() {
 
+    }
+
+    public static double angleToHeight (int angleDesired) {
+        double radAngle = Math.toRadians(angleDesired);
+        return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
     }
 }
