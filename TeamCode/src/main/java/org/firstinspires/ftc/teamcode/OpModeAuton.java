@@ -25,6 +25,8 @@ public class OpModeAuton extends OpMode
     public DcMotor shooterMotor;
     public DcMotor shooterAngler;
 
+    public Servo clawServo;
+
     //Create motor power variables for drive train motors
     private double frontLeftPower;
     private double frontRightPower;
@@ -49,6 +51,8 @@ public class OpModeAuton extends OpMode
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
         shooterPusher = hardwareMap.get(Servo.class, "shooterBlocker");
 
+        clawServo = hardwareMap.get(Servo.class, "clawServo");
+
         //Set the motor directions
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -69,7 +73,7 @@ public class OpModeAuton extends OpMode
         telemetry.update();
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler);
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
     }
 
 
@@ -79,6 +83,8 @@ public class OpModeAuton extends OpMode
         autFunc.moveLeft(0); //Needs to be calculated to line up straight with high goal
         autFunc.shoot3Times();
         autFunc.moveForward(12);//Might should be re-calculated distance to get onto launch line for parking points
+
+
 
         /*//forwards 54 inches; front of the robot will be at the 3rd square line
         //spin and shoot 3 times

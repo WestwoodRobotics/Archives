@@ -18,10 +18,17 @@ public class AutonFunctionsTwo {
     public Servo shooterBlocker;
     public Servo shooterPusher;
 
+    public Servo clawServo;
+
     public int encoderCounts; //Variable we use in our move functions to store what the encoder counts should be at once we finish moving the desired distance
 
     public final int ENCODER_COUNTS_WHEEL_ROTATION = 28;
     public double wheelCircumference;
+
+    private boolean isClawOpen = true;
+    private double clawServoPosition;
+    private double clawOpenPosition = 0.5; //Needs testing for accurate value
+    private double clawClosedPosition = 0;
 
     //Constants representing the servo positions for the shooter blocker and pusher (needs testing for accurate positions)
     public final double BLOCKER_OPEN_POSITION = .5;
@@ -34,7 +41,7 @@ public class AutonFunctionsTwo {
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
-    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, DcMotor shootA){
+    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, DcMotor shootA, Servo clawServo){
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
@@ -43,6 +50,7 @@ public class AutonFunctionsTwo {
         shooterPusher = shootP;
         shooterMotor = shootM;
         shooterAngler = shootA;
+        this.clawServo = clawServo;
 
 
         wheelCircumference = 9.435; //Circumference of our mecanum wheels may be subject to change
@@ -185,5 +193,23 @@ public class AutonFunctionsTwo {
 
     public void angleShooter(double degrees) {
         //Method to angle the shooter to a desired angle
+    }
+
+    public void toggleClaw() {
+        //When called open or close the claw
+        if (isClawOpen) {
+            clawServoPosition = clawClosedPosition;
+            isClawOpen = false;
+        } else if (!isClawOpen) {
+            clawServoPosition = clawOpenPosition;
+            isClawOpen = true;
+        }
+
+        //Set the position of the servo
+        clawServo.setPosition(clawServoPosition);
+    }
+
+    public void angleClaw() {
+
     }
 }
