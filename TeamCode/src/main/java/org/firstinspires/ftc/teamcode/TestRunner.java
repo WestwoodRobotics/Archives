@@ -36,6 +36,8 @@ public class TestRunner extends OpMode
     //Assign the auton functions class to a variable name
     AutonFunctionsTwo autFunc;
 **/
+    Test testing;
+
     @Override
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
