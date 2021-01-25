@@ -9,7 +9,7 @@ public class Test {
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
-    public Servo shooterBlocker;
+/*    public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
     public DcMotor shooterAngler;
@@ -18,7 +18,7 @@ public class Test {
     public final double BLOCKER_CLOSED_POSITION = 0;
     public final double PUSHER_OPEN_POSITION = 0.333;
     public final double PUSHER_CLOSED_POSITION = 0;
-
+**/
     public ElapsedTime runtime = new ElapsedTime();
 
     public Test(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive) {
