@@ -83,7 +83,6 @@ public class TestRunner extends OpMode
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
        testing.moveLeft();
-       testing.pause(3.0);
        testing.moveRight();
 
 
