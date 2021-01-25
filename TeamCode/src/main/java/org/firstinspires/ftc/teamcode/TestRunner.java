@@ -82,26 +82,11 @@ public class TestRunner extends OpMode
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
-       testing.moveForward();
+       testing.moveLeft();
+       testing.pause(3.0);
+       testing.moveRight();
 
 
-        /*//forwards 54 inches; front of the robot will be at the 3rd square line
-        //spin and shoot 3 times
-        //turn 22.28 degrees; 24 - 18.5 + 24 = 29.5, tan^-1(29.5/72) = 22.28
-        //shoot
-        //turn 4.918 degrees; 24 - 11 + 24 = 37, tan^-1(37/72) = 27.198, 27.198 - 22.28 = 4.918
-        //shoot
-        //turn 4.520 degrees; 24 - 3.5 + 24 = 44.5, tan^-1(44.5/72) = 31.718, 31.718 - 27.198 = 4.520
-        //shoot
-        //forwards 12 inches; get on the line
-        autFunc.moveForward(54);
-        autFunc.turnClockwise(22.28);
-        autFunc.shoot();
-        autFunc.turnCounterClockwise(4.918);
-        autFunc.shoot();
-        autFunc.turnCounterClockwise(4.520);
-        autFunc.shoot();
-        autFunc.moveForward(12);*/
     }
 
 
