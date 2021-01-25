@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Auton", group="Iterative Opmode")
-public class OpModeAuton extends OpMode
+public class TestRunner extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -20,7 +20,7 @@ public class OpModeAuton extends OpMode
     public DcMotor backRightDrive;
 
     //Initialize shooter motors and servos
-    public Servo shooterBlocker;
+/*    public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
     public DcMotor shooterAngler;
@@ -35,7 +35,7 @@ public class OpModeAuton extends OpMode
 
     //Assign the auton functions class to a variable name
     AutonFunctionsTwo autFunc;
-
+**/
     @Override
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
@@ -45,14 +45,14 @@ public class OpModeAuton extends OpMode
         backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
 
-        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
+/*        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
         shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
         shooterPusher = hardwareMap.get(Servo.class, "shooterBlocker");
 
         clawServo = hardwareMap.get(Servo.class, "clawServo");
-
+**/
         //Set the motor directions
         frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
@@ -73,17 +73,14 @@ public class OpModeAuton extends OpMode
         telemetry.update();
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
+//        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
+        Test testing = new Test (frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
     }
 
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
-        autFunc.moveForward(54); //Might should be re-calculated distance from start to right behind launch line for shooting
-        autFunc.moveLeft(0); //Needs to be calculated to line up straight with high goal
-        autFunc.shoot3Times();
-        autFunc.moveForward(12);//Might should be re-calculated distance to get onto launch line for parking points
-
+       testing.testFR();
 
 
         /*//forwards 54 inches; front of the robot will be at the 3rd square line

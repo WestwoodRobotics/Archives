@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class AutonFunctions {
+public class Test {
     public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
@@ -21,15 +21,11 @@ public class AutonFunctions {
 
     public ElapsedTime runtime = new ElapsedTime();
 
-    public AutonFunctions(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, DcMotor shootA){
+    public Test(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive) {
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
         backRightDrive = bRDrive;
-        shooterBlocker = shootB;
-        shooterPusher = shootP;
-        shooterMotor = shootM;
-        shooterAngler = shootA;
     }
     /*
     //waits for a given time
@@ -182,6 +178,26 @@ public class AutonFunctions {
         frontRightDrive.setPower(0);
     }
 
+    public void testFL () {
+        while (runtime.seconds() < 5) {
+            frontLeftDrive.setPower(1);
+        }
+        frontLeftDrive.setPower(0);
+    }
+
+    public void testBR () {
+        while (runtime.seconds() < 5) {
+            backRightDrive.setPower(1);
+        }
+        backRightDrive.setPower(0);
+    }
+
+    public void testBL () {
+        while (runtime.seconds() < 5) {
+            backLeftDrive.setPower(1);
+        }
+        backLeftDrive.setPower(0);
+    }
     public void stop() {
         frontLeftDrive.setPower(0);
         frontRightDrive.setPower(0);
