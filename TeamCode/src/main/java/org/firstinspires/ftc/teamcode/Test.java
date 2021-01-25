@@ -27,99 +27,92 @@ public class Test {
         backLeftDrive = bLDrive;
         backRightDrive = bRDrive;
     }
-    /*
+
     //waits for a given time
     public void pause (double seconds) {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < seconds) {}
     }
+
     //assumes robot moves at 5in per sec
-    public void moveForward (double inch, double power) {
-        double seconds = inch/5;
+    public void moveForward () {
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            frontLeftDrive.setPower(power);
-            frontRightDrive.setPower(power);
-            backLeftDrive.setPower(power);
-            backRightDrive.setPower(power);
+        while (runtime.seconds() - startTime < 3) {
+            frontLeftDrive.setPower(0.5);
+            frontRightDrive.setPower(0.5);
+            backLeftDrive.setPower(0.5);
+            backRightDrive.setPower(0.5);
         }
         stop();
     }
 
-    public void moveBackward (double inch, double power) {
-        double seconds = inch/5;
+    public void moveBackward () {
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            frontLeftDrive.setPower(-power);
-            frontRightDrive.setPower(-power);
-            backLeftDrive.setPower(-power);
-            backRightDrive.setPower(-power);
+        while (runtime.seconds() - startTime < 3) {
+            frontLeftDrive.setPower(-0.5);
+            frontRightDrive.setPower(-0.5);
+            backLeftDrive.setPower(-0.5);
+            backRightDrive.setPower(-0.5);
         }
         stop();
     }
 
-    public void moveLeft (double inch, double power) {
-        double seconds = inch/5;
+    public void moveLeft () {
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            frontLeftDrive.setPower(-power);
-            frontRightDrive.setPower(power);
-            backLeftDrive.setPower(power);
-            backRightDrive.setPower(-power);
+        while (runtime.seconds() - startTime < 3) {
+            frontLeftDrive.setPower(-0.5);
+            frontRightDrive.setPower(0.5);
+            backLeftDrive.setPower(0.5);
+            backRightDrive.setPower(-0.5);
         }
         stop();
     }
 
-    public void moveRight (double inch, double power) {
-        double seconds = inch/5;
+    public void moveRight () {
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            frontLeftDrive.setPower(power);
-            frontRightDrive.setPower(-power);
-            backLeftDrive.setPower(-power);
-            backRightDrive.setPower(power);
+        while (runtime.seconds() - startTime < 3) {
+            frontLeftDrive.setPower(0.5);
+            frontRightDrive.setPower(-0.5);
+            backLeftDrive.setPower(-0.5);
+            backRightDrive.setPower(0.5);
         }
         stop();
     }
-    public void moveDiagFL (double inch, double power) {
-        double seconds = inch/5;
+    public void moveDiagFL () {
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            frontRightDrive.setPower(power);
-            backLeftDrive.setPower(power);
+        while (runtime.seconds() - startTime < 3) {
+            frontRightDrive.setPower(0.5);
+            backLeftDrive.setPower(0.5);
         }
         stop();
     }
-    public void moveDiagFR (double inch, double power) {
-        double seconds = inch/5;
+    public void moveDiagFR () {
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            frontLeftDrive.setPower(power);
-            backRightDrive.setPower(power);
+        while (runtime.seconds() - startTime < 3) {
+            frontLeftDrive.setPower(0.5);
+            backRightDrive.setPower(0.5);
         }
         stop();
     }
     public void moveDiagBL (double inch, double power) {
-        double seconds = inch/5;
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            frontLeftDrive.setPower(-power);
-            backRightDrive.setPower(-power);
+        while (runtime.seconds() - startTime < 3) {
+            frontLeftDrive.setPower(-0.5);
+            backRightDrive.setPower(-0.5);
         }
         stop();
     }
-    public void moveDiagBR (double inch, double power) {
-        double seconds = inch/5;
+    public void moveDiagBR () {
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            frontRightDrive.setPower(-power);
-            backLeftDrive.setPower(-power);
+        while (runtime.seconds() - startTime < 3) {
+            frontRightDrive.setPower(-0.5);
+            backLeftDrive.setPower(-0.5);
         }
         stop();
     }
 
     //assumes robot spins at 90 degrees per second
-    public void turnFrontCenterClock (double degrees) {
+/*    public void turnFrontCenterClock (double degrees) {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < (degrees/90)) {
             backLeftDrive.setPower(1);
@@ -172,28 +165,32 @@ public class Test {
     }
 **/
     public void testFR () {
-        while (runtime.seconds() < 5) {
+        double startTime = runtime.seconds();
+        while (runtime.seconds() - startTime < 5) {
             frontRightDrive.setPower(1);
         }
         frontRightDrive.setPower(0);
     }
 
     public void testFL () {
-        while (runtime.seconds() < 5) {
+        double startTime = runtime.seconds();
+        while (runtime.seconds() - startTime < 5) {
             frontLeftDrive.setPower(1);
         }
         frontLeftDrive.setPower(0);
     }
 
     public void testBR () {
-        while (runtime.seconds() < 5) {
+        double startTime = runtime.seconds();
+        while (runtime.seconds() - startTime < 5) {
             backRightDrive.setPower(1);
         }
         backRightDrive.setPower(0);
     }
 
     public void testBL () {
-        while (runtime.seconds() < 5) {
+        double startTime = runtime.seconds();
+        while (runtime.seconds() - startTime < 5) {
             backLeftDrive.setPower(1);
         }
         backLeftDrive.setPower(0);
