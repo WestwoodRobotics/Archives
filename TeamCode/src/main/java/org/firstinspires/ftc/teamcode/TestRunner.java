@@ -60,11 +60,11 @@ public class TestRunner extends OpMode
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         //Set the motor powers to 0 by default
-        frontLeftPower = 0;
+/*        frontLeftPower = 0;
         frontRightPower = 0;
         backLeftPower = 0;
         backRightPower = 0;
-
+**/
         //Set the zero power behavior of the motors to stop quickly
         stop();
 
