@@ -74,16 +74,18 @@ public class OpModeAuton extends OpMode
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
+        Test testing = new Test (frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
     }
 
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
-        autFunc.moveForward(54); //Might should be re-calculated distance from start to right behind launch line for shooting
+        testing.testFR();
+/*        autFunc.moveForward(54); //Might should be re-calculated distance from start to right behind launch line for shooting
         autFunc.moveLeft(0); //Needs to be calculated to line up straight with high goal
         autFunc.shoot3Times();
         autFunc.moveForward(12);//Might should be re-calculated distance to get onto launch line for parking points
-
+**/
 
 
         /*//forwards 54 inches; front of the robot will be at the 3rd square line
