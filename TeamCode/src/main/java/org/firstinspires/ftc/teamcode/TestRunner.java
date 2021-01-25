@@ -82,10 +82,7 @@ public class TestRunner extends OpMode
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
-       testing.testFR();
-       testing.testFL();
-       testing.testBR();
-       testing.testBL();
+       testing.moveForward();
 
 
         /*//forwards 54 inches; front of the robot will be at the 3rd square line
