@@ -60,8 +60,8 @@ public class Test {
     public void moveLeft () {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < 3) {
-            frontLeftDrive.setPower(-0.5);
-            frontRightDrive.setPower(0.5);
+            frontLeftDrive.setPower(-0.5/2);
+            frontRightDrive.setPower(0.5/2);
             backLeftDrive.setPower(0.5);
             backRightDrive.setPower(-0.5);
         }
@@ -71,8 +71,8 @@ public class Test {
     public void moveRight () {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < 3) {
-            frontLeftDrive.setPower(0.5);
-            frontRightDrive.setPower(-0.5);
+            frontLeftDrive.setPower(0.5/2);
+            frontRightDrive.setPower(-0.5/2);
             backLeftDrive.setPower(-0.5);
             backRightDrive.setPower(0.5);
         }
