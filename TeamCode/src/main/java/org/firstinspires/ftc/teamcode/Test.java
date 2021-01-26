@@ -15,9 +15,9 @@ public class Test {
     public DcMotor shooterMotor;
  //   public DcMotor shooterAngler;
 
-    public final double BLOCKER_OPEN_POSITION = 0.5;
+    public final double BLOCKER_OPEN_POSITION = -0.5;
     public final double BLOCKER_CLOSED_POSITION = 0;
-    public final double PUSHER_OPEN_POSITION = 0.333;
+    public final double PUSHER_OPEN_POSITION = -0.333;
     public final double PUSHER_CLOSED_POSITION = 0;
 
     public ElapsedTime runtime = new ElapsedTime();
@@ -40,8 +40,10 @@ public class Test {
     public void pause (double seconds) {
         int temp;
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            temp = 0;
+        while (true) {
+            if (runtime.seconds() - startTime > seconds) {
+                break;
+            }
         }
     }
 
