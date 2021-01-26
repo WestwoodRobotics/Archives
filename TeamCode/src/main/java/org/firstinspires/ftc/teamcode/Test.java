@@ -150,10 +150,10 @@ public class Test {
         //delay
         pause(500);
         //
-/*        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
+        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-*/        //stop spinning the shooter motor
+        //stop spinning the shooter motor
         shooterMotor.setPower(0);
     }
 
