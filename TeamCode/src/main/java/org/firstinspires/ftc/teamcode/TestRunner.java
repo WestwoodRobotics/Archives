@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Auton", group="Iterative Opmode")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test Runner", group="Iterative Opmode")
 public class TestRunner extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
