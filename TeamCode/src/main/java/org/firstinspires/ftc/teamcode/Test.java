@@ -37,12 +37,11 @@ public class Test {
     }
 
     //waits for a given time
-    public void pause (double seconds) {
-        double startTime = runtime.seconds();
-        while (true) {
-            if (runtime.seconds() - startTime > seconds) {
-                return;
-            }
+    private void pause (long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 
@@ -150,7 +149,7 @@ public class Test {
         //turn the shooter push servo 60 degrees and then back 60 degrees
 //        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
         //delay
-        pause(0.5);
+        pause(500);
         //
 /*        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
