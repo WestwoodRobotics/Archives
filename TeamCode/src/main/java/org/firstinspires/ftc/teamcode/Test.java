@@ -38,11 +38,10 @@ public class Test {
 
     //waits for a given time
     public void pause (double seconds) {
-        int temp;
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
-                break;
+                return;
             }
         }
     }
