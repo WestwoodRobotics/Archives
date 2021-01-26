@@ -89,7 +89,7 @@ public class TestRunner extends OpMode
     }
 
 
-    public void stop() {
+/*    public void stop() {
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -100,4 +100,5 @@ public class TestRunner extends OpMode
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
     }
+     */
 }

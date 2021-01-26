@@ -174,7 +174,7 @@ public class Test {
         //stop spinning the shooter motor
         shooterMotor.setPower(0);
     }
-**/
+
     public void testFR () {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < 5) {
@@ -212,4 +212,6 @@ public class Test {
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
     }
+
+ */
 }
