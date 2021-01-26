@@ -37,7 +37,7 @@ public class TestRunner extends OpMode
     AutonFunctionsTwo autFunc;
 **/
     Test testing;
-//testing testing testing
+
     @Override
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
@@ -68,7 +68,7 @@ public class TestRunner extends OpMode
         backRightPower = 0;
 **/
         //Set the zero power behavior of the motors to stop quickly
-        stop();
+//        stop();
 
         //Set up telemetry
         telemetry.addData("Status", "Initialized");
