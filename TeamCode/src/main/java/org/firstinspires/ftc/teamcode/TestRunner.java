@@ -51,7 +51,7 @@ public class TestRunner extends OpMode
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
-        shooterPusher = hardwareMap.get(Servo.class, "shooterBlocker");
+        shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
 
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 

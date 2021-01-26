@@ -146,16 +146,16 @@ public class Test {
         //turn blocker servo 90 degrees
         shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
         //turn the shooter push servo 60 degrees and then back 60 degrees
-/*        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+//        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
         //delay
         pause(0.5);
         //
-        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
+/*        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-        //stop spinning the shooter motor
+*/        //stop spinning the shooter motor
         shooterMotor.setPower(0);
-**/    }
+    }
 
 /*    public void shoot3times() {
         //start spinning the shooter motor
