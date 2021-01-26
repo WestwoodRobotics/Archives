@@ -14,18 +14,18 @@ public class TestRunner extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
 
     //Initialize drive train motors
-    public DcMotor frontLeftDrive;
+/*    public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
-
+**/
     //Initialize shooter motors and servos
-/*    public Servo shooterBlocker;
+    public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
     public DcMotor shooterAngler;
 
-    public Servo clawServo;
+/*    public Servo clawServo;
 
     //Create motor power variables for drive train motors
     private double frontLeftPower;
@@ -42,24 +42,24 @@ public class TestRunner extends OpMode
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
+/*        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
         frontRightDrive = hardwareMap.get(DcMotor.class,"frontRightDrive");
         backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
-
-/*        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
-        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
+**/
+        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
+//        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
         shooterPusher = hardwareMap.get(Servo.class, "shooterBlocker");
 
-        clawServo = hardwareMap.get(Servo.class, "clawServo");
-**/
+//        clawServo = hardwareMap.get(Servo.class, "clawServo");
+
         //Set the motor directions
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+//        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+//        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
+//        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+//        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         //Set the motor powers to 0 by default
 /*        frontLeftPower = 0;
@@ -76,14 +76,14 @@ public class TestRunner extends OpMode
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
 //        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
-        testing = new Test(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
+//        testing = new Test(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
+        testing = new Test (shooterBlocker, shooterPusher, shooterMotor);
     }
 
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
-       testing.moveLeft();
-       testing.moveRight();
+       testing.shoot();
 
 
     }

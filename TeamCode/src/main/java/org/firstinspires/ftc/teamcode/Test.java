@@ -5,37 +5,48 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Test {
-    public DcMotor frontLeftDrive;
+/*    public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
-/*    public Servo shooterBlocker;
+**/
+    public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
-    public DcMotor shooterAngler;
+ //   public DcMotor shooterAngler;
 
     public final double BLOCKER_OPEN_POSITION = 0.5;
     public final double BLOCKER_CLOSED_POSITION = 0;
     public final double PUSHER_OPEN_POSITION = 0.333;
     public final double PUSHER_CLOSED_POSITION = 0;
-**/
+
     public ElapsedTime runtime = new ElapsedTime();
 
-    public Test(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive) {
+/*    public Test (DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive) {
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
         backRightDrive = bRDrive;
     }
+**/
+
+    public Test (Servo shootB, Servo shootP, DcMotor shootM){
+        shooterBlocker = shootB;
+        shooterPusher = shootP;
+        shooterMotor = shootM;
+    }
 
     //waits for a given time
     public void pause (double seconds) {
         double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {}
+        while (runtime.seconds() - startTime < seconds) {
+            continue;
+        }
     }
 
+
     //assumes robot moves at 5in per sec
-    public void moveForward () {
+/*    public void moveForward () {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < 3) {
             frontLeftDrive.setPower(0.5);
@@ -112,7 +123,7 @@ public class Test {
     }
 
     //assumes robot spins at 90 degrees per second
-/*    public void turnFrontCenterClock (double degrees) {
+    public void turnFrontCenterClock (double degrees) {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < (degrees/90)) {
             backLeftDrive.setPower(1);
@@ -127,14 +138,14 @@ public class Test {
             backRightDrive.setPower(1);
         }
     }
-
+**/
     public void shoot() {
         //start spinning the shooter motor
         shooterMotor.setPower(1);
         //turn blocker servo 90 degrees
         shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
         //turn the shooter push servo 60 degrees and then back 60 degrees
-        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+/*        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
         //delay
         pause(0.5);
         //
@@ -143,9 +154,9 @@ public class Test {
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
         //stop spinning the shooter motor
         shooterMotor.setPower(0);
-    }
+**/    }
 
-    public void shoot3times() {
+/*    public void shoot3times() {
         //start spinning the shooter motor
         shooterMotor.setPower(1);
         //turn blocker servo 90 degrees
