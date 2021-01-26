@@ -41,27 +41,26 @@ public class AutonMethods {
     public void goForward(double inches) {
         int ticks = (int) (inches * INCHES_TO_TICKS);
 
-        //reset encoders
+        // reset encoders
         resetAllEncoders();
 
-        //set target
+        // set target
         frontLeft.setTargetPosition(ticks);
         frontRight.setTargetPosition(-ticks);
         backLeft.setTargetPosition(-ticks);
         backRight.setTargetPosition(ticks);
 
-        //RUN_TO_POSITION mode
-        runToPosition();
+        // RUN_TO_POSITION mode
+        setToRunToPosition();
 
-        //set power
+        // set power
         frontLeft.setPower(1);
         frontRight.setPower(-1);
         backLeft.setPower(-1);
         backRight.setPower(1);
 
-        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached
-        }
+        // wait until all motors reach target
+        waitUntilReached();
 
         brakeAllMotors();
         setToUsingEncoders();
@@ -70,27 +69,26 @@ public class AutonMethods {
     public void goBackward(double inches) {
         int ticks = (int) (inches * INCHES_TO_TICKS);
 
-        //reset encoders
+        // reset encoders
         resetAllEncoders();
 
-        //set target
+        // set target
         frontLeft.setTargetPosition(-ticks);
         frontRight.setTargetPosition(ticks);
         backLeft.setTargetPosition(ticks);
         backRight.setTargetPosition(-ticks);
 
-        //RUN_TO_POSITION mode
-        runToPosition();
+        // RUN_TO_POSITION mode
+        setToRunToPosition();
 
-        //set power
+        // set power
         frontLeft.setPower(-1);
         frontRight.setPower(1);
         backLeft.setPower(1);
         backRight.setPower(-1);
 
-        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached
-        }
+        // wait until all motors reach target
+        waitUntilReached();
 
         brakeAllMotors();
         setToUsingEncoders();
@@ -98,24 +96,27 @@ public class AutonMethods {
 
     public void goLeft(double inches) {
         int ticks = (int) (inches * INCHES_TO_TICKS);
+
+        // reset encoders
         resetAllEncoders();
 
+        // set target
         frontLeft.setTargetPosition(-ticks);
         frontRight.setTargetPosition(-ticks);
         backLeft.setTargetPosition(-ticks);
         backRight.setTargetPosition(-ticks);
 
-        runToPosition();
+        // RUN_TO_POSITION mode
+        setToRunToPosition();
 
-        //set power
+        // set power
         frontLeft.setPower(-1);
         frontRight.setPower(-1);
         backLeft.setPower(-1);
         backRight.setPower(-1);
 
-        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached
-        }
+        // wait until all motors reach target
+        waitUntilReached();
 
         brakeAllMotors();
         setToUsingEncoders();
@@ -123,24 +124,27 @@ public class AutonMethods {
 
     public void goRight(double inches) {
         int ticks = (int) (inches * INCHES_TO_TICKS);
+
+        // reset encoders
         resetAllEncoders();
 
+        // set target
         frontLeft.setTargetPosition(ticks);
         frontRight.setTargetPosition(ticks);
         backLeft.setTargetPosition(ticks);
         backRight.setTargetPosition(ticks);
 
-        runToPosition();
+        // RUN_TO_POSITION mode
+        setToRunToPosition();
 
-        //set power
+        // set power
         frontLeft.setPower(1);
         frontRight.setPower(1);
         backLeft.setPower(1);
         backRight.setPower(1);
 
-        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached
-        }
+        // wait until all motors reach target
+        waitUntilReached();
 
         brakeAllMotors();
         setToUsingEncoders();
@@ -149,24 +153,26 @@ public class AutonMethods {
     public void turnRightCenter(double degrees) {
         int ticks = (int) (degrees * DEGREES_TO_TICKS);
 
+        // reset encoders
         resetAllEncoders();
 
+        // set target
         frontLeft.setTargetPosition(ticks);
         frontRight.setTargetPosition(ticks);
         backLeft.setTargetPosition(-ticks);
         backRight.setTargetPosition(-ticks);
 
-        runToPosition();
+        // RUN_TO_POSITION mode
+        setToRunToPosition();
 
-        //set power
+        // set power
         frontLeft.setPower(1);
         frontRight.setPower(1);
         backLeft.setPower(-1);
         backRight.setPower(-1);
 
-        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached
-        }
+        // wait until all motors reach target
+        waitUntilReached();
 
         brakeAllMotors();
         setToUsingEncoders();
@@ -175,24 +181,26 @@ public class AutonMethods {
     public void turnLeftCenter(double degrees) {
         int ticks = (int) (degrees * DEGREES_TO_TICKS);
 
+        // reset encoders
         resetAllEncoders();
 
+        // set target
         frontLeft.setTargetPosition(-ticks);
         frontRight.setTargetPosition(-ticks);
         backLeft.setTargetPosition(ticks);
         backRight.setTargetPosition(ticks);
 
-        runToPosition();
+        // RUN_TO_POSITION mode
+        setToRunToPosition();
 
-        //set power
+        // set power
         frontLeft.setPower(-1);
         frontRight.setPower(-1);
         backLeft.setPower(1);
         backRight.setPower(1);
 
-        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
-            //do nothing until target reached
-        }
+        // wait until all motors reach target
+        waitUntilReached();
 
         brakeAllMotors();
         setToUsingEncoders();
@@ -219,17 +227,23 @@ public class AutonMethods {
         backRight.setPower(0);
     }
 
-    public void runToPosition() {
+    public void setToRunToPosition() {
         frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+    public void waitUntilReached() {
+        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
+            // do nothing until target reached for all motors
+        }
+    }
+
     public void pause(double seconds) {
         runtime.reset();
         while(runtime.seconds() < seconds) {
-            //do nothing cause it's a pause
+            // do nothing because it's a pause
         }
     }
 }

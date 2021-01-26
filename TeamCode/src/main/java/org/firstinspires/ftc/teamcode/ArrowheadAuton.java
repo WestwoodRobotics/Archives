@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class ArrowheadAuton extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
-    //initialize motors
+    // initialize motors
     private DcMotor frontLeft = null;
     private DcMotor frontRight = null;
     private DcMotor backLeft = null;
@@ -25,7 +25,7 @@ public class ArrowheadAuton extends LinearOpMode {
 
     public void runOpMode() {
 
-        //put all 8 motors on the hardware map
+        // put all 8 motors on the hardware map
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
@@ -35,7 +35,7 @@ public class ArrowheadAuton extends LinearOpMode {
         shooter = hardwareMap.get(DcMotor.class, "shooter");
         arm = hardwareMap.get(DcMotor.class, "arm");
 
-        //set directions of all 8 motors
+        // set directions of all 8 motors
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -45,13 +45,13 @@ public class ArrowheadAuton extends LinearOpMode {
         shooter.setDirection(DcMotor.Direction.FORWARD);
         arm.setDirection(DcMotor.Direction.FORWARD);
 
-        //run using encoders
+        // run using encoders
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //brake
+        // set ZeroPowerBehavior to brake
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -68,24 +68,24 @@ public class ArrowheadAuton extends LinearOpMode {
         while (opModeIsActive()) {
             methods.setToUsingEncoders();
 
-            //go to launch line
+            // go to launch line
             methods.goForward(60);
 
-            //hit 1st powershot [from right to left]
+            // hit 1st powershot [from right to left]
             methods.goLeft(6);
             methods.pause(1);
             methods.shootOn();
             methods.pause(2);
             methods.shootOff();
 
-            //hit 2nd powershot
+            // hit 2nd powershot
             methods.goLeft(7.5);
             methods.pause(1);
             methods.shootOn();
             methods.pause(2);
             methods.shootOff();
 
-            //hit 3rd powershot
+            // hit 3rd powershot
             methods.goLeft(7.5);
             methods.pause(1);
             methods.shootOn();
@@ -96,23 +96,23 @@ public class ArrowheadAuton extends LinearOpMode {
             methods.goRight(21 + 24);
 
 
-            //intake square A
+            // intake square A
             methods.goForward(12);
             methods.intakesOn();
             methods.goRight(12);
             methods.goLeft(12);
 
-            //intake square B
+            // intake square B
             methods.goForward(12);
             methods.goLeft(12);
             methods.goRight(12);
 
-            //intake square C
+            // intake square C
             methods.goForward(12);
             methods.goRight(12);
             methods.goLeft(12);
 
-            //back to shoot in high goal
+            // back to shoot in high goal
             methods.goBackward(12 + 24 + 12);
             methods.goLeft(12);
             methods.shootOn();
