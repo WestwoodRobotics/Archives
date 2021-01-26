@@ -15,9 +15,9 @@ public class Test {
     public DcMotor shooterMotor;
  //   public DcMotor shooterAngler;
 
-    public final double BLOCKER_OPEN_POSITION = -0.5;
+    public final double BLOCKER_OPEN_POSITION = 0.5;
     public final double BLOCKER_CLOSED_POSITION = 0;
-    public final double PUSHER_OPEN_POSITION = -0.333;
+    public final double PUSHER_OPEN_POSITION = 0.333;
     public final double PUSHER_CLOSED_POSITION = 0;
 
     public ElapsedTime runtime = new ElapsedTime();
@@ -146,7 +146,8 @@ public class Test {
         //start spinning the shooter motor
         shooterMotor.setPower(1);
         //turn blocker servo 90 degrees
-        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+//        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+        shooterBlocker.setPosition(0);
         //turn the shooter push servo 60 degrees and then back 60 degrees
 //        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
         //delay
