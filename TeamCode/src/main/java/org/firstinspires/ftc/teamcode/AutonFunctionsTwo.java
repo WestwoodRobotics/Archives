@@ -82,25 +82,50 @@ public class AutonFunctionsTwo {
         if (fL > 0) {
             encoderCounts = (int) frontLeftDrive.getCurrentPosition() +
                     (int) Math.rint(ENCODER_COUNTS_WHEEL_ROTATION * in / wheelCircumference);
+            while (frontLeftDrive.getCurrentPosition() < encoderCounts) {
+                frontLeftDrive.setPower(fL);
+                frontRightDrive.setPower(fR);
+                backLeftDrive.setPower(bL);
+                frontLeftDrive.setPower(bR);
+            }
         } else if (fL < 0) { //Since we are tracking movement to know when to stop using only the FL motor we can just check if it is going forward or backwards
                              // and account for that in our encoder count equations
             encoderCounts = (int) frontLeftDrive.getCurrentPosition() -
                     (int) Math.rint(ENCODER_COUNTS_WHEEL_ROTATION * in / wheelCircumference);
+            while (frontLeftDrive.getCurrentPosition() > encoderCounts) {
+                frontLeftDrive.setPower(fL);
+                frontRightDrive.setPower(fR);
+                backLeftDrive.setPower(bL);
+                frontLeftDrive.setPower(bR);
+            }
         }
 
         //Uses a while loop (similar to the pause function) to keep the motors running until the FL motor reaches the expected amount of encoder counts
-        while (frontLeftDrive.getCurrentPosition() < encoderCounts) {
-            frontLeftDrive.setPower(fL);
-            frontRightDrive.setPower(fR);
-            backLeftDrive.setPower(bL);
-            frontLeftDrive.setPower(bR);
-        }
+
+
 
         //Stop the robot after it has finished moving
         stop();
     }
+/*    public void PID (double in, int fL, int fR, int bL, int bR) {
+        double prevError = encoderCounts - frontLeftDrive.getCurrentPosition();
+        double prevTime = runtime.seconds();
+        while (True) {
+            double curTime = runtime.seconds();
+            double curError = encoderCounts - frontLeftDrive.getCurrentPosition();
+            double p = x * curError;
+            double d = x * (curError - prevError)/(curTime - prevTime);
+            double output = p + d;
+            frontLeftDrive.setPower(output * fL);
+            frontRightDrive.setPower(output * fR);
+            backLeftDrive.setPower(output * bL);
+            frontLeftDrive.setPower(output * bR);
+            prevError = curError;
+            prevTime = curTime;
+        }
 
-
+    }
+*/
     //Move forward a desired amount of inches
     public void moveForward(double inches) {
         move(inches, 1, 1, 1, 1);
