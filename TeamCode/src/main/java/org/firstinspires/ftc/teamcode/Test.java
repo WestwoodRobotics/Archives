@@ -179,10 +179,10 @@ public class Test {
     }
 */
 
-    public void pseudoPID () {
-        double curTime = runtime.seconds();
+//    public void pseudoPID () {
+//        double curTime = runtime.seconds();
 //        int curError = ;
-    }
+//    }
     /*
     public void testFR () {
         double startTime = runtime.seconds();
