@@ -147,9 +147,6 @@ public class Test {
         shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(PUSHER_OPEN_POSITION);
-        //delay
-        pause(500);
-        //
         shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
