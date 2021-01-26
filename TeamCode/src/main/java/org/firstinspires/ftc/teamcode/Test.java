@@ -146,6 +146,7 @@ public class Test {
         //turn blocker servo 90 degrees
 //        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
         shooterBlocker.setPosition(0);
+        shooterPusher.setPosition(0);
         //turn the shooter push servo 60 degrees and then back 60 degrees
 //        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
         //delay
@@ -176,7 +177,13 @@ public class Test {
         //stop spinning the shooter motor
         shooterMotor.setPower(0);
     }
+*/
 
+    public void pseudoPID () {
+        int curTime = runtime.seconds();
+//        int curError = ;
+    }
+    /*
     public void testFR () {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < 5) {
