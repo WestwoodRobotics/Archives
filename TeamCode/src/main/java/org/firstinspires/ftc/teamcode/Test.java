@@ -180,7 +180,7 @@ public class Test {
 */
 
     public void pseudoPID () {
-        int curTime = runtime.seconds();
+        double curTime = runtime.seconds();
 //        int curError = ;
     }
     /*
