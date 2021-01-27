@@ -48,19 +48,7 @@ public class Test {
     }
 
     //waits for a given time
-    public void pause (long milliseconds) {
-        try {
-//            telemetry.addData("Pause: ", "started");
-//            telemetry.update();
-            Thread.sleep(milliseconds);
-//            telemetry.addData("Pause:", "finished");
-//            telemetry.update();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    public void tPause (double seconds) {
+    public void pause (double seconds) {
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
@@ -169,16 +157,15 @@ public class Test {
         shooterMotor.setPower(1);
         //turn blocker servo 90 degrees
         shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+        this.pause(0.2);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(PUSHER_OPEN_POSITION);
 
-        this.tPause(3.0);
         shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
         //stop spinning the shooter motor
         shooterMotor.setPower(0);
-        this.tPause(3.0);
     }
 
     public void shoot3times() {
@@ -188,10 +175,9 @@ public class Test {
         shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         for (int i = 0; i < 3 ; i++) {
-            shooterPusher.setPosition(PUSHER_OPEN_POSITION);
             //delay
-//            pause(1);
-
+            this.pause(0.3);
+            shooterPusher.setPosition(PUSHER_OPEN_POSITION);
             shooterPusher.setPosition(PUSHER_RELOAD_POSITION);
         }
         //turn blocker servo 90 degrees counter clockwise
