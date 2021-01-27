@@ -67,6 +67,8 @@ public class TestRunner extends OpMode
         backLeftPower = 0;
         backRightPower = 0;
 **/
+        shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         //Set the zero power behavior of the motors to stop quickly
 //        stop();
 

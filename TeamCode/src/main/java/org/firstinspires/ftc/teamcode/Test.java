@@ -64,7 +64,7 @@ public class Test {
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
-                return;
+                break;
             }
         }
     }
@@ -172,12 +172,13 @@ public class Test {
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(PUSHER_OPEN_POSITION);
 
-        this.tPause(0.5);
+        this.tPause(3.0);
         shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
         //stop spinning the shooter motor
         shooterMotor.setPower(0);
+        this.tPause(3.0);
     }
 
     public void shoot3times() {
