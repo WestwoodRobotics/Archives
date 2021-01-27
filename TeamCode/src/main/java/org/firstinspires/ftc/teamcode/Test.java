@@ -177,6 +177,7 @@ public class Test {
             //delay
             this.pause(0.5);
             shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+            this.pause(0.5);
             shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         }
         //turn blocker servo 90 degrees counter clockwise
