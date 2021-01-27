@@ -50,12 +50,22 @@ public class Test {
     //waits for a given time
     public void pause (long milliseconds) {
         try {
-            telemetry.addData("Pause: ", "started");
-            telemetry.update();
+//            telemetry.addData("Pause: ", "started");
+//            telemetry.update();
             Thread.sleep(milliseconds);
-            telemetry.addData("Pause:", "finished");
+//            telemetry.addData("Pause:", "finished");
+//            telemetry.update();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+        }
+    }
+
+    public void tPause (double seconds) {
+        double startTime = runtime.seconds();
+        while (true) {
+            if (runtime.seconds() - startTime > seconds) {
+                return;
+            }
         }
     }
 
@@ -162,7 +172,7 @@ public class Test {
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(PUSHER_OPEN_POSITION);
 
-        this.pause(500);
+        this.tPause(0.5);
         shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
