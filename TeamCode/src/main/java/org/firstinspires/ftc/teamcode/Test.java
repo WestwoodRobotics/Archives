@@ -175,7 +175,7 @@ public class Test {
         //turn the shooter push servo 60 degrees and then back 60 degrees
         for (int i = 0; i < 3 ; i++) {
             //delay
-            this.pause(0.3);
+            this.pause(0.5);
             shooterPusher.setPosition(PUSHER_OPEN_POSITION);
             shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         }
