@@ -77,7 +77,7 @@ public class TestRunner extends OpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
 //        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
 //        testing = new Test(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
-        testing = new Test (shooterBlocker, shooterPusher, shooterMotor);
+        testing = new Test (shooterBlocker, shooterPusher, shooterMotor, telemetry);
     }
 
 

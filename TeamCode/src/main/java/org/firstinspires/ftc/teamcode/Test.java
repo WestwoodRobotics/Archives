@@ -40,11 +40,11 @@ public class Test {
     }
 **/
 
-    public Test (Servo shootB, Servo shootP, DcMotor shootM){
+    public Test (Servo shootB, Servo shootP, DcMotor shootM, Telemetry t){
         shooterBlocker = shootB;
         shooterPusher = shootP;
         shooterMotor = shootM;
-
+        telemetry = t;
     }
 
     //waits for a given time
