@@ -1,8 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import java.lang.Thread;
 
 public class Test {
@@ -22,6 +28,8 @@ public class Test {
     public final double PUSHER_CLOSED_POSITION = 0;
     public final double PUSHER_RELOAD_POSITION = -0.333;
 
+    public Telemetry telemetry;
+
     public ElapsedTime runtime = new ElapsedTime();
 
 /*    public Test (DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive) {
@@ -36,12 +44,16 @@ public class Test {
         shooterBlocker = shootB;
         shooterPusher = shootP;
         shooterMotor = shootM;
+
     }
 
     //waits for a given time
     public void pause (long milliseconds) {
         try {
+            telemetry.addData("Pause: ", "started");
+            telemetry.update();
             Thread.sleep(milliseconds);
+            telemetry.addData("Pause:", "finished");
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -150,7 +162,7 @@ public class Test {
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(PUSHER_OPEN_POSITION);
 
-        Thread.sleep(500);
+        this.pause(500);
         shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
