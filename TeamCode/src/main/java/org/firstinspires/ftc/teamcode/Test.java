@@ -26,7 +26,6 @@ public class Test {
     public final double BLOCKER_CLOSED_POSITION = 0;
     public final double PUSHER_OPEN_POSITION = 0.333;
     public final double PUSHER_CLOSED_POSITION = 0;
-    public final double PUSHER_RELOAD_POSITION = -0.333;
 
     public Telemetry telemetry;
 
@@ -178,12 +177,11 @@ public class Test {
             //delay
             this.pause(0.3);
             shooterPusher.setPosition(PUSHER_OPEN_POSITION);
-            shooterPusher.setPosition(PUSHER_RELOAD_POSITION);
+            shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         }
         //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
         //stop spinning the shooter motor
-        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         shooterMotor.setPower(0);
     }
 
