@@ -24,6 +24,8 @@ public class AutonFunctionsTwo {
 
     public final int ENCODER_COUNTS_WHEEL_ROTATION = 28;
     public double wheelCircumference;
+    public final double constantForP = 0; //not found yet
+    public final double constantForD = 0; //not found yet
 
     private boolean isClawOpen = true;
     private double clawServoPosition;
@@ -107,14 +109,14 @@ public class AutonFunctionsTwo {
         //Stop the robot after it has finished moving
         stop();
     }
-/*    public void PID (double in, int fL, int fR, int bL, int bR) {
+    public void PID (double in, int fL, int fR, int bL, int bR) {
         double prevError = encoderCounts - frontLeftDrive.getCurrentPosition();
         double prevTime = runtime.seconds();
-        while (True) {
+        while (true) {
             double curTime = runtime.seconds();
             double curError = encoderCounts - frontLeftDrive.getCurrentPosition();
-            double p = x * curError;
-            double d = x * (curError - prevError)/(curTime - prevTime);
+            double p = constantForP * curError;
+            double d = constantForD * (curError - prevError)/(curTime - prevTime);
             double output = p + d;
             frontLeftDrive.setPower(output * fL);
             frontRightDrive.setPower(output * fR);
@@ -125,7 +127,7 @@ public class AutonFunctionsTwo {
         }
 
     }
-*/
+
     //Move forward a desired amount of inches
     public void moveForward(double inches) {
         move(inches, 1, 1, 1, 1);
