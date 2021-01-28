@@ -24,8 +24,8 @@ public class AutonFunctionsTwo {
 
     public final int ENCODER_COUNTS_WHEEL_ROTATION = 28;
     public double wheelCircumference;
-    public final double constantForP = 0; //not found yet
-    public final double constantForD = 0; //not found yet
+    public final double P_CONST = 0; //not found yet
+    public final double D_CONST = 0; //not found yet
 
     private boolean isClawOpen = true;
     private double clawServoPosition;
@@ -112,11 +112,11 @@ public class AutonFunctionsTwo {
     public void PID (double in, int fL, int fR, int bL, int bR) {
         double prevError = encoderCounts - frontLeftDrive.getCurrentPosition();
         double prevTime = runtime.seconds();
-        while (true) {
+        while (Math.abs(prevError) > 1) {
             double curTime = runtime.seconds();
             double curError = encoderCounts - frontLeftDrive.getCurrentPosition();
-            double p = constantForP * curError;
-            double d = constantForD * (curError - prevError)/(curTime - prevTime);
+            double p = P_CONST * curError;
+            double d = D_CONST * (curError - prevError)/(curTime - prevTime);
             double output = p + d;
             frontLeftDrive.setPower(output * fL);
             frontRightDrive.setPower(output * fR);
