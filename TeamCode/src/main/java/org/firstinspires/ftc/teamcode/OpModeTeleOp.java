@@ -1,12 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Hunga Munga TeleOp", group="Iterative Opmode")
 public class OpModeTeleOp extends OpMode
@@ -48,9 +45,17 @@ public class OpModeTeleOp extends OpMode
     public final double PUSHER_OPEN_POSITION = 0.333;
     public final double PUSHER_CLOSED_POSITION = 0;
 
-    private double currentShooterHeight;
+    public int shooterEncoderCounts; //Variable we use in our move functions to store what the encoder counts should be at once we finish moving the desired distance
+    public final double P_CONST = 0; //not found yet
+    public final double D_CONST = 0; //not found yet
+
+    private double currentShooterHeight = 0; //Need testing to find default shooter height
     private double newShooterHeight;
     private double heightDifference;
+
+    private final int HIGH_GOAL_ANGLE = 30; //Needs to test for actual value
+    private final int MID_GOAL_ANGLE = 15; //Needs to test for actual value
+    private final int POWER_SHOT_TARGET_ANGLE = 45; //Needs to test for actual value
 
     //Boolean to store if the intake is on or off
     private boolean isIntakeOn;
@@ -218,6 +223,19 @@ public class OpModeTeleOp extends OpMode
 //        clawServo.setPosition(clawServoPosition);
 
 
+        if (gamepad2.dpad_left) {
+            angleShooter(POWER_SHOT_TARGET_ANGLE);
+        }
+
+        if (gamepad2.dpad_up) {
+            angleShooter(HIGH_GOAL_ANGLE);
+        }
+
+        if (gamepad2.dpad_right) {
+            angleShooter(MID_GOAL_ANGLE);
+        }
+
+
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
     }
@@ -234,6 +252,21 @@ public class OpModeTeleOp extends OpMode
         backRightDrive.setPower(0);
     }
 
+    public void shooterPID (int shooterAnglerPower) {
+        double prevError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
+        double prevTime = runtime.seconds();
+        while (Math.abs(prevError) > 1) {
+            double curTime = runtime.seconds();
+            double curError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
+            double p = P_CONST * curError;
+            double d = D_CONST * (curError - prevError)/(curTime - prevTime);
+            double output = p + d;
+            shooterAngler.setPower(shooterAnglerPower);
+            prevError = curError;
+            prevTime = curTime;
+        }
+    }
+
     //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
     public void pause(double seconds) {
         double startTime = runtime.seconds();
@@ -241,11 +274,19 @@ public class OpModeTeleOp extends OpMode
         while(runtime.seconds() - startTime < seconds) {}
     }
 
+
     public void angleShooter(int angle) {
         newShooterHeight = angleToHeight(angle);
         heightDifference = newShooterHeight - currentShooterHeight;
 
         //Translate heightDifference into encoder counts and use PID to move the motor correctly in order to angle the shooter
+        if (heightDifference < 0) {
+            shooterEncoderCounts = 1; //Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+        } else if (heightDifference > 0) {
+            shooterEncoderCounts = -1;//Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+        }
+
+        currentShooterHeight = newShooterHeight;
     }
 
     public static double angleToHeight (int angleDesired) {

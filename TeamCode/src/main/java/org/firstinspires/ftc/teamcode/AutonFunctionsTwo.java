@@ -21,6 +21,7 @@ public class AutonFunctionsTwo {
     public Servo clawServo;
 
     public int encoderCounts; //Variable we use in our move functions to store what the encoder counts should be at once we finish moving the desired distance
+    public int shooterEncoderCounts;
 
     public final int ENCODER_COUNTS_WHEEL_ROTATION = 28;
     public double wheelCircumference;
@@ -38,7 +39,7 @@ public class AutonFunctionsTwo {
     public final double PUSHER_OPEN_POSITION = 0.333;
     public final double PUSHER_CLOSED_POSITION = 0;
 
-    private double currentShooterHeight;
+    private double currentShooterHeight = 0; //Need testing to find default shooter height;
     private double newShooterHeight;
     private double heightDifference;
 
@@ -109,7 +110,7 @@ public class AutonFunctionsTwo {
         //Stop the robot after it has finished moving
         stop();
     }
-    public void PID (double in, int fL, int fR, int bL, int bR) {
+    public void driveTrainPID (double in, int fL, int fR, int bL, int bR) {
         double prevError = encoderCounts - frontLeftDrive.getCurrentPosition();
         double prevTime = runtime.seconds();
         while (Math.abs(prevError) > 1) {
@@ -125,7 +126,6 @@ public class AutonFunctionsTwo {
             prevError = curError;
             prevTime = curTime;
         }
-
     }
 
     //Move forward a desired amount of inches
@@ -222,11 +222,33 @@ public class AutonFunctionsTwo {
         shooterMotor.setPower(0);
     }
 
+    public void shooterPID (int shooterAnglerPower) {
+        double prevError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
+        double prevTime = runtime.seconds();
+        while (Math.abs(prevError) > 1) {
+            double curTime = runtime.seconds();
+            double curError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
+            double p = P_CONST * curError;
+            double d = D_CONST * (curError - prevError)/(curTime - prevTime);
+            double output = p + d;
+            shooterAngler.setPower(shooterAnglerPower);
+            prevError = curError;
+            prevTime = curTime;
+        }
+    }
+
     public void angleShooter(int angle) {
         newShooterHeight = angleToHeight(angle);
         heightDifference = newShooterHeight - currentShooterHeight;
 
         //Translate heightDifference into encoder counts and use PID to move the motor correctly in order to angle the shooter
+        if (heightDifference < 0) {
+            encoderCounts = 1; //Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+        } else if (heightDifference > 0) {
+            encoderCounts = -1;//Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+        }
+
+        currentShooterHeight = newShooterHeight;
     }
 
     public void toggleClaw() {

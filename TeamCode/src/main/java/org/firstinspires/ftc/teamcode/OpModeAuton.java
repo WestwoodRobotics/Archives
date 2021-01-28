@@ -33,6 +33,8 @@ public class OpModeAuton extends OpMode
     private double backLeftPower;
     private double backRightPower;
 
+    private final int HIGH_GOAL_ANGLE = 30; //Needs to test for actual value
+
     //Assign the auton functions class to a variable name
     AutonFunctionsTwo autFunc;
 
@@ -79,11 +81,12 @@ public class OpModeAuton extends OpMode
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
+        autFunc.angleShooter(HIGH_GOAL_ANGLE);
         autFunc.moveForward(54); //Might should be re-calculated distance from start to right behind launch line for shooting
         autFunc.moveLeft(0); //Needs to be calculated to line up straight with high goal
         autFunc.shoot3Times();
         autFunc.moveForward(12);//Might should be re-calculated distance to get onto launch line for parking points
-
+        autFunc.pause(30);
 
 
         /*//forwards 54 inches; front of the robot will be at the 3rd square line
