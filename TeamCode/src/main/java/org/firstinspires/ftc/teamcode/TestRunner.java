@@ -14,11 +14,11 @@ public class TestRunner extends OpMode
     private ElapsedTime runtime = new ElapsedTime();
 
     //Initialize drive train motors
-/*    public DcMotor frontLeftDrive;
+    public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
-**/
+
     //Initialize shooter motors and servos
     public Servo shooterBlocker;
     public Servo shooterPusher;
@@ -27,7 +27,7 @@ public class TestRunner extends OpMode
 
     DcMotor intakeMotor;
 
-/*    public Servo clawServo;
+    public Servo clawServo;
 
     //Create motor power variables for drive train motors
     private double frontLeftPower;
@@ -37,18 +37,17 @@ public class TestRunner extends OpMode
 
     //Assign the auton functions class to a variable name
     AutonFunctionsTwo autFunc;
-**/
     Test testing;
 
     @Override
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-/*        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
+        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
         frontRightDrive = hardwareMap.get(DcMotor.class,"frontRightDrive");
         backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
-**/
+
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
@@ -66,15 +65,15 @@ public class TestRunner extends OpMode
 //        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         //Set the motor powers to 0 by default
-/*        frontLeftPower = 0;
+        frontLeftPower = 0;
         frontRightPower = 0;
         backLeftPower = 0;
         backRightPower = 0;
-**/
+
         shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //Set the zero power behavior of the motors to stop quickly
-//        stop();
+        stop();
 
         //Set up telemetry
         telemetry.addData("Status", "Initialized");
@@ -83,19 +82,23 @@ public class TestRunner extends OpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
 //        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
 //        testing = new Test(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
-        testing = new Test (shooterBlocker, shooterPusher, shooterMotor, telemetry, intakeMotor);
+        testing = new Test (frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, telemetry, intakeMotor);
     }
 
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
        testing.shoot3times();
-
+//       testing.moveLeft();
+//       testing.moveRight();
+//       testing.intakeOn();
+//       testing.pause(3);
+//       testing.intakeOff();
 
     }
 
 
-/*    public void stop() {
+    public void stop() {
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -106,5 +109,4 @@ public class TestRunner extends OpMode
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
     }
-     */
 }
