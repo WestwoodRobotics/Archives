@@ -25,6 +25,8 @@ public class TestRunner extends OpMode
     public DcMotor shooterMotor;
     public DcMotor shooterAngler;
 
+    DcMotor intakeMotor;
+
 /*    public Servo clawServo;
 
     //Create motor power variables for drive train motors
@@ -53,6 +55,8 @@ public class TestRunner extends OpMode
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
         shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
 
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         //Set the motor directions
@@ -79,7 +83,7 @@ public class TestRunner extends OpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
 //        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
 //        testing = new Test(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
-        testing = new Test (shooterBlocker, shooterPusher, shooterMotor, telemetry);
+        testing = new Test (shooterBlocker, shooterPusher, shooterMotor, telemetry, intakeMotor);
     }
 
 

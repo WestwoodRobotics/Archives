@@ -22,6 +22,8 @@ public class Test {
     public DcMotor shooterMotor;
  //   public DcMotor shooterAngler;
 
+    public DcMotor intakeMotor;
+
     public final double BLOCKER_OPEN_POSITION = 0.5;
     public final double BLOCKER_CLOSED_POSITION = 0;
     public final double PUSHER_OPEN_POSITION = 0.333;
@@ -39,10 +41,11 @@ public class Test {
     }
 **/
 
-    public Test (Servo shootB, Servo shootP, DcMotor shootM, Telemetry t){
+    public Test (Servo shootB, Servo shootP, DcMotor shootM, Telemetry t, DcMotor intake){
         shooterBlocker = shootB;
         shooterPusher = shootP;
         shooterMotor = shootM;
+        intakeMotor = intake;
         telemetry = t;
     }
 
@@ -54,6 +57,11 @@ public class Test {
                 break;
             }
         }
+    }
+
+
+    public void activateIntake(double seconds) {
+
     }
 
 
