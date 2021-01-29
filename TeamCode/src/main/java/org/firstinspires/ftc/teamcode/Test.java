@@ -61,7 +61,11 @@ public class Test {
 
 
     public void activateIntake(double seconds) {
-
+        double startTime = runtime.seconds();
+        while (runtime.seconds() - startTime < 3) {
+            intakeMotor.setPower(1);
+        }
+        intakeMotor.setPower(0);
     }
 
 

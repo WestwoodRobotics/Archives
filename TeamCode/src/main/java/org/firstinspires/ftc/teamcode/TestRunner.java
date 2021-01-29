@@ -89,9 +89,9 @@ public class TestRunner extends OpMode
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
-       testing.shoot3times();
+       testing.activateIntake(3);
 
-
+       testing.pause(30); //To ensure it doesn't repeat the code above (is in loop method which loops/repeats the code over and over)
     }
 
 
