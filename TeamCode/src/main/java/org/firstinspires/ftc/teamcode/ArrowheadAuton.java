@@ -3,8 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.*;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -19,21 +17,29 @@ public class ArrowheadAuton extends LinearOpMode {
     private DcMotor backLeft = null;
     private DcMotor backRight = null;
     private DcMotor intakeLeft = null;
-    private DcMotor intakeRight = null;
+    //private DcMotor intakeRight = null;
     private DcMotor shooter = null;
     private DcMotor arm = null;
 
+    // initialize servos
+    private Servo claw1 = null;
+    private Servo claw2 = null;
+    private Servo shooterHelper = null;
+
     public void runOpMode() {
 
-        // put all 8 motors on the hardware map
+        // put all 8 motors and all 3 servos on the hardware map
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         intakeLeft = hardwareMap.get(DcMotor.class, "intakeLeft");
-        intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
+        //intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
         shooter = hardwareMap.get(DcMotor.class, "shooter");
         arm = hardwareMap.get(DcMotor.class, "arm");
+        claw1 = hardwareMap.get(Servo.class, "claw1");
+        claw2 = hardwareMap.get(Servo.class, "claw2");
+        shooterHelper = hardwareMap.get(Servo.class, "shooterHelper");
 
         // set directions of all 8 motors
         frontLeft.setDirection(DcMotor.Direction.FORWARD);
@@ -41,7 +47,7 @@ public class ArrowheadAuton extends LinearOpMode {
         backLeft.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
         intakeLeft.setDirection(DcMotor.Direction.FORWARD);
-        intakeRight.setDirection(DcMotor.Direction.FORWARD);
+        //intakeRight.setDirection(DcMotor.Direction.FORWARD);
         shooter.setDirection(DcMotor.Direction.FORWARD);
         arm.setDirection(DcMotor.Direction.FORWARD);
 
@@ -57,15 +63,17 @@ public class ArrowheadAuton extends LinearOpMode {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
 
-        AutonMethods methods = new AutonMethods(frontLeft, frontRight, backLeft, backRight, intakeLeft, intakeRight, shooter, arm);
+        AutonMethods methods = new AutonMethods(frontLeft, frontRight, backLeft, backRight, intakeLeft, shooter, arm, claw1, claw2, shooterHelper);
 
-        while (opModeIsActive()) {
+        //AutonMethods methods = new AutonMethods(frontLeft, frontRight, backLeft, backRight, intakeLeft, intakeRight, shooter, arm, claw1, claw2, shooterHelper);
+
+        while (opModeIsActive() && runtime.seconds() <= 30.0) {
             methods.setToUsingEncoders();
 
             // go to launch line

@@ -8,10 +8,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+@TeleOp(name = "TestOpModeForCOMP", group = "Iterative Opmode")
 
-@TeleOp(name = "TeleOp2", group = "Iterative Opmode")
-
-public class ArrowheadTeleOp extends OpMode {
+public class MotorTestFile extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     // initialize motors
@@ -22,8 +21,6 @@ public class ArrowheadTeleOp extends OpMode {
     // code to run ONCE when the driver hits INIT
     @Override
     public void init() {
-        telemetry.addData("Status", "Initialized");
-
         // put all motors on the hardware map
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
@@ -53,92 +50,62 @@ public class ArrowheadTeleOp extends OpMode {
     }
 
     /*
-     * CONTROLS:
-     *
-     * GAMEPAD 1:
-     * Position Movement (forward, backward, left, right, diagonal):
-     * -- LEFT JOYSTICK (X and Y)
-     *
-     * Turn movement (turn on center of robot):
-     * -- LEFT BUMPER turns LEFT
-     * -- RIGHT BUMPER turns RIGHT
-     * -- if both bumpers pressed, no turning occurs
-     *
-     * GAMEPAD 2:
-     * Shooter:
-     * -- LEFT TRIGGER sets shooter motor to go BACKWARD
-     * -- RIGHT TRIGGER sets shooter motor to go FORWARD (shoots)
-     *
-     * Intakes:
-     * -- UNUSED A turns RIGHT intake FORWARD
-     * -- UNUSED B turns RIGHT intake BACKWARD
-     * -- Y turns LEFT intake FORWARD
-     * -- X turns LEFT intake BACKWARD
-     *
-     * Arm:
-     * -- LEFT JOYSTICK (only Y)
-     */
-
-
-    /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
     @Override
     public void loop() {
-
-
-/*
-        frontLeft.setPower(frontLeftPower);
-        frontRight.setPower(frontRightPower);
-        backLeft.setPower(backLeftPower);
-        backRight.setPower(backRightPower);*/
-
-        // update runtime and powers of drivetrain motors on telemetry
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight (%.2f)", frontLeftPower, frontRightPower, backLeftPower, backRightPower);
-        telemetry.update();
-
-        // ARM -- sets power of arm motor based on dpad up/down (GAMEPAD 2), opens/closes claw
-        while (gamepad2.dpad_up) {
-            arm.setPower(0.1);
+        while (gamepad1.x) {
+            frontLeft.setPower(1);
         }
-        while (gamepad2.dpad_down) {
-            arm.setPower(-0.1);
+        while (gamepad1.y) {
+            frontRight.setPower(1);
+        }
+        while (gamepad1.a) {
+            backLeft.setPower(1);
+        }
+        while (gamepad1.b) {
+            backRight.setPower(1);
         }
 
-        if (gamepad2.left_bumper) {
-            //clawOpen = !clawOpen;
+        //arm
+        while (gamepad1.dpad_up) {
+            arm.setPower(0.2);
+        }
+        while (gamepad1.dpad_down) {
+            arm.setPower(-0.2);
         }
 
+        //intake left
+        while (gamepad1.left_trigger != 0) {
+            intakeLeft.setPower(0.5);
+        }
+        while (gamepad1.right_trigger != 0) {
+            intakeLeft.setPower(-0.5);
+        }
 
-        // SHOOTER -- left trigger reverses shooter, right trigger shoots (GAMEPAD 2)
-        if (gamepad2.left_trigger != 0) {
-            shooter.setPower(-1);
-        } else if (gamepad2.right_trigger != 0) {
+        //shooter
+        while (gamepad1.left_bumper) {
             shooter.setPower(1);
-        } else {
-            shooter.setPower(0);
         }
 
-        // INTAKES --
-        //  UNUSED A makes RIGHT intake go FORWARD
-        //  UNUSED B makes RIGHT intake go BACKWARD
-        //   Y makes LEFT intake go FORWARD
-        //   X makes LEFT intake go BACKWARD
-        /*if (gamepad2.a) {
-            intakeRight.setPower(1);
-        } else if (gamepad2.b) {
-            intakeRight.setPower(-1);
-        } else {
-            intakeRight.setPower(0);
-        }*/
+        //claw servos
+        while (gamepad1.dpad_left) {
+            claw1.setPosition(1);
+        }
+        while (gamepad1.dpad_right) {
+            claw1.setPosition(0);
+        }
 
-        if (gamepad2.y) {
-            intakeLeft.setPower(1);
-        } else if (gamepad2.x) {
-            intakeLeft.setPower(-1);
-        } else {
-            intakeLeft.setPower(0);
+        while (gamepad1.left_stick_button) {
+            claw2.setPosition(1);
+        }
+        while (gamepad1.right_stick_button) {
+            claw2.setPosition(0);
+        }
+
+        //shooter servo
+        while (gamepad1.right_bumper) {
+            shooterHelper.setPosition(1);
         }
 
         // update runtime and powers of mechanisms on telemetry
@@ -147,14 +114,5 @@ public class ArrowheadTeleOp extends OpMode {
         telemetry.addData("Motors", "intakeLeft (%.2f), shooter (%.2f), arm (%.2f)", intakeLeft.getPower(), shooter.getPower(), arm.getPower());
 
         telemetry.update();
-    }
-
-
-
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {
     }
 }

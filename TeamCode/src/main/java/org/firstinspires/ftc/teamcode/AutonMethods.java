@@ -1,15 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class AutonMethods {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontLeft, frontRight, backLeft, backRight, intakeLeft, intakeRight, shooter, arm;
+    private Servo claw1, claw2, shooterHelper;
     private final int INCHES_TO_TICKS = 5;
     private final double DEGREES_TO_TICKS = 0.284;
 
-    public AutonMethods(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, DcMotor intakeLeft, DcMotor intakeRight, DcMotor shooter, DcMotor arm) {
+    public AutonMethods(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, DcMotor intakeLeft, DcMotor intakeRight, DcMotor shooter, DcMotor arm, Servo claw1, Servo claw2, Servo shooterHelper) {
         this.frontLeft = frontLeft;
         this.frontRight = frontRight;
         this.backLeft = backLeft;
@@ -18,24 +20,49 @@ public class AutonMethods {
         this.intakeRight = intakeRight;
         this.shooter = shooter;
         this.arm = arm;
+        this.claw1 = claw1;
+        this.claw2 = claw2;
+        this.shooterHelper = shooterHelper;
+    }
+
+    public AutonMethods(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, DcMotor intakeLeft, DcMotor shooter, DcMotor arm, Servo claw1, Servo claw2, Servo shooterHelper) {
+        // 1st comp constructor
+        this.frontLeft = frontLeft;
+        this.frontRight = frontRight;
+        this.backLeft = backLeft;
+        this.backRight = backRight;
+        this.intakeLeft = intakeLeft;
+        this.shooter = shooter;
+        this.arm = arm;
+        this.claw1 = claw1;
+        this.claw2 = claw2;
+        this.shooterHelper = shooterHelper;
+    }
+
+    public void releaseWobbleGoal() {
+        arm.setPower(-1);
+        claw1.setPosition(1);
+        claw1.setPosition(0);
     }
 
     public void intakesOn() {
         intakeLeft.setPower(1);
-        intakeRight.setPower(1);
+        // intakeRight.setPower(1);
     }
 
     public void intakesOff() {
         intakeLeft.setPower(0);
-        intakeRight.setPower(0);
+        // intakeRight.setPower(0);
     }
 
     public void shootOn() {
+        shooterHelper.setPosition(1);
         shooter.setPower(1);
     }
 
     public void shootOff() {
         shooter.setPower(0);
+        shooterHelper.setPosition(0);
     }
 
     public void goForward(double inches) {
