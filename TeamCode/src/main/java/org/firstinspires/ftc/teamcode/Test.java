@@ -20,7 +20,7 @@ public class Test {
     public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
- //   public DcMotor shooterAngler;
+    public DcMotor shooterAngler;
 
     public DcMotor intakeMotor;
 
@@ -33,7 +33,7 @@ public class Test {
 
     public ElapsedTime runtime = new ElapsedTime();
 
-    public Test (DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, Telemetry t, DcMotor intake) {
+    public Test (DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, Telemetry t, DcMotor intake, DcMotor aMotor) {
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
@@ -42,6 +42,7 @@ public class Test {
         shooterPusher = shootP;
         shooterMotor = shootM;
         intakeMotor = intake;
+        shooterAngler = aMotor;
         telemetry = t;
     }
 
@@ -235,6 +236,15 @@ public class Test {
     public void intakeOff () {
         intakeMotor.setPower(0);
     }
+
+    public void changeAngle (double seconds, int direction) {
+        double startTime = runtime.seconds();
+        while (runtime.seconds() - startTime < seconds) {
+            shooterAngler.setPower(direction * 0.3);
+        }
+        shooterAngler.setPower(0);
+    }
+
     public void stop() {
         frontLeftDrive.setPower(0);
         frontRightDrive.setPower(0);

@@ -36,7 +36,7 @@ public class TestRunner extends OpMode
     private double backRightPower;
 
     //Assign the auton functions class to a variable name
-    AutonFunctionsTwo autFunc;
+    //AutonFunctionsTwo autFunc;
     Test testing;
 
     @Override
@@ -49,7 +49,7 @@ public class TestRunner extends OpMode
         backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
 
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
-//        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
+        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
         shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
@@ -59,16 +59,31 @@ public class TestRunner extends OpMode
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         //Set the motor directions
-//        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-//        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-//        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-//        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        intakeMotor.setDirection(DcMotor.Direction.REVERSE);
+        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        shooterMotor.setDirection(DcMotor.Direction.FORWARD);
+        shooterAngler.setDirection(DcMotor.Direction.FORWARD);
+
+        shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shooterAngler.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //Set the motor powers to 0 by default
         frontLeftPower = 0;
         frontRightPower = 0;
         backLeftPower = 0;
         backRightPower = 0;
+
 
         shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -82,32 +97,26 @@ public class TestRunner extends OpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
 //        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
 //        testing = new Test(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
-        testing = new Test (frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, telemetry, intakeMotor);
+        testing = new Test (frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, telemetry, intakeMotor, shooterAngler);
     }
 
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
 
-       testing.shoot3times();
+//       testing.shoot3times();
 //       testing.moveLeft();
 //       testing.moveRight();
 //       testing.intakeOn();
 //       testing.pause(3);
 //       testing.intakeOff();
-
-       testing.activateIntake(3);
-
-       testing.pause(30); //To ensure it doesn't repeat the code above (is in loop method which loops/repeats the code over and over)
+        testing.changeAngle(0.5,1);
+        testing.pause(30); //To ensure it doesn't repeat the code above (is in loop method which loops/repeats the code over and over)
+        stop();
     }
 
 
     public void stop() {
-        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
         frontLeftDrive.setPower(0);
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
