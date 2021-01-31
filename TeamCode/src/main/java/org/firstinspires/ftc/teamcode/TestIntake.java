@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test Runner", group="Iterative Opmode")
-public class TestRunner extends OpMode
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test Intake", group="Iterative Opmode")
+public class TestIntake extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -108,9 +108,9 @@ public class TestRunner extends OpMode
 //       testing.moveLeft();
 //       testing.moveRight();
 //       testing.intakeOn();
-//       testing.pause(3);
-//       testing.intakeOff();
-        testing.changeAngle(0.5,1);
+        testing.pause(3);
+        testing.intakeOff();
+//        testing.changeAngle(0.5,1);
         testing.pause(30); //To ensure it doesn't repeat the code above (is in loop method which loops/repeats the code over and over)
         stop();
     }
