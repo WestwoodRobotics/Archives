@@ -170,10 +170,10 @@ public class OpModeTeleOp extends OpMode
         //When LB or RB is pressed turn the intake on or off and change the variable to match the current state
         if (gamepad2.left_bumper || gamepad2.right_bumper) {
             if (isIntakeOn) {
-                intakeMotor.setPower(0);
+                testing.intakeOff();
                 isIntakeOn = false;
             } else if (!isIntakeOn) {
-                intakeMotor.setPower(1);
+                testing.intakeOn();
                 isIntakeOn = true;
             }
         }
