@@ -113,7 +113,7 @@ public class TestDriveTrain extends OpMode
 //        testing.pause(3);
 //        testing.intakeOff();
 //        testing.changeAngle(0.5,1);
-        testing.pause(30); //To ensure it doesn't repeat the code above (is in loop method which loops/repeats the code over and over)
+//        testing.pause(30); //To ensure it doesn't repeat the code above (is in loop method which loops/repeats the code over and over)
         stop();
     }
 
@@ -123,5 +123,8 @@ public class TestDriveTrain extends OpMode
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
+        shooterMotor.setPower(0);
+        shooterAngler.setPower(0);
+        intakeMotor.setPower(0);
     }
 }
