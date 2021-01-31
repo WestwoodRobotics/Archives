@@ -105,11 +105,13 @@ public class TestDriveTrain extends OpMode
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
 
 //       testing.shoot3times();
-       testing.moveLeft();
-       testing.moveRight();
-//       testing.intakeOn();
-//       testing.pause(3);
-//       testing.intakeOff();
+        testing.moveForward();
+        testing.moveLeft();
+        testing.moveBackward();
+        testing.moveRight();
+//        testing.intakeOn();
+//        testing.pause(3);
+//        testing.intakeOff();
 //        testing.changeAngle(0.5,1);
         testing.pause(30); //To ensure it doesn't repeat the code above (is in loop method which loops/repeats the code over and over)
         stop();

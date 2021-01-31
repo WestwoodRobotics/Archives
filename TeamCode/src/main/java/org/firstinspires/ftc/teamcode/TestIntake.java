@@ -107,7 +107,7 @@ public class TestIntake extends OpMode
 //       testing.shoot3times();
 //       testing.moveLeft();
 //       testing.moveRight();
-//       testing.intakeOn();
+        testing.intakeOn();
         testing.pause(3);
         testing.intakeOff();
 //        testing.changeAngle(0.5,1);
