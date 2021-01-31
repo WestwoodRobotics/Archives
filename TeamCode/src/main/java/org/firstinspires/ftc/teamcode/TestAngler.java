@@ -111,6 +111,7 @@ public class TestAngler extends OpMode
 //       testing.pause(3);
 //       testing.intakeOff();
         testing.changeAngle(0.5,1);
+        testing.changeAngle(0.5,-1);
 //        testing.pause(30); //To ensure it doesn't repeat the code above (is in loop method which loops/repeats the code over and over)
         stop();
     }

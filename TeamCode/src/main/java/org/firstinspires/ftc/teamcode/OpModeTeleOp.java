@@ -60,6 +60,7 @@ public class OpModeTeleOp extends OpMode
     //Boolean to store if the intake is on or off
     private boolean isIntakeOn;
 
+    Test testing;
 
     @Override
     public void init() {
@@ -110,6 +111,9 @@ public class OpModeTeleOp extends OpMode
         //Set up telemetry
         telemetry.addData("Status", "Initialized");
         telemetry.update();
+
+        testing = new Test (frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, telemetry, intakeMotor, shooterAngler);
+
     }
 
     @Override
@@ -176,37 +180,11 @@ public class OpModeTeleOp extends OpMode
 
 
         if (gamepad2.right_trigger > 0) {
-            //Turn on the flywheel for the shooter
-            shooterMotor.setPower(1);
-            //Move the blocker out of the way to the ring can leave the magazine
-            shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
-            //Move the pusher to push the ring
-            shooterPusher.setPosition(PUSHER_OPEN_POSITION);
-
-            pause(0.5);
-            shooterPusher.setPosition(PUSHER_CLOSED_POSITION); //Pull the pusher back allowing another ring to fall into the magazine
-            //Move the blocker back into place to prevent rings from leaving the magazine
-            shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-            //Turn off the flywheel
-            shooterMotor.setPower(0);
+            testing.shoot();
         }
 
         if (gamepad2.left_trigger > 0) {
-            //Turn on the flywheel for the shooter
-            shooterMotor.setPower(1);
-            //Move the blocker out of the way to the ring can leave the magazine
-            shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
-            //Move the pusher to push the ring and bring it back to allow another ring in 3 times
-            for (int i = 0; i < 3; i++ ) {
-                shooterPusher.setPosition(PUSHER_OPEN_POSITION); //Pushes the ring
-                //delay
-                pause(1);
-                shooterPusher.setPosition(PUSHER_CLOSED_POSITION); //Pulls back the pusher so another ring can fall into the magazine
-            }
-            //Move the blocker back into place to prevent rings from leaving the magazine
-            shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-            //Turn off the flywheel
-            shooterMotor.setPower(0);
+            testing.shoot3times();
         }
 
 
@@ -223,7 +201,7 @@ public class OpModeTeleOp extends OpMode
 //        clawServo.setPosition(clawServoPosition);
 
 
-        if (gamepad2.dpad_left) {
+/*        if (gamepad2.dpad_left) {
             angleShooter(POWER_SHOT_TARGET_ANGLE);
         }
 
@@ -234,7 +212,7 @@ public class OpModeTeleOp extends OpMode
         if (gamepad2.dpad_right) {
             angleShooter(MID_GOAL_ANGLE);
         }
-
+*/
 
         telemetry.addData("Status", "Run Time: " + runtime.toString());
         telemetry.update();
@@ -252,7 +230,7 @@ public class OpModeTeleOp extends OpMode
         backRightDrive.setPower(0);
     }
 
-    public void shooterPID (int shooterAnglerPower) {
+/*    public void shooterPID (int shooterAnglerPower) {
         double prevError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
         double prevTime = runtime.seconds();
         while (Math.abs(prevError) > 1) {
@@ -266,16 +244,20 @@ public class OpModeTeleOp extends OpMode
             prevTime = curTime;
         }
     }
+    */
 
     //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
-    public void pause(double seconds) {
+    public void pause (double seconds) {
         double startTime = runtime.seconds();
-
-        while(runtime.seconds() - startTime < seconds) {}
+        while (true) {
+            if (runtime.seconds() - startTime > seconds) {
+                break;
+            }
+        }
     }
 
 
-    public void angleShooter(int angle) {
+/*    public void angleShooter(int angle) {
         newShooterHeight = angleToHeight(angle);
         heightDifference = newShooterHeight - currentShooterHeight;
 
@@ -289,8 +271,10 @@ public class OpModeTeleOp extends OpMode
         currentShooterHeight = newShooterHeight;
     }
 
+
     public static double angleToHeight (int angleDesired) {
         double radAngle = Math.toRadians(angleDesired);
         return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
     }
+ */
 }

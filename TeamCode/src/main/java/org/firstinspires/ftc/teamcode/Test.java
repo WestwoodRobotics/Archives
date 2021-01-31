@@ -56,17 +56,6 @@ public class Test {
         }
     }
 
-
-
-    public void activateIntake(double seconds) {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 3) {
-            intakeMotor.setPower(1);
-        }
-        intakeMotor.setPower(0);
-    }
-
-
     //assumes robot moves at 5in per sec
     public void moveForward () {
         double startTime = runtime.seconds();
@@ -240,7 +229,7 @@ public class Test {
     public void changeAngle (double seconds, int direction) {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < seconds) {
-            shooterAngler.setPower(direction * 0.3);
+            shooterAngler.setPower(direction * 0.5);
         }
         shooterAngler.setPower(0);
     }
@@ -250,6 +239,9 @@ public class Test {
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
+        shooterMotor.setPower(0);
+        shooterAngler.setPower(0);
+        intakeMotor.setPower(0);
     }
 
 }
