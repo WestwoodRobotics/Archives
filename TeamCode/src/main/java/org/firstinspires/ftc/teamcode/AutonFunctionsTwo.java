@@ -18,7 +18,7 @@ public class AutonFunctionsTwo {
     public Servo shooterBlocker;
     public Servo shooterPusher;
 
-    public Servo clawServo;
+//    public Servo clawServo;
 
     public int encoderCounts; //Variable we use in our move functions to store what the encoder counts should be at once we finish moving the desired distance
     public int shooterEncoderCounts;
@@ -28,10 +28,10 @@ public class AutonFunctionsTwo {
     public final double P_CONST = 0; //not found yet
     public final double D_CONST = 0; //not found yet
 
-    private boolean isClawOpen = true;
-    private double clawServoPosition;
-    private double clawOpenPosition = 0.5; //Needs testing for accurate value
-    private double clawClosedPosition = 0;
+//    private boolean isClawOpen = true;
+//    private double clawServoPosition;
+//    private double clawOpenPosition = 0.5; //Needs testing for accurate value
+//    private double clawClosedPosition = 0;
 
     //Constants representing the servo positions for the shooter blocker and pusher (needs testing for accurate positions)
     public final double BLOCKER_OPEN_POSITION = .5;
@@ -48,7 +48,7 @@ public class AutonFunctionsTwo {
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
-    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, DcMotor shootA, Servo clawServo){
+    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, DcMotor shootA){
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
@@ -57,7 +57,7 @@ public class AutonFunctionsTwo {
         shooterPusher = shootP;
         shooterMotor = shootM;
         shooterAngler = shootA;
-        this.clawServo = clawServo;
+//        this.clawServo = clawServo;
 
 
         wheelCircumference = 9.435; //Circumference of our mecanum wheels may be subject to change
@@ -65,10 +65,13 @@ public class AutonFunctionsTwo {
 
 
     //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
-    public void pause(double seconds) {
+    public void pause (double seconds) {
         double startTime = runtime.seconds();
-
-        while(runtime.seconds() - startTime < seconds) {}
+        while (true) {
+            if (runtime.seconds() - startTime > seconds) {
+                break;
+            }
+        }
     }
 
 
@@ -222,55 +225,55 @@ public class AutonFunctionsTwo {
         shooterMotor.setPower(0);
     }
 
-    public void shooterPID (int shooterAnglerPower) {
-        double prevError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
-        double prevTime = runtime.seconds();
-        while (Math.abs(prevError) > 1) {
-            double curTime = runtime.seconds();
-            double curError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
-            double p = P_CONST * curError;
-            double d = D_CONST * (curError - prevError)/(curTime - prevTime);
-            double output = p + d;
-            shooterAngler.setPower(shooterAnglerPower);
-            prevError = curError;
-            prevTime = curTime;
-        }
-    }
+//    public void shooterPID (int shooterAnglerPower) {
+//        double prevError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
+//        double prevTime = runtime.seconds();
+//        while (Math.abs(prevError) > 1) {
+//            double curTime = runtime.seconds();
+//            double curError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
+//            double p = P_CONST * curError;
+//            double d = D_CONST * (curError - prevError)/(curTime - prevTime);
+//            double output = p + d;
+//            shooterAngler.setPower(shooterAnglerPower);
+//            prevError = curError;
+//            prevTime = curTime;
+//        }
+//    }
 
-    public void angleShooter(int angle) {
-        newShooterHeight = angleToHeight(angle);
-        heightDifference = newShooterHeight - currentShooterHeight;
+//    public void angleShooter(int angle) {
+//        newShooterHeight = angleToHeight(angle);
+//        heightDifference = newShooterHeight - currentShooterHeight;
+//
+//        //Translate heightDifference into encoder counts and use PID to move the motor correctly in order to angle the shooter
+//        if (heightDifference < 0) {
+//            encoderCounts = 1; //Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+//        } else if (heightDifference > 0) {
+//            encoderCounts = -1;//Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+//        }
+//
+//        currentShooterHeight = newShooterHeight;
+//    }
 
-        //Translate heightDifference into encoder counts and use PID to move the motor correctly in order to angle the shooter
-        if (heightDifference < 0) {
-            encoderCounts = 1; //Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
-        } else if (heightDifference > 0) {
-            encoderCounts = -1;//Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
-        }
+//    public void toggleClaw() {
+//        //When called open or close the claw
+//        if (isClawOpen) {
+//            clawServoPosition = clawClosedPosition;
+//            isClawOpen = false;
+//        } else if (!isClawOpen) {
+//            clawServoPosition = clawOpenPosition;
+//            isClawOpen = true;
+//        }
+//
+//        //Set the position of the servo
+//        clawServo.setPosition(clawServoPosition);
+//    }
 
-        currentShooterHeight = newShooterHeight;
-    }
+//    public void angleClaw() {
+//
+//    }
 
-    public void toggleClaw() {
-        //When called open or close the claw
-        if (isClawOpen) {
-            clawServoPosition = clawClosedPosition;
-            isClawOpen = false;
-        } else if (!isClawOpen) {
-            clawServoPosition = clawOpenPosition;
-            isClawOpen = true;
-        }
-
-        //Set the position of the servo
-        clawServo.setPosition(clawServoPosition);
-    }
-
-    public void angleClaw() {
-
-    }
-
-    public static double angleToHeight (int angleDesired) {
-        double radAngle = Math.toRadians(angleDesired);
-        return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
-    }
+//    public static double angleToHeight (int angleDesired) {
+//        double radAngle = Math.toRadians(angleDesired);
+//        return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
+//    }
 }
