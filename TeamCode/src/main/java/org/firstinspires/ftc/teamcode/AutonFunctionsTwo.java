@@ -25,8 +25,8 @@ public class AutonFunctionsTwo {
 
     public final int ENCODER_COUNTS_WHEEL_ROTATION = 28;
     public double wheelCircumference;
-    public final double P_CONST = 0; //not found yet
-    public final double D_CONST = 0; //not found yet
+//    public final double P_CONST = 0; //not found yet
+//    public final double D_CONST = 0; //not found yet
 
 //    private boolean isClawOpen = true;
 //    private double clawServoPosition;
@@ -39,16 +39,16 @@ public class AutonFunctionsTwo {
     public final double PUSHER_OPEN_POSITION = 0.333;
     public final double PUSHER_CLOSED_POSITION = 0;
 
-    private double currentShooterHeight = 0; //Need testing to find default shooter height;
-    private double newShooterHeight;
-    private double heightDifference;
+//    private double currentShooterHeight = 0; //Need testing to find default shooter height;
+//    private double newShooterHeight;
+//    private double heightDifference;
 
     public ElapsedTime runtime = new ElapsedTime();
 
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
-    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, DcMotor shootA){
+    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM){
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
@@ -56,7 +56,7 @@ public class AutonFunctionsTwo {
         shooterBlocker = shootB;
         shooterPusher = shootP;
         shooterMotor = shootM;
-        shooterAngler = shootA;
+//        shooterAngler = shootA;
 //        this.clawServo = clawServo;
 
 
@@ -113,23 +113,23 @@ public class AutonFunctionsTwo {
         //Stop the robot after it has finished moving
         stop();
     }
-    public void driveTrainPID (double in, int fL, int fR, int bL, int bR) {
-        double prevError = encoderCounts - frontLeftDrive.getCurrentPosition();
-        double prevTime = runtime.seconds();
-        while (Math.abs(prevError) > 1) {
-            double curTime = runtime.seconds();
-            double curError = encoderCounts - frontLeftDrive.getCurrentPosition();
-            double p = P_CONST * curError;
-            double d = D_CONST * (curError - prevError)/(curTime - prevTime);
-            double output = p + d;
-            frontLeftDrive.setPower(output * fL);
-            frontRightDrive.setPower(output * fR);
-            backLeftDrive.setPower(output * bL);
-            frontLeftDrive.setPower(output * bR);
-            prevError = curError;
-            prevTime = curTime;
-        }
-    }
+//    public void driveTrainPID (double in, int fL, int fR, int bL, int bR) {
+//        double prevError = encoderCounts - frontLeftDrive.getCurrentPosition();
+//        double prevTime = runtime.seconds();
+//        while (Math.abs(prevError) > 1) {
+//            double curTime = runtime.seconds();
+//            double curError = encoderCounts - frontLeftDrive.getCurrentPosition();
+//            double p = P_CONST * curError;
+//            double d = D_CONST * (curError - prevError)/(curTime - prevTime);
+//            double output = p + d;
+//            frontLeftDrive.setPower(output * fL);
+//            frontRightDrive.setPower(output * fR);
+//            backLeftDrive.setPower(output * bL);
+//            frontLeftDrive.setPower(output * bR);
+//            prevError = curError;
+//            prevTime = curTime;
+//        }
+//    }
 
     //Move forward a desired amount of inches
     public void moveForward(double inches) {
@@ -191,37 +191,38 @@ public class AutonFunctionsTwo {
 
     //Shoot once
     public void shoot() {
-        //Turn on the flywheel for the shooter
+        //start spinning the shooter motor
         shooterMotor.setPower(1);
-        //Move the blocker out of the way to the ring can leave the magazine
+        //turn blocker servo 90 degrees
         shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
-        //Move the pusher to push the ring
+        this.pause(0.2);
+        //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(PUSHER_OPEN_POSITION);
 
-        pause(0.5);
-        shooterPusher.setPosition(PUSHER_CLOSED_POSITION); //Pull the pusher back allowing another ring to fall into the magazine
-        //Move the blocker back into place to prevent rings from leaving the magazine
+        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
+        //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-        //Turn off the flywheel
+        //stop spinning the shooter motor
         shooterMotor.setPower(0);
     }
 
     //Shoot 3 times
-    public void shoot3Times() {
-        //Turn on the flywheel for the shooter
+    public void shoot3times() {
+        //start spinning the shooter motor
         shooterMotor.setPower(1);
-        //Move the blocker out of the way to the ring can leave the magazine
+        //turn blocker servo 90 degrees
         shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
-        //Move the pusher to push the ring and bring it back to allow another ring in 3 times
-        for (int i = 0; i < 3; i++ ) {
-            shooterPusher.setPosition(PUSHER_OPEN_POSITION); //Pushes the ring
+        //turn the shooter push servo 60 degrees and then back 60 degrees
+        for (int i = 0; i < 3 ; i++) {
             //delay
-            pause(1);
-            shooterPusher.setPosition(PUSHER_CLOSED_POSITION); //Pulls back the pusher so another ring can fall into the magazine
+            this.pause(0.5);
+            shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+            this.pause(0.5);
+            shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         }
-        //Move the blocker back into place to prevent rings from leaving the magazine
+        //turn blocker servo 90 degrees counter clockwise
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-        //Turn off the flywheel
+        //stop spinning the shooter motor
         shooterMotor.setPower(0);
     }
 

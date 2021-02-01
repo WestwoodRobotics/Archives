@@ -37,7 +37,7 @@ public class OpModeTeleOp extends OpMode
     public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
-    public DcMotor shooterAngler;
+//    public DcMotor shooterAngler;
 
     //Constants representing the servo positions for the shooter blocker and pusher (needs testing for accurate positions)
     public final double BLOCKER_OPEN_POSITION = .5;
@@ -46,21 +46,21 @@ public class OpModeTeleOp extends OpMode
     public final double PUSHER_CLOSED_POSITION = 0;
 
     public int shooterEncoderCounts; //Variable we use in our move functions to store what the encoder counts should be at once we finish moving the desired distance
-    public final double P_CONST = 0; //not found yet
-    public final double D_CONST = 0; //not found yet
+//    public final double P_CONST = 0; //not found yet
+//    public final double D_CONST = 0; //not found yet
 
-    private double currentShooterHeight = 0; //Need testing to find default shooter height
-    private double newShooterHeight;
-    private double heightDifference;
+//    private double currentShooterHeight = 0; //Need testing to find default shooter height
+//    private double newShooterHeight;
+//    private double heightDifference;
 
-    private final int HIGH_GOAL_ANGLE = 30; //Needs to test for actual value
-    private final int MID_GOAL_ANGLE = 15; //Needs to test for actual value
-    private final int POWER_SHOT_TARGET_ANGLE = 45; //Needs to test for actual value
+//    private final int HIGH_GOAL_ANGLE = 30; //Needs to test for actual value
+//    private final int MID_GOAL_ANGLE = 15; //Needs to test for actual value
+//    private final int POWER_SHOT_TARGET_ANGLE = 45; //Needs to test for actual value
 
     //Boolean to store if the intake is on or off
     private boolean isIntakeOn;
 
-    Test testing;
+    AutonFunctionsTwo autFunc;
 
     @Override
     public void init() {
@@ -76,7 +76,7 @@ public class OpModeTeleOp extends OpMode
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
-        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
+//        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
         shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
@@ -112,8 +112,7 @@ public class OpModeTeleOp extends OpMode
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        testing = new Test (frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, telemetry, intakeMotor, shooterAngler);
-
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor);
     }
 
     @Override
@@ -170,21 +169,21 @@ public class OpModeTeleOp extends OpMode
         //When LB or RB is pressed turn the intake on or off and change the variable to match the current state
         if (gamepad2.left_bumper || gamepad2.right_bumper) {
             if (isIntakeOn) {
-                testing.intakeOff();
+                intakeMotor.setPower(0);
                 isIntakeOn = false;
             } else if (!isIntakeOn) {
-                testing.intakeOn();
+                intakeMotor.setPower(1);
                 isIntakeOn = true;
             }
         }
 
 
         if (gamepad2.right_trigger > 0) {
-            testing.shoot();
+            autFunc.shoot();
         }
 
         if (gamepad2.left_trigger > 0) {
-            testing.shoot3times();
+            autFunc.shoot3times();
         }
 
 
