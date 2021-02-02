@@ -5,18 +5,26 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class AutonFunctionsTwo {
-    //Drive train motors
     public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
 
-    //Servos and motors involving the shooter
+    public Servo shooterBlocker;
+    public Servo shooterPusher;
     public DcMotor shooterMotor;
     public DcMotor shooterAngler;
 
-    public Servo shooterBlocker;
-    public Servo shooterPusher;
+    public DcMotor intakeMotor;
+
+    public final double BLOCKER_OPEN_POSITION = 0.5;
+    public final double BLOCKER_CLOSED_POSITION = 0;
+    public final double PUSHER_OPEN_POSITION = 0.277;
+    public final double PUSHER_CLOSED_POSITION = 0;
+
+    public Telemetry telemetry;
+
+    public ElapsedTime runtime = new ElapsedTime();
 
 //    public Servo clawServo;
 
@@ -34,17 +42,10 @@ public class AutonFunctionsTwo {
 //    private double clawClosedPosition = 0;
 
     //Constants representing the servo positions for the shooter blocker and pusher (needs testing for accurate positions)
-    public final double BLOCKER_OPEN_POSITION = .5;
-    public final double BLOCKER_CLOSED_POSITION = 0;
-    public final double PUSHER_OPEN_POSITION = 0.333;
-    public final double PUSHER_CLOSED_POSITION = 0;
 
 //    private double currentShooterHeight = 0; //Need testing to find default shooter height;
 //    private double newShooterHeight;
 //    private double heightDifference;
-
-    public ElapsedTime runtime = new ElapsedTime();
-
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
@@ -198,9 +199,10 @@ public class AutonFunctionsTwo {
         this.pause(0.2);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(PUSHER_OPEN_POSITION);
-
+        this.pause(0.3);
         shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
+        this.pause(0.3);
         shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
         //stop spinning the shooter motor
         shooterMotor.setPower(0);

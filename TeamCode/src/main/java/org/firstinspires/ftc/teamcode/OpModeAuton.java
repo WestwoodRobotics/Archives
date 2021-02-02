@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -11,19 +12,21 @@ import com.qualcomm.robotcore.util.Range;
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Auton", group="Iterative Opmode")
 public class OpModeAuton extends OpMode
 {
-    private ElapsedTime runtime = new ElapsedTime();
-
-    //Initialize drive train motors
     public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
 
-    //Initialize shooter motors and servos
     public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
-//    public DcMotor shooterAngler;
+    public DcMotor shooterAngler;
+
+    public DcMotor intakeMotor;
+
+    public Telemetry telemetry;
+
+    public ElapsedTime runtime = new ElapsedTime();
 
 //    public Servo clawServo;
 
@@ -61,11 +64,8 @@ public class OpModeAuton extends OpMode
         backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
-        //Set the motor powers to 0 by default
-        frontLeftPower = 0;
-        frontRightPower = 0;
-        backLeftPower = 0;
-        backRightPower = 0;
+        intakeMotor.setDirection(DcMotor.Direction.REVERSE);
+        shooterMotor.setDirection(DcMotor.Direction.FORWARD);
 
         //Set the zero power behavior of the motors to stop quickly
         stop();
@@ -113,10 +113,14 @@ public class OpModeAuton extends OpMode
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftDrive.setPower(0);
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
+        shooterMotor.setPower(0);
+        intakeMotor.setPower(0);
     }
 }

@@ -89,19 +89,13 @@ public class OpModeTeleOp extends OpMode
         backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
-
-
-        //Set the motor powers to 0 by default
-        frontLeftPower = 0;
-        frontRightPower = 0;
-        backLeftPower = 0;
-        backRightPower = 0;
+        shooterMotor.setDirection(DcMotor.Direction.FORWARD);
 
         //Set the zero power behavior of the motors to stop quickly
         stop();
 
         //Set the default values for toggle control booleans such as if the intake is on or off or if the claw is open or closed
-        isIntakeOn = false;
+//        isIntakeOn = false;
 //        isClawOpen = true;
 
         //Set the minimum and maximum values for the claw servo and set the claw servo position to the open position by default
@@ -167,26 +161,83 @@ public class OpModeTeleOp extends OpMode
 
 
         //When LB or RB is pressed turn the intake on or off and change the variable to match the current state
-        if (gamepad2.left_bumper || gamepad2.right_bumper) {
-            if (isIntakeOn) {
-                intakeMotor.setPower(0);
-                isIntakeOn = false;
-            } else if (!isIntakeOn) {
-                intakeMotor.setPower(1);
-                isIntakeOn = true;
-            }
+        if (gamepad2.left_bumper) {
+            intakeMotor.setPower(1);
+        }
+        else {
+            intakeMotor.setPower(0);
         }
 
+        if (gamepad2.right_bumper) {
+            intakeMotor.setPower(-1);
+        }
+        else {
+            intakeMotor.setPower(0);
+        }
 
         if (gamepad2.right_trigger > 0) {
-            autFunc.shoot();
+            shooterMotor.setPower(0.75);
+        }
+        else {
+            shooterMotor.setPower(0);
+        }
+
+        if (gamepad2.a) {
+            shooterMotor.setPower(0.6);
+        }
+        else if (gamepad2.right_trigger == ) {
+            shooterMotor.setPower(0);
         }
 
         if (gamepad2.left_trigger > 0) {
-            autFunc.shoot3times();
+            //turn blocker servo 90 degrees
+            shooterBlocker.setPosition(0.5);
+            this.pause(0.2);
+            //turn the shooter push servo 60 degrees and then back 60 degrees
+            shooterPusher.setPosition(0.277);
+            this.pause(0.3);
+            shooterPusher.setPosition(0);
+            //turn blocker servo 90 degrees counter clockwise
+            this.pause(0.3);
+            shooterBlocker.setPosition(0);
+        }
+/*        if (gamepad2.right_trigger > 0) {
+            //start spinning the shooter motor
+            shooterMotor.setPower(1);
+            //turn blocker servo 90 degrees
+            shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+            this.pause(0.2);
+            //turn the shooter push servo 60 degrees and then back 60 degrees
+            shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+            this.pause(0.3);
+            shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
+            //turn blocker servo 90 degrees counter clockwise
+            this.pause(0.3);
+            shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
+            //stop spinning the shooter motor
+            shooterMotor.setPower(0);
         }
 
+        if (gamepad2.left_trigger > 0) {
+            //start spinning the shooter motor
+            shooterMotor.setPower(1);
+            //turn blocker servo 90 degrees
+            shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+            //turn the shooter push servo 60 degrees and then back 60 degrees
+            for (int i = 0; i < 3 ; i++) {
+                //delay
+                this.pause(0.5);
+                shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+                this.pause(0.5);
+                shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
+            }
+            //turn blocker servo 90 degrees counter clockwise
+            shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
+            //stop spinning the shooter motor
+            shooterMotor.setPower(0);
+        }
 
+*/
         //When B is pressed open or close the claw
 //        if (gamepad2.b && isClawOpen) {
 //            clawServoPosition = clawClosedPosition;
@@ -222,11 +273,15 @@ public class OpModeTeleOp extends OpMode
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         frontLeftDrive.setPower(0);
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
+        shooterMotor.setPower(0);
+        intakeMotor.setPower(0);
     }
 
 /*    public void shooterPID (int shooterAnglerPower) {
@@ -250,7 +305,7 @@ public class OpModeTeleOp extends OpMode
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
-                break;
+                return;
             }
         }
     }
