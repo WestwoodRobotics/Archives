@@ -1,15 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Auton", group="Iterative Opmode")
-public class BasicAuton extends OpMode
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Basic Auton", group="Linear OpMode")
+public class BasicAuton extends LinearOpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -39,7 +41,7 @@ public class BasicAuton extends OpMode
     AutonFunctionsTwo autFunc;
 
     @Override
-    public void init() {
+    public void runOpMode () {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
         frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
@@ -51,7 +53,7 @@ public class BasicAuton extends OpMode
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
-        shooterPusher = hardwareMap.get(Servo.class, "shooterBlocker");
+        shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
 
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
@@ -67,8 +69,18 @@ public class BasicAuton extends OpMode
         backLeftPower = 0;
         backRightPower = 0;
 
+/*        frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+ */
+        shooterPusher.setPosition(0);
+        shooterBlocker.setPosition(0);
         //Set the zero power behavior of the motors to stop quickly
-        stop();
 
         //Set up telemetry
         telemetry.addData("Status", "Initialized");
@@ -76,16 +88,74 @@ public class BasicAuton extends OpMode
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor);
+        waitForStart();
+        shooterMotor.setPower(0.73);
+        //turn blocker servo 90 degrees
+        shooterBlocker.setPosition(0.5);
+        this.pause(2);
+        //turn the shooter push servo 60 degrees and then back 60 degrees
+        shooterPusher.setPosition(0.2);
+        this.pause(0.3);
+        shooterPusher.setPosition(0);
+        //turn blocker servo 90 degrees
+        shooterBlocker.setPosition(0.5);
+        this.pause(2);
+        //turn the shooter push servo 60 degrees and then back 60 degrees
+        shooterPusher.setPosition(0.2);
+        this.pause(0.3);
+        shooterPusher.setPosition(0);
+        //turn blocker servo 90 degrees
+        shooterBlocker.setPosition(0.5);
+        this.pause(2);
+        //turn the shooter push servo 60 degrees and then back 60 degrees
+        shooterPusher.setPosition(0.2);
+        this.pause(0.3);
+        shooterPusher.setPosition(0);
+        shooterBlocker.setPosition(0);
+        shooterMotor.setPower(0);
+/*        frontLeftDrive.setPower(0.5);
+        frontRightDrive.setPower(0.5);
+        backLeftDrive.setPower(0.5);
+        backRightDrive.setPower(0.5);
+        double startTime = runtime.seconds();
+        while (true) {
+            if (runtime.seconds() - startTime > 6) {
+                break;
+            }
+        }
+*/
+/*
+        double encoderCounts = 28 * 20 * 62 / (3 * Math.PI);
+        frontLeftDrive.setTargetPosition((int) encoderCounts);
+        frontRightDrive.setTargetPosition((int) encoderCounts);
+        backLeftDrive.setTargetPosition((int) encoderCounts);
+        backRightDrive.setTargetPosition((int) encoderCounts);
+        frontLeftDrive.setPower(0.5);
+        frontRightDrive.setPower(0.5);
+        backLeftDrive.setPower(0.5);
+        backRightDrive.setPower(0.5);
+        frontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (frontLeftDrive.isBusy()) { }
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
+*/
     }
 
-
-    @Override
-    public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
-        autFunc.moveForward(66); //Might should be re-calculated distance from start to right behind launch line for shooting
-        autFunc.pause(30);
+    public void pause (double seconds) {
+        double startTime = runtime.seconds();
+        while (true) {
+            if (runtime.seconds() - startTime > seconds) {
+                return;
+            }
+        }
     }
 
-
+/*    @Override
     public void stop() {
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -97,4 +167,4 @@ public class BasicAuton extends OpMode
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
     }
-}
+*/

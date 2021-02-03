@@ -164,35 +164,29 @@ public class OpModeTeleOp extends OpMode
         if (gamepad2.left_bumper) {
             intakeMotor.setPower(1);
         }
-        else {
-            intakeMotor.setPower(0);
-        }
-
-        if (gamepad2.right_bumper) {
+        else if (gamepad2.right_bumper) {
             intakeMotor.setPower(-1);
         }
+
         else {
             intakeMotor.setPower(0);
         }
 
         if (gamepad2.right_trigger > 0) {
-            shooterMotor.setPower(0.75);
-        }
-        else {
-            shooterMotor.setPower(0);
+            shooterMotor.setPower(0.72);
         }
 
-        if (gamepad2.a) {
+        else if (gamepad2.a) {
             shooterMotor.setPower(0.6);
         }
-        else if (gamepad2.right_trigger == ) {
+        else {
             shooterMotor.setPower(0);
         }
 
         if (gamepad2.left_trigger > 0) {
             //turn blocker servo 90 degrees
             shooterBlocker.setPosition(0.5);
-            this.pause(0.2);
+            this.pause(2);
             //turn the shooter push servo 60 degrees and then back 60 degrees
             shooterPusher.setPosition(0.277);
             this.pause(0.3);

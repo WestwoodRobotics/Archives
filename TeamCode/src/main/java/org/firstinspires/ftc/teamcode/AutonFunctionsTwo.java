@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -22,7 +23,7 @@ public class AutonFunctionsTwo {
     public final double PUSHER_OPEN_POSITION = 0.277;
     public final double PUSHER_CLOSED_POSITION = 0;
 
-    public Telemetry telemetry;
+    Telemetry telemetry;
 
     public ElapsedTime runtime = new ElapsedTime();
 
@@ -96,7 +97,7 @@ public class AutonFunctionsTwo {
                 frontLeftDrive.setPower(bR);
             }
         } else if (fL < 0) { //Since we are tracking movement to know when to stop using only the FL motor we can just check if it is going forward or backwards
-                             // and account for that in our encoder count equations
+            // and account for that in our encoder count equations
             encoderCounts = (int) frontLeftDrive.getCurrentPosition() -
                     (int) Math.rint(ENCODER_COUNTS_WHEEL_ROTATION * in / wheelCircumference);
             while (frontLeftDrive.getCurrentPosition() > encoderCounts) {
