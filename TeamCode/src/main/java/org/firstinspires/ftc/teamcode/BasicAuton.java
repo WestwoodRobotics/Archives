@@ -89,7 +89,7 @@ public class BasicAuton extends LinearOpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor);
         waitForStart();
-        shooterMotor.setPower(0.73);
+        shooterMotor.setPower(0.75);
         //turn blocker servo 90 degrees
         shooterBlocker.setPosition(0.5);
         this.pause(2);
@@ -109,7 +109,8 @@ public class BasicAuton extends LinearOpMode
         this.pause(2);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(0.2);
-        this.pause(0.3);
+        this.pause(0.3
+        );
         shooterPusher.setPosition(0);
         shooterBlocker.setPosition(0);
         shooterMotor.setPower(0);
@@ -154,7 +155,7 @@ public class BasicAuton extends LinearOpMode
             }
         }
     }
-
+}
 /*    @Override
     public void stop() {
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

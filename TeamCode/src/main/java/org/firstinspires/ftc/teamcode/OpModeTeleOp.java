@@ -173,11 +173,13 @@ public class OpModeTeleOp extends OpMode
         }
 
         if (gamepad2.right_trigger > 0) {
-            shooterMotor.setPower(0.72);
+            shooterMotor.setPower(0.73);
         }
-
         else if (gamepad2.a) {
-            shooterMotor.setPower(0.6);
+            shooterMotor.setPower(0.7);
+        }
+        else if (gamepad2.b) {
+            shooterMotor.setPower(0.65);
         }
         else {
             shooterMotor.setPower(0);
@@ -186,9 +188,9 @@ public class OpModeTeleOp extends OpMode
         if (gamepad2.left_trigger > 0) {
             //turn blocker servo 90 degrees
             shooterBlocker.setPosition(0.5);
-            this.pause(2);
+            this.pause(2.25);
             //turn the shooter push servo 60 degrees and then back 60 degrees
-            shooterPusher.setPosition(0.277);
+            shooterPusher.setPosition(0.3);
             this.pause(0.3);
             shooterPusher.setPosition(0);
             //turn blocker servo 90 degrees counter clockwise
