@@ -4,19 +4,36 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name = "TeleOp2", group = "Iterative Opmode")
 
+/**
+ * This is the TeleOp code for Team 17264 Arrowhead for the 2020-2021 FTC season. It enables
+ * drivers to remotely control our robot using two controllers (GAMEPAD1 and GAMEPAD2). This
+ * is done by the use of a phone connected to the Control Hub.
+ *
+ * @version Last updated on 2/8/2021
+ */
 public class ArrowheadTeleOp extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
-    // initialize motors
-    private DcMotor frontLeft, frontRight, backLeft, backRight, intakeLeft, intakeRight, shooter, arm;
+    /**
+     * Initializes motors and servos.
+     */
+    private DcMotor frontLeft, frontRight, backLeft, backRight, intakeLeft, shooter, arm;
+    private Servo claw1, claw2, shooterHelper;
+    //private CRServo shooterHelper;
 
-    // code to run ONCE when the driver hits INIT
+    /**
+     * The code runs ONCE when the driver hits INIT on the phone. All motors and servos are put
+     * on the hardware map. The zero power behavior of all motors are set to BRAKE so that the
+     * motors stop moving when their powers are set to 0. Directions of the motors are set
+     * individually as determined during testing.
+     */
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
@@ -26,23 +43,34 @@ public class ArrowheadTeleOp extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
-
         intakeLeft = hardwareMap.get(DcMotor.class, "intakeLeft");
-        intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
+        //intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
         shooter = hardwareMap.get(DcMotor.class, "shooter");
         arm = hardwareMap.get(DcMotor.class, "arm");
+        claw1 = hardwareMap.get(Servo.class, "claw1");
+        claw2 = hardwareMap.get(Servo.class, "claw2");
+        shooterHelper = hardwareMap.get(Servo.class, "shooterHelper");
+        //shooterHelper = hardwareMap.get(CRServo.class, "shooterHelper");
 
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // set turn directions of all motors
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.FORWARD);
-
+        backRight.setDirection(DcMotor.Direction.REVERSE);
         intakeLeft.setDirection(DcMotor.Direction.FORWARD);
-        intakeRight.setDirection(DcMotor.Direction.FORWARD);
-        shooter.setDirection(DcMotor.Direction.FORWARD);
+        //intakeRight.setDirection(DcMotor.Direction.FORWARD);
+        shooter.setDirection(DcMotor.Direction.REVERSE);
         arm.setDirection(DcMotor.Direction.FORWARD);
+
 
         // tell driver that initialization is complete.
         telemetry.addData("Status", "Initialized");
@@ -52,57 +80,56 @@ public class ArrowheadTeleOp extends OpMode {
      * CONTROLS:
      *
      * GAMEPAD 1:
-     * Position Movement (forward, backward, left, right, diagonal):
-     * -- LEFT JOYSTICK (X and Y)
      *
-     * Turn movement (turn on center of robot):
-     * -- LEFT BUMPER turns LEFT
-     * -- RIGHT BUMPER turns RIGHT
-     * -- if both bumpers pressed, no turning occurs
+     * DRIVETRAIN (GAMEPAD1) --
+     *      LEFT_STICK controls movement (right, left, forward, backward, diagonals)
+     *      LEFT_TRIGGER and RIGHT_TRIGGER control turning
+     *
+     *
      *
      * GAMEPAD 2:
-     * Shooter:
-     * -- LEFT TRIGGER sets shooter motor to go BACKWARD
-     * -- RIGHT TRIGGER sets shooter motor to go FORWARD (shoots)
      *
-     * Intakes:
-     * -- A turns RIGHT intake FORWARD
-     * -- B turns RIGHT intake BACKWARD
-     * -- Y turns LEFT intake FORWARD
-     * -- X turns LEFT intake BACKWARD
+     * SHOOTER (GAMEPAD2) --
+     *      LEFT_TRIGGER shoots
+     *      LEFT_BUMPER shoots @ const. speed   (press & hold)
+     *      RIGHT_BUMPER reverse shoots         (press & hold)
+     *      A makes shooterHelper go FORWARD    (press & hold)
      *
-     * Arm:
-     * -- LEFT JOYSTICK (only Y)
+     * INTAKES (GAMEPAD2) --
+     *      RIGHT_TRIGGER makes LEFT intake go FORWARD (sucks in)
+     *      RIGHT_BUMPER makes LEFT intake go BACKWARD (rejects)
+     *
+     * ARM (GAMEPAD2) --
+     *      DPAD_UP makes the arm move up
+     *      DPAD_DOWN makes the arm move down
+     *      DPAD_LEFT opens the claw
+     *      DPAD_RIGHT closes the claw
      */
 
 
-    /*
-     * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
+    /**
+     * This method runs REPEATEDLY after the driver hits PLAY but before they hit STOP. It
+     * allows for the drivers to control all of the mechanisms of the robot.
      */
     @Override
     public void loop() {
 
-        // for simplicity and easier readability
-        double leftStickX = gamepad1.left_stick_x;
-        double leftStickY1 = -gamepad1.left_stick_y;
-        double leftStickY2 = -gamepad2.left_stick_y;
-        double turnNum = 0;
+        /* DRIVETRAIN (GAMEPAD1) --
+         *      LEFT_STICK controls movement (right, left, forward, backward, diagonals)
+         *      LEFT_TRIGGER and RIGHT_TRIGGER control turning
+         */
+        double leftStickX1 = gamepad1.left_stick_x;
+        double leftStickY1 = gamepad1.left_stick_y;
+        double turnNum;
 
-        // DRIVETRAIN -- turns based on bumpers, moves based on left joystick (GAMEPAD 1)
-        // sets turnNum based on bumpers
-        if (gamepad1.left_bumper && !gamepad1.right_bumper) {
-            turnNum = -1;
-        } else if (!gamepad1.left_bumper && gamepad1.right_bumper) {
-            turnNum = 1;
-        } else {
-            turnNum = 0;
-        }
+        // turnNum is set to the difference in the right and left turn values
+        turnNum = gamepad1.right_trigger - gamepad1.left_trigger;
 
         // set powers for drivetrain using left joystick and turnNum (accounts for weird orientation)
-        double frontLeftPower = -leftStickY1 + leftStickX + turnNum ;
-        double frontRightPower = leftStickY1 + leftStickX - turnNum;
-        double backLeftPower = leftStickY1 + leftStickX + turnNum;
-        double backRightPower = -leftStickY1 + leftStickX - turnNum;
+        double frontLeftPower = -leftStickY1 + leftStickX1 + turnNum;
+        double frontRightPower = leftStickY1 + leftStickX1 + turnNum;
+        double backLeftPower = leftStickY1 + leftStickX1 - turnNum;
+        double backRightPower = -leftStickY1 + leftStickX1 - turnNum;
 
         // scale down drivetrain power variables to fit within range [-1, 1]
         double maxPower = Math.max(Math.max(Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower)), Math.abs(backLeftPower)), Math.abs(backRightPower));
@@ -120,50 +147,92 @@ public class ArrowheadTeleOp extends OpMode {
 
         // update runtime and powers of drivetrain motors on telemetry
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight (%.2f)", frontLeftPower, frontRightPower, backLeftPower, backRightPower);
+        //telemetry.addData("Motors", frontRightPower, backLeftPower, backRightPower);
         telemetry.update();
 
-        // ARM -- sets power of arm motor based on left stick y (GAMEPAD 2)
-        arm.setPower(leftStickY2);
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // SHOOTER -- left trigger reverses shooter, right trigger shoots (GAMEPAD 2)
+        /* ARM (GAMEPAD2) --
+         *      DPAD_UP makes the arm move up
+         *      DPAD_DOWN makes the arm move down
+         *      DPAD_LEFT opens the claw
+         *      DPAD_RIGHT closes the claw
+         */
+        if (gamepad2.dpad_up) {
+            arm.setPower(0.01);
+        } else if (gamepad2.dpad_down) {
+            arm.setPower(-0.01);
+        } else {
+            arm.setPower(0);
+        }
+
+        if (gamepad2.dpad_left) {
+            claw1.setPosition(0);
+            //claw2.setPosition(1);
+        } else if (gamepad2.dpad_right) {
+            claw1.setPosition(1);
+            //claw2.setPosition(0);
+        }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /* SHOOTER (GAMEPAD2) --
+         *      LEFT_TRIGGER shoots
+         *      LEFT_BUMPER shoots @ const. speed   (press & hold)
+         *      RIGHT_BUMPER reverse shoots         (press & hold)
+         *      A makes shooterHelper go FORWARD    (press & hold)
+         */
         if (gamepad2.left_trigger != 0) {
-            shooter.setPower(-1);
-        } else if (gamepad2.right_trigger != 0) {
-            shooter.setPower(1);
+            shooter.setPower(gamepad2.left_trigger);
+        } else if (gamepad2.left_bumper) {
+            shooter.setPower(0.822);
         } else {
             shooter.setPower(0);
         }
 
-        // INTAKES --
-        //   A makes RIGHT intake go FORWARD
-        //   B makes RIGHT intake go BACKWARD
-        //   Y makes LEFT intake go FORWARD
-        //   X makes LEFT intake go BACKWARD
         if (gamepad2.a) {
-            intakeRight.setPower(1);
-        } else if (gamepad2.b) {
-            intakeRight.setPower(-1);
+            //runtime.reset();
+
+            //while (runtime.seconds() < 1) {
+            shooterHelper.setPosition(1);
+            //}
+
+            //runtime.reset();
+
+            //while (runtime.seconds() < 1) {
+            //    shooterHelper.setPosition(0);
+            //}
         } else {
-            intakeRight.setPower(0);
+            shooterHelper.setPosition(0);
         }
 
-        if (gamepad2.y) {
-            intakeLeft.setPower(1);
-        } else if (gamepad2.x) {
-            intakeLeft.setPower(-1);
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        /* INTAKES (GAMEPAD2) --
+         *      RIGHT_TRIGGER makes LEFT intake go FORWARD (sucks in)
+         *      RIGHT_BUMPER makes LEFT intake go BACKWARD (rejects)
+         */
+        if (gamepad2.right_trigger != 0) {
+            intakeLeft.setPower(gamepad2.right_trigger * 0.7);
+        } else if (gamepad2.right_bumper) {
+            intakeLeft.setPower(-0.1);
         } else {
             intakeLeft.setPower(0);
         }
 
         // update runtime and powers of mechanisms on telemetry
         telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.addData("Motors", "intakeLeft (%.2f), intakeRight (%.2f), shooter (%.2f), arm (%.2f)", intakeLeft.getPower(), intakeRight.getPower(), shooter.getPower(), arm.getPower());
+
+        telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight (%.2f)", frontLeft.getPower(), frontRight.getPower(), backLeft.getPower(), backRight.getPower());
+        telemetry.addData("Motors", "intakeLeft (%.2f), shooter (%.2f), arm (%.2f)", intakeLeft.getPower(), shooter.getPower(), arm.getPower());
+        //telemetry.addData("Servos", "claw1 (%.2f), claw2 (%.2f), shooterHelper (%.2f)", claw1.getPosition(), claw2.getPosition(), shooterHelper.getPower());
+        telemetry.addData("Servos", "claw1 (%.2f), claw2 (%.2f), shooterHelper (%.2f)", claw1.getPosition(), claw2.getPosition(), shooterHelper.getPosition());
+
         telemetry.update();
     }
 
-    /*
-     * Code to run ONCE after the driver hits STOP
+
+    /**
+     * The code runs ONCE after the driver hits STOP. It overrides the loop() method.
      */
     @Override
     public void stop() {
