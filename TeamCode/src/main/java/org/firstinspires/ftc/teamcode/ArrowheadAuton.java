@@ -6,6 +6,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+/**
+ * This is the Autonomous code for Team 17264 Arrowhead for the 2020-2021 FTC season.
+ * This code calls several methods from the AutonMethods class. And this is the official
+ * code that will be run from the driver station.
+ *
+ * @version Last updated on 2/14/2021
+ */
 
 @Autonomous(name = "Basic: Linear OpMode", group = "Linear Opmode")
 public class ArrowheadAuton extends LinearOpMode {
@@ -17,7 +24,7 @@ public class ArrowheadAuton extends LinearOpMode {
     private DcMotor backLeft = null;
     private DcMotor backRight = null;
     private DcMotor intakeLeft = null;
-    //private DcMotor intakeRight = null;
+    private DcMotor intakeRight = null;
     private DcMotor shooter = null;
     private DcMotor arm = null;
 
@@ -26,8 +33,10 @@ public class ArrowheadAuton extends LinearOpMode {
     private Servo claw2 = null;
     private Servo shooterHelper = null;
 
+    /**
+     * This method runs once. It initializes all motors on the hardware map, sets their direction,
+     */
     public void runOpMode() {
-
         // put all 8 motors and all 3 servos on the hardware map
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
@@ -76,39 +85,60 @@ public class ArrowheadAuton extends LinearOpMode {
         while (opModeIsActive() && runtime.seconds() < 30) {
             methods.setToUsingEncoders();
 
-            // UNUSED hit 1st powershot [from right to left]
-
-            // score in the goals
-            //methods.goLeft(6);
-            methods.noELeft();
-            methods.pause(1);
+            // hit 1st powershot [from right to left]
+            methods.goLeft(6);
+            methods.goForward(72);
             methods.shootOn();
+            methods.pause(1);
             methods.moveHelper();
-            methods.moveHelper();
-            methods.moveHelper();
-            methods.shootOff();
-
-            // go to launch line
-            //methods.goForward(72);
-            methods.noEForward();
 
             // hit 2nd powershot
-            //methods.goLeft(7.5);
-            //methods.pause(1);
-            //methods.shootOn();
-            //methods.pause(2);
-            //methods.shootOff();
+            methods.goLeft(7.5);
+            methods.pause(1);
+            methods.moveHelper();
 
             // hit 3rd powershot
-            //methods.goLeft(7.5);
-            //methods.pause(1);
-            //methods.shootOn();
-            //methods.pause(2);
-            //methods.shootOff();
+            methods.goLeft(7.5);
+            methods.pause(1);
+            methods.moveHelper();
+            methods.shootOff();
+            /**** AT THIS POINT:
+             *    3 POWERSHOTS SHOULD HAVE BEEN SCORED,
+             *    0 RINGS REMAIN IN THE ROBOT****/
+
+            // go intake the rings in the pile
+            methods.intakesOn();
+            methods.goBackward(50);
+            methods.goRight(30);
+            // just for good measure
+            methods.goLeft(10);
+            methods.goRight(10);
+            methods.intakesOff();
+            /**** AT THIS POINT:
+             *    3 POWERSHOTS SHOULD HAVE BEEN SCORED,
+             *    3 RINGS REMAIN IN THE ROBOT****/
+
+            // score in the goals
+            methods.shootOn();
+            methods.goBackward(12);
+            methods.goLeft(9);
+            methods.pause(1);
+            methods.moveHelper();
+            methods.pause(1);
+            methods.moveHelper();
+            methods.pause(1);
+            methods.moveHelper();
+            methods.shootOff();
+            /**** AT THIS POINT:
+             *    3 POWERSHOTS SHOULD HAVE BEEN SCORED,
+             *    3 GOALS SHOULD HAVE BEEN SCORED
+             *    0 RINGS REMAIN IN THE ROBOT****/
+
+            // park on launch line
+            methods.goForward(72);
 
 
-            //methods.goRight(21 + 24);
-
+            /** OLD CODE **/
 
             // intake square A
             //methods.goForward(12);

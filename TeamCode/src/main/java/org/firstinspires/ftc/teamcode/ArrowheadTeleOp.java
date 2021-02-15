@@ -16,7 +16,7 @@ import com.qualcomm.robotcore.util.Range;
  * drivers to remotely control our robot using two controllers (GAMEPAD1 and GAMEPAD2). This
  * is done by the use of a phone connected to the Control Hub.
  *
- * @version Last updated on 2/8/2021
+ * @version Last updated on 2/14/2021
  */
 public class ArrowheadTeleOp extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -79,20 +79,14 @@ public class ArrowheadTeleOp extends OpMode {
     /*
      * CONTROLS:
      *
-     * GAMEPAD 1:
-     *
      * DRIVETRAIN (GAMEPAD1) --
      *      LEFT_STICK controls movement (right, left, forward, backward, diagonals)
      *      LEFT_TRIGGER and RIGHT_TRIGGER control turning
      *
      *
-     *
-     * GAMEPAD 2:
-     *
      * SHOOTER (GAMEPAD2) --
      *      LEFT_TRIGGER shoots
      *      LEFT_BUMPER shoots @ const. speed   (press & hold)
-     *      RIGHT_BUMPER reverse shoots         (press & hold)
      *      A makes shooterHelper go FORWARD    (press & hold)
      *
      * INTAKES (GAMEPAD2) --
@@ -145,11 +139,6 @@ public class ArrowheadTeleOp extends OpMode {
         backLeft.setPower(backLeftPower);
         backRight.setPower(backRightPower);
 
-        // update runtime and powers of drivetrain motors on telemetry
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        //telemetry.addData("Motors", frontRightPower, backLeftPower, backRightPower);
-        telemetry.update();
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /* ARM (GAMEPAD2) --
@@ -178,7 +167,6 @@ public class ArrowheadTeleOp extends OpMode {
         /* SHOOTER (GAMEPAD2) --
          *      LEFT_TRIGGER shoots
          *      LEFT_BUMPER shoots @ const. speed   (press & hold)
-         *      RIGHT_BUMPER reverse shoots         (press & hold)
          *      A makes shooterHelper go FORWARD    (press & hold)
          */
         if (gamepad2.left_trigger != 0) {
