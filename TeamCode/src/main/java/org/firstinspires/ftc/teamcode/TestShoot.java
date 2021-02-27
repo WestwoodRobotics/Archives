@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test Intake", group="Iterative Opmode")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test Shoot", group="Iterative Opmode")
 public class TestShoot extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
@@ -23,9 +23,10 @@ public class TestShoot extends OpMode
     public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
-    public DcMotor shooterAngler;
+//    public DcMotor shooterAngler;
 
-    DcMotor intakeMotor;
+    public DcMotor intakeMotor;
+    public DcMotor scuffedMotor;
 
     public Servo clawServo;
 
@@ -49,12 +50,13 @@ public class TestShoot extends OpMode
         backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
 
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
-        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
+//        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
         shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
 
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+        scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
 
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
@@ -73,10 +75,14 @@ public class TestShoot extends OpMode
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         shooterMotor.setDirection(DcMotor.Direction.FORWARD);
-        shooterAngler.setDirection(DcMotor.Direction.FORWARD);
+        //shooterAngler.setDirection(DcMotor.Direction.FORWARD);
+
+        scuffedMotor.setDirection(DcMotor.Direction.REVERSE);
 
         shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        shooterAngler.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        shooterAngler.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        scuffedMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         //Set the motor powers to 0 by default
         frontLeftPower = 0;
@@ -97,7 +103,7 @@ public class TestShoot extends OpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
 //        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, shooterAngler, clawServo);
 //        testing = new Test(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive);
-        testing = new Test (frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, telemetry, intakeMotor, shooterAngler);
+        testing = new Test (frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, telemetry, intakeMotor, scuffedMotor);
     }
 
 
@@ -122,7 +128,7 @@ public class TestShoot extends OpMode
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
         shooterMotor.setPower(0);
-        shooterAngler.setPower(0);
+//        shooterAngler.setPower(0);
         intakeMotor.setPower(0);
     }
 }

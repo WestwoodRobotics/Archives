@@ -25,6 +25,7 @@ public class BasicAuton extends LinearOpMode
     public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
+    public DcMotor scuffedMotor;
 //    public DcMotor shooterAngler;
 
 //    public Servo clawServo;
@@ -87,7 +88,7 @@ public class BasicAuton extends LinearOpMode
         telemetry.update();
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor);
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, scuffedMotor);
         waitForStart();
         shooterMotor.setPower(0.75);
         //turn blocker servo 90 degrees

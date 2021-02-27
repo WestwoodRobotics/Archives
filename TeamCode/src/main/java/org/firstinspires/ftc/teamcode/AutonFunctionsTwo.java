@@ -17,6 +17,7 @@ public class AutonFunctionsTwo {
     public DcMotor shooterAngler;
 
     public DcMotor intakeMotor;
+    public DcMotor scuffedMotor;
 
     public final double BLOCKER_OPEN_POSITION = 0.5;
     public final double BLOCKER_CLOSED_POSITION = 0;
@@ -50,7 +51,7 @@ public class AutonFunctionsTwo {
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
-    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM){
+    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, DcMotor sMotor){
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
@@ -60,7 +61,7 @@ public class AutonFunctionsTwo {
         shooterMotor = shootM;
 //        shooterAngler = shootA;
 //        this.clawServo = clawServo;
-
+        scuffedMotor = sMotor;
 
         wheelCircumference = 9.435; //Circumference of our mecanum wheels may be subject to change
     }

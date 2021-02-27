@@ -20,9 +20,10 @@ public class OpModeAuton extends OpMode
     public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
-    public DcMotor shooterAngler;
+//    public DcMotor shooterAngler;
 
     public DcMotor intakeMotor;
+    public DcMotor scuffedMotor;
 
     public Telemetry telemetry;
 
@@ -67,6 +68,7 @@ public class OpModeAuton extends OpMode
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         shooterMotor.setDirection(DcMotor.Direction.FORWARD);
 
+        scuffedMotor.setDirection(DcMotor.Direction.REVERSE);
         //Set the zero power behavior of the motors to stop quickly
         stop();
 
@@ -75,7 +77,7 @@ public class OpModeAuton extends OpMode
         telemetry.update();
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor);
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, scuffedMotor);
     }
 
 

@@ -23,6 +23,7 @@ public class OpModeTeleOp extends OpMode
 
     //Initialize intake motor and create the power variable
     public DcMotor intakeMotor;
+    public DcMotor scuffedMotor;
 
     //Initialize the servo for opening and closing the claw
 //    public Servo clawServo;
@@ -72,6 +73,7 @@ public class OpModeTeleOp extends OpMode
         backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
 
         intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
+        scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
 
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
@@ -90,7 +92,7 @@ public class OpModeTeleOp extends OpMode
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         shooterMotor.setDirection(DcMotor.Direction.FORWARD);
-
+        scuffedMotor.setDirection(DcMotor.Direction.REVERSE);
         //Set the zero power behavior of the motors to stop quickly
         stop();
 
@@ -106,7 +108,7 @@ public class OpModeTeleOp extends OpMode
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor);
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, scuffedMotor);
     }
 
     @Override
@@ -170,6 +172,16 @@ public class OpModeTeleOp extends OpMode
 
         else {
             intakeMotor.setPower(0);
+        }
+
+        if (gamepad2.x) {
+            scuffedMotor.setPower(1);
+        }
+        else if (gamepad2.y) {
+            scuffedMotor.setPower(-1);
+        }
+        else {
+            scuffedMotor.setPower(0);
         }
 
         if (gamepad2.right_trigger > 0) {
