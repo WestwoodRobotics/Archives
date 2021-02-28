@@ -199,15 +199,15 @@ public class OpModeTeleOp extends OpMode
 
         if (gamepad2.left_trigger > 0) {
             //turn blocker servo 90 degrees
-            shooterBlocker.setPosition(0.5);
-            this.pause(2.25);
+//            shooterBlocker.setPosition(0.5);
+//            this.pause(1);
             //turn the shooter push servo 60 degrees and then back 60 degrees
             shooterPusher.setPosition(0.3);
             this.pause(0.3);
             shooterPusher.setPosition(0);
             //turn blocker servo 90 degrees counter clockwise
             this.pause(0.3);
-            shooterBlocker.setPosition(0);
+//            shooterBlocker.setPosition(0);
         }
 /*        if (gamepad2.right_trigger > 0) {
             //start spinning the shooter motor

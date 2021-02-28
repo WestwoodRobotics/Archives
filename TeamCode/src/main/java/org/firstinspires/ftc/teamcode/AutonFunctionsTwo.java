@@ -14,7 +14,7 @@ public class AutonFunctionsTwo {
     public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
-    public DcMotor shooterAngler;
+//    public DcMotor shooterAngler;
 
     public DcMotor intakeMotor;
     public DcMotor scuffedMotor;
