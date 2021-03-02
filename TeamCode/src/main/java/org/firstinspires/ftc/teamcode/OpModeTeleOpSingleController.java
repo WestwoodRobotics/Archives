@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Hunga Munga TeleOp", group="Iterative Opmode")
-public class OpModeTeleOp extends OpMode
+public class OpModeTeleOpSingleController extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
     //Initialize drive train motors
@@ -152,8 +152,8 @@ public class OpModeTeleOp extends OpMode
             backRightPower /= greatestPower;
         }
 
-        //Slo-Mo when holding LB
-        if (gamepad1.left_bumper){
+        //Slo-Mo when holding Y
+        if (gamepad1.y){
             frontLeftPower *= 0.5;
             frontRightPower *= 0.5;
             backLeftPower *= 0.5;
@@ -168,41 +168,38 @@ public class OpModeTeleOp extends OpMode
 
 
         //When LB or RB is pressed turn the intake on or off and change the variable to match the current state
-        if (gamepad2.left_bumper) {
+        if (gamepad1.left_bumper) {
             intakeMotor.setPower(1);
         }
-        else if (gamepad2.right_bumper) {
+        else if (gamepad1.right_bumper) {
             intakeMotor.setPower(-1);
         }
-
         else {
             intakeMotor.setPower(0);
         }
 
+        //May need to be reversed
         if (gamepad2.x) {
             scuffedMotor.setPower(1);
-        }
-        else if (gamepad2.y) {
-            scuffedMotor.setPower(-1);
         }
         else {
             scuffedMotor.setPower(0);
         }
 
-        if (gamepad2.right_trigger > 0) {
+        if (gamepad1.right_trigger > 0) {
             shooterMotor.setPower(0.715);
         }
-        else if (gamepad2.a) {
+        else if (gamepad1.a) {
             shooterMotor.setPower(0.55);
         }
-        else if (gamepad2.b) {
+        else if (gamepad1.b) {
             shooterMotor.setPower(0.68);
         }
         else {
             shooterMotor.setPower(0);
         }
 
-        if (gamepad2.left_trigger > 0) {
+        if (gamepad1.left_trigger > 0) {
             //turn blocker servo 90 degrees
 //            shooterBlocker.setPosition(0.5);
 //            this.pause(1);
