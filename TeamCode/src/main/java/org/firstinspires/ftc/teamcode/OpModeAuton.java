@@ -17,7 +17,7 @@ public class OpModeAuton extends OpMode
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
 
-    public Servo shooterBlocker;
+//    public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
 //    public DcMotor shooterAngler;
@@ -44,8 +44,53 @@ public class OpModeAuton extends OpMode
 
     @Override
     public void init() {
+                /*initialize your motors here using the hardwareMap variable and the .get method within it.
+        Map the motor objects to the physical motors using the control hub*/
+        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotor.class,"frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
+
+        intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
+        scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
+
+//        clawServo = hardwareMap.get(Servo.class, "clawServo");
+
+        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
+//        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
+
+//        shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
+        shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
+
+
+        //Set the motor directions
+        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+
+        intakeMotor.setDirection(DcMotor.Direction.REVERSE);
+        shooterMotor.setDirection(DcMotor.Direction.FORWARD);
+        scuffedMotor.setDirection(DcMotor.Direction.REVERSE);
+        //Set the zero power behavior of the motors to stop quickly
+        stop();
+
+        //Set the default values for toggle control booleans such as if the intake is on or off or if the claw is open or closed
+//        isIntakeOn = false;
+//        isClawOpen = true;
+
+        //Set the minimum and maximum values for the claw servo and set the claw servo position to the open position by default
+//        clawClosedPosition = 0;
+//        clawOpenPosition = 0.5;
+
+        //Set up telemetry
+//        telemetry.addData("Status", "Initialized");
+//        telemetry.update();
+
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
+/*
         frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
         frontRightDrive = hardwareMap.get(DcMotor.class,"frontRightDrive");
         backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
@@ -54,8 +99,8 @@ public class OpModeAuton extends OpMode
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
-        shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
-        shooterPusher = hardwareMap.get(Servo.class, "shooterBlocker");
+//        shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
+        shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
 
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
@@ -77,16 +122,17 @@ public class OpModeAuton extends OpMode
         telemetry.update();
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, scuffedMotor);
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
+        */
     }
 
 
     @Override
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
-        autFunc.moveForward(54); //Might should be re-calculated distance from start to right behind launch line for shooting
-        autFunc.moveLeft(0); //Needs to be calculated to line up straight with high goal
+//        autFunc.moveForward(54); //Might should be re-calculated distance from start to right behind launch line for shooting
+//        autFunc.moveLeft(0); //Needs to be calculated to line up straight with high goal
         autFunc.shoot3times();
-        autFunc.moveForward(12);//Might should be re-calculated distance to get onto launch line for parking points
+//        autFunc.moveForward(12);//Might should be re-calculated distance to get onto launch line for parking points
         autFunc.pause(30);
 
 

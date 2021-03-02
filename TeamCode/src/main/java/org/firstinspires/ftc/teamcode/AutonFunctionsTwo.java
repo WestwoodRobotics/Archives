@@ -19,9 +19,9 @@ public class AutonFunctionsTwo {
     public DcMotor intakeMotor;
     public DcMotor scuffedMotor;
 
-    public final double BLOCKER_OPEN_POSITION = 0.5;
-    public final double BLOCKER_CLOSED_POSITION = 0;
-    public final double PUSHER_OPEN_POSITION = 0.277;
+//    public final double BLOCKER_OPEN_POSITION = 0.5;
+//    public final double BLOCKER_CLOSED_POSITION = 0;
+    public final double PUSHER_OPEN_POSITION = 0.25;
     public final double PUSHER_CLOSED_POSITION = 0;
 
     Telemetry telemetry;
@@ -51,12 +51,12 @@ public class AutonFunctionsTwo {
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
-    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, DcMotor sMotor){
+    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootP, DcMotor shootM, DcMotor sMotor){
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
         backRightDrive = bRDrive;
-        shooterBlocker = shootB;
+//        shooterBlocker = shootB;
         shooterPusher = shootP;
         shooterMotor = shootM;
 //        shooterAngler = shootA;
@@ -195,17 +195,17 @@ public class AutonFunctionsTwo {
     //Shoot once
     public void shoot() {
         //start spinning the shooter motor
-        shooterMotor.setPower(1);
+        shooterMotor.setPower(0.715);
         //turn blocker servo 90 degrees
-        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+//        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
         this.pause(0.2);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(PUSHER_OPEN_POSITION);
         this.pause(0.3);
         shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         //turn blocker servo 90 degrees counter clockwise
-        this.pause(0.3);
-        shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
+//        this.pause(0.3);
+//        shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
         //stop spinning the shooter motor
         shooterMotor.setPower(0);
     }
@@ -213,19 +213,19 @@ public class AutonFunctionsTwo {
     //Shoot 3 times
     public void shoot3times() {
         //start spinning the shooter motor
-        shooterMotor.setPower(1);
+        shooterMotor.setPower(0.7);
         //turn blocker servo 90 degrees
-        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+//        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         for (int i = 0; i < 3 ; i++) {
             //delay
-            this.pause(0.5);
+            this.pause(1);
             shooterPusher.setPosition(PUSHER_OPEN_POSITION);
             this.pause(0.5);
             shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
         }
         //turn blocker servo 90 degrees counter clockwise
-        shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
+//        shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
         //stop spinning the shooter motor
         shooterMotor.setPower(0);
     }

@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Hunga Munga TeleOp", group="Iterative Opmode")
 public class OpModeTeleOp extends OpMode
@@ -25,6 +29,7 @@ public class OpModeTeleOp extends OpMode
     public DcMotor intakeMotor;
     public DcMotor scuffedMotor;
 
+    public Telemetry telemetry;
     //Initialize the servo for opening and closing the claw
 //    public Servo clawServo;
 
@@ -105,10 +110,10 @@ public class OpModeTeleOp extends OpMode
 //        clawOpenPosition = 0.5;
 
         //Set up telemetry
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
+//        telemetry.addData("Status", "Initialized");
+//        telemetry.update();
 
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterBlocker, shooterPusher, shooterMotor, scuffedMotor);
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
     }
 
     @Override
@@ -185,13 +190,13 @@ public class OpModeTeleOp extends OpMode
         }
 
         if (gamepad2.right_trigger > 0) {
-            shooterMotor.setPower(0.73);
+            shooterMotor.setPower(0.715);
         }
         else if (gamepad2.a) {
-            shooterMotor.setPower(0.7);
+            shooterMotor.setPower(0.55);
         }
         else if (gamepad2.b) {
-            shooterMotor.setPower(0.65);
+            shooterMotor.setPower(0.68);
         }
         else {
             shooterMotor.setPower(0);
@@ -202,11 +207,11 @@ public class OpModeTeleOp extends OpMode
 //            shooterBlocker.setPosition(0.5);
 //            this.pause(1);
             //turn the shooter push servo 60 degrees and then back 60 degrees
-            shooterPusher.setPosition(0.3);
+            shooterPusher.setPosition(0.25);
             this.pause(0.3);
             shooterPusher.setPosition(0);
             //turn blocker servo 90 degrees counter clockwise
-            this.pause(0.3);
+            this.pause(0.75);
 //            shooterBlocker.setPosition(0);
         }
 /*        if (gamepad2.right_trigger > 0) {
@@ -272,8 +277,8 @@ public class OpModeTeleOp extends OpMode
         }
 */
 
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-        telemetry.update();
+//        telemetry.addData("Status", "Run Time: " + runtime.toString());
+//        telemetry.update();
     }
 
     public void stop() {
