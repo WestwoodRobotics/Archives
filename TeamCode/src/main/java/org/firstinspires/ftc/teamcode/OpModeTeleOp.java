@@ -305,7 +305,7 @@ public class OpModeTeleOp extends OpMode {
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
-                return;q
+                return;
             }
         }
     }
