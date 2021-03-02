@@ -12,15 +12,18 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.lang.Thread;
 
 public class Test {
-/*    public DcMotor frontLeftDrive;
+    public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
-**/
+
     public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotor shooterMotor;
- //   public DcMotor shooterAngler;
+//    public DcMotor shooterAngler;
+    public DcMotor scuffedMotor;
+
+    public DcMotor intakeMotor;
 
     public final double BLOCKER_OPEN_POSITION = 0.5;
     public final double BLOCKER_CLOSED_POSITION = 0;
@@ -31,18 +34,17 @@ public class Test {
 
     public ElapsedTime runtime = new ElapsedTime();
 
-/*    public Test (DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive) {
+    public Test (DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, Telemetry t, DcMotor intake, DcMotor sMotor) {
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
         backRightDrive = bRDrive;
-    }
-**/
-
-    public Test (Servo shootB, Servo shootP, DcMotor shootM, Telemetry t){
         shooterBlocker = shootB;
         shooterPusher = shootP;
         shooterMotor = shootM;
+        intakeMotor = intake;
+//        shooterAngler = aMotor;
+        scuffedMotor = sMotor;
         telemetry = t;
     }
 
@@ -56,9 +58,8 @@ public class Test {
         }
     }
 
-
     //assumes robot moves at 5in per sec
-/*    public void moveForward () {
+    public void moveForward () {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < 3) {
             frontLeftDrive.setPower(0.5);
@@ -150,7 +151,7 @@ public class Test {
             backRightDrive.setPower(1);
         }
     }
-**/
+
     public void shoot() {
         //start spinning the shooter motor
         shooterMotor.setPower(1);
@@ -186,7 +187,7 @@ public class Test {
         shooterMotor.setPower(0);
     }
 
-    /*
+
     public void testFR () {
         double startTime = runtime.seconds();
         while (runtime.seconds() - startTime < 5) {
@@ -218,12 +219,40 @@ public class Test {
         }
         backLeftDrive.setPower(0);
     }
+
+    public void scuffedOn () {
+        scuffedMotor.setPower(1);
+    }
+
+    public void scuffedOff () {
+        scuffedMotor.setPower(0);
+    }
+    public void intakeOn () {
+        intakeMotor.setPower(1);
+    }
+
+    public void intakeOff () {
+        intakeMotor.setPower(0);
+    }
+
+/*    public void changeAngle (double seconds, int direction) {
+        double startTime = runtime.seconds();
+        while (runtime.seconds() - startTime < seconds) {
+            shooterAngler.setPower(direction * 0.5);
+        }
+        shooterAngler.setPower(0);
+    }
+
+ */
+
     public void stop() {
         frontLeftDrive.setPower(0);
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
+        shooterMotor.setPower(0);
+//        shooterAngler.setPower(0);
+        intakeMotor.setPower(0);
     }
 
- */
 }

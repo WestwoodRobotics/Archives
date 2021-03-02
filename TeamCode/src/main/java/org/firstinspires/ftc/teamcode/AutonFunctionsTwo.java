@@ -51,7 +51,7 @@ public class AutonFunctionsTwo {
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
-    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootP, DcMotor shootM, DcMotor sMotor){
+    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootP, DcMotor shootM, DcMotor sMotor) {
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
@@ -68,7 +68,7 @@ public class AutonFunctionsTwo {
 
 
     //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
-    public void pause (double seconds) {
+    public void pause(double seconds) {
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
@@ -110,7 +110,6 @@ public class AutonFunctionsTwo {
         }
 
         //Uses a while loop (similar to the pause function) to keep the motors running until the FL motor reaches the expected amount of encoder counts
-
 
 
         //Stop the robot after it has finished moving
@@ -211,7 +210,7 @@ public class AutonFunctionsTwo {
         //turn blocker servo 90 degrees
 //        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
         //turn the shooter push servo 60 degrees and then back 60 degrees
-        for (int i = 0; i < 3 ; i++) {
+        for (int i = 0; i < 3; i++) {
             //delay
             this.pause(1);
             shooterPusher.setPosition(PUSHER_OPEN_POSITION);

@@ -10,8 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Auton", group="Iterative Opmode")
-public class OpModeAuton extends OpMode
-{
+public class OpModeAuton extends OpMode {
     public DcMotor frontLeftDrive;
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
@@ -46,12 +45,12 @@ public class OpModeAuton extends OpMode
     public void init() {
                 /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
-        frontRightDrive = hardwareMap.get(DcMotor.class,"frontRightDrive");
-        backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
-        backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
+        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
 
-        intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
 
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");

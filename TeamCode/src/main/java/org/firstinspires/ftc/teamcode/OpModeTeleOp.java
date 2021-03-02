@@ -10,8 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Hunga Munga TeleOp", group="Iterative Opmode")
-public class OpModeTeleOp extends OpMode
-{
+public class OpModeTeleOp extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     //Initialize drive train motors
     public DcMotor frontLeftDrive;
@@ -72,12 +71,12 @@ public class OpModeTeleOp extends OpMode
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
-        frontRightDrive = hardwareMap.get(DcMotor.class,"frontRightDrive");
-        backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
-        backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
+        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
 
-        intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
 
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
@@ -153,7 +152,7 @@ public class OpModeTeleOp extends OpMode
         }
 
         //Slo-Mo when holding LB
-        if (gamepad1.left_bumper){
+        if (gamepad1.left_bumper) {
             frontLeftPower *= 0.5;
             frontRightPower *= 0.5;
             backLeftPower *= 0.5;
@@ -170,35 +169,27 @@ public class OpModeTeleOp extends OpMode
         //When LB or RB is pressed turn the intake on or off and change the variable to match the current state
         if (gamepad2.left_bumper) {
             intakeMotor.setPower(1);
-        }
-        else if (gamepad2.right_bumper) {
+        } else if (gamepad2.right_bumper) {
             intakeMotor.setPower(-1);
-        }
-
-        else {
+        } else {
             intakeMotor.setPower(0);
         }
 
         if (gamepad2.x) {
             scuffedMotor.setPower(1);
-        }
-        else if (gamepad2.y) {
+        } else if (gamepad2.y) {
             scuffedMotor.setPower(-1);
-        }
-        else {
+        } else {
             scuffedMotor.setPower(0);
         }
 
         if (gamepad2.right_trigger > 0) {
             shooterMotor.setPower(0.715);
-        }
-        else if (gamepad2.a) {
+        } else if (gamepad2.a) {
             shooterMotor.setPower(0.55);
-        }
-        else if (gamepad2.b) {
+        } else if (gamepad2.b) {
             shooterMotor.setPower(0.68);
-        }
-        else {
+        } else {
             shooterMotor.setPower(0);
         }
 
@@ -310,11 +301,11 @@ public class OpModeTeleOp extends OpMode
     */
 
     //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
-    public void pause (double seconds) {
+    public void pause(double seconds) {
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
-                return;
+                return;q
             }
         }
     }
