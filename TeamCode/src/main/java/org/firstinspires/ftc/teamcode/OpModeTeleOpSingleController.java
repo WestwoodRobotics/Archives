@@ -179,7 +179,7 @@ public class OpModeTeleOpSingleController extends OpMode
         }
 
         //May need to be reversed
-        if (gamepad2.x) {
+        if (gamepad1.x) {
             scuffedMotor.setPower(1);
         }
         else {
