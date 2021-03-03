@@ -189,7 +189,7 @@ public class OpModeTeleOpSingleController extends OpMode
 
         if (gamepad1.right_trigger > 0) {
 //            shooterMotor.setPower(0.715);
-            shooterMotor.setVelocity(1);
+            shooterMotor.setVelocity(1000);
         }
         else if (gamepad1.a) {
             shooterMotor.setPower(0.55);
