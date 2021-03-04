@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -41,7 +42,7 @@ public class OpModeTeleOp extends OpMode {
     //Initialize motors and servos for the shooter
     public Servo shooterBlocker;
     public Servo shooterPusher;
-    public DcMotor shooterMotor;
+    public DcMotorEx shooterMotor;
 //    public DcMotor shooterAngler;
 
     //Constants representing the servo positions for the shooter blocker and pusher (needs testing for accurate positions)
@@ -81,7 +82,7 @@ public class OpModeTeleOp extends OpMode {
 
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
-        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
+        shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
         shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
@@ -184,11 +185,14 @@ public class OpModeTeleOp extends OpMode {
         }
 
         if (gamepad2.right_trigger > 0) {
-            shooterMotor.setPower(0.715);
+//            shooterMotor.setPower(0.715);
+            shooterMotor.setVelocity(1690);
         } else if (gamepad2.a) {
-            shooterMotor.setPower(0.55);
+//            shooterMotor.setPower(0.55);
+            shooterMotor.setVelocity(1300);
         } else if (gamepad2.b) {
-            shooterMotor.setPower(0.68);
+//            shooterMotor.setPower(0.68);
+            shooterMotor.setVelocity(1610);
         } else {
             shooterMotor.setPower(0);
         }

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -24,7 +25,7 @@ public class BasicAuton extends LinearOpMode
     //Initialize shooter motors and servos
 //    public Servo shooterBlocker;
     public Servo shooterPusher;
-    public DcMotor shooterMotor;
+    public DcMotorEx shooterMotor;
     public DcMotor scuffedMotor;
 //    public DcMotor shooterAngler;
 
@@ -50,7 +51,7 @@ public class BasicAuton extends LinearOpMode
         backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
         backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
 
-        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
+        shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
 //        shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
@@ -90,7 +91,8 @@ public class BasicAuton extends LinearOpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
         waitForStart();
-        shooterMotor.setPower(0.715);
+//        shooterMotor.setPower(0.715);
+        shooterMotor.setVelocity(1690);
         //turn blocker servo 90 degrees
 //        shooterBlocker.setPosition(0.5);
         this.pause(2);
