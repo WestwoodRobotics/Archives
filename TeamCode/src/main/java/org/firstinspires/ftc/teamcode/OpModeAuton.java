@@ -1,13 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Auton", group="Iterative Opmode")
 public class OpModeAuton extends OpMode {
@@ -18,7 +22,7 @@ public class OpModeAuton extends OpMode {
 
     //    public Servo shooterBlocker;
     public Servo shooterPusher;
-    public DcMotor shooterMotor;
+    public DcMotorEx shooterMotor;
 //    public DcMotor shooterAngler;
 
     public DcMotor intakeMotor;
@@ -55,7 +59,7 @@ public class OpModeAuton extends OpMode {
 
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
-        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
+        shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
 
 //        shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");

@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Hunga Munga TeleOp", group="Iterative Opmode")
+@com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Hunga Munga OneConTeleOp", group="Iterative Opmode")
 public class OpModeTeleOpSingleController extends OpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
@@ -187,17 +187,17 @@ public class OpModeTeleOpSingleController extends OpMode
             scuffedMotor.setPower(0);
         }
 
-        if (gamepad1.right_trigger > 0) {
+        if (gamepad2.right_trigger > 0) {
 //            shooterMotor.setPower(0.715);
-            shooterMotor.setVelocity(1690);
-        }
-        else if (gamepad1.a) {
-//            shooterMotor.setPower(0.55);
-            shooterMotor.setVelocity(1300);
-        }
-        else if (gamepad1.b) {
-//            shooterMotor.setPower(0.68);
             shooterMotor.setVelocity(1600);
+        }
+        else if (gamepad2.a) {
+//            shooterMotor.setPower(0.55);
+            shooterMotor.setVelocity(1450);
+        }
+        else if (gamepad2.b) {
+//            shooterMotor.setPower(0.68);
+            shooterMotor.setVelocity(1650);
         }
         else {
             shooterMotor.setPower(0);
@@ -277,6 +277,15 @@ public class OpModeTeleOpSingleController extends OpMode
 //        telemetry.addData("Status", "Run Time: " + runtime.toString());
 //        telemetry.update();
     }
+    //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
+    public void pause (double seconds) {
+        double startTime = runtime.seconds();
+        while (true) {
+            if (runtime.seconds() - startTime > seconds) {
+                return;
+            }
+        }
+    }
 
     public void stop() {
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -310,15 +319,7 @@ public class OpModeTeleOpSingleController extends OpMode
     }
     */
 
-    //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
-    public void pause (double seconds) {
-        double startTime = runtime.seconds();
-        while (true) {
-            if (runtime.seconds() - startTime > seconds) {
-                return;
-            }
-        }
-    }
+
 
 
 /*    public void angleShooter(int angle) {
@@ -337,4 +338,5 @@ public class OpModeTeleOpSingleController extends OpMode
         return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
     }
  */
+
 }

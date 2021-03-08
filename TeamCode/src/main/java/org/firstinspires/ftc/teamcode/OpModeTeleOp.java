@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Hunga Munga TeleOp", group="Iterative Opmode")
 public class OpModeTeleOp extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -24,12 +25,12 @@ public class OpModeTeleOp extends OpMode {
     private double frontRightPower;
     private double backLeftPower;
     private double backRightPower;
+    private int epr = 28;
 
     //Initialize intake motor and create the power variable
     public DcMotor intakeMotor;
     public DcMotor scuffedMotor;
 
-    public Telemetry telemetry;
     //Initialize the servo for opening and closing the claw
 //    public Servo clawServo;
 
@@ -114,6 +115,7 @@ public class OpModeTeleOp extends OpMode {
 //        telemetry.update();
 
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
+        shooterMotor.setVelocityPIDFCoefficients(400, 0, 0, 0);
     }
 
     @Override
@@ -121,6 +123,10 @@ public class OpModeTeleOp extends OpMode {
         /*use the left stick of gamepad1 in order to find what angle the left stick is at.
         use gamepad1.left_stick_x and gamepad1.left_stick_y to get the current x and y positions
         of the left stick on the first gamepad.*/
+        //Set up telemetry
+        telemetry.addData("Velocity", this.TpsToRpm(shooterMotor.getVelocity()));
+        telemetry.update();
+
 
         //Get the values of the joystick input filtered through the corresponding equation for each wheel/motor
         frontLeftPower = gamepad1.left_stick_x - gamepad1.left_stick_y + gamepad1.right_stick_x;
@@ -185,14 +191,13 @@ public class OpModeTeleOp extends OpMode {
         }
 
         if (gamepad2.right_trigger > 0) {
-//            shooterMotor.setPower(0.715);
-            shooterMotor.setVelocity(1690);
+            shooterMotor.setVelocity(RpmToTps(3650));
         } else if (gamepad2.a) {
 //            shooterMotor.setPower(0.55);
-            shooterMotor.setVelocity(1300);
+            shooterMotor.setVelocity(RpmToTps(3100));
         } else if (gamepad2.b) {
 //            shooterMotor.setPower(0.68);
-            shooterMotor.setVelocity(1610);
+            shooterMotor.setVelocity(RpmToTps(3500));
         } else {
             shooterMotor.setPower(0);
         }
@@ -305,7 +310,7 @@ public class OpModeTeleOp extends OpMode {
     */
 
     //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
-    public void pause(double seconds) {
+    public void pause (double seconds) {
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
@@ -331,4 +336,11 @@ public class OpModeTeleOp extends OpMode {
         return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
     }
  */
+    public double TpsToRpm (double tps) {
+        return tps * 60 / epr;
+    }
+
+    public double RpmToTps (double rpm) {
+        return rpm * epr / 60;
+    }
 }

@@ -1,9 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 public class AutonFunctionsTwo {
     public DcMotor frontLeftDrive;
@@ -13,8 +18,9 @@ public class AutonFunctionsTwo {
 
     public Servo shooterBlocker;
     public Servo shooterPusher;
-    public DcMotor shooterMotor;
+    public DcMotorEx shooterMotor;
 //    public DcMotor shooterAngler;
+    private int epr = 28;
 
     public DcMotor intakeMotor;
     public DcMotor scuffedMotor;
@@ -51,7 +57,7 @@ public class AutonFunctionsTwo {
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
-    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootP, DcMotor shootM, DcMotor sMotor) {
+    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootP, DcMotorEx shootM, DcMotor sMotor) {
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
@@ -206,7 +212,7 @@ public class AutonFunctionsTwo {
     //Shoot 3 times
     public void shoot3times() {
         //start spinning the shooter motor
-        shooterMotor.setPower(0.7);
+        shooterMotor.setVelocity(1600);
         //turn blocker servo 90 degrees
 //        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
         //turn the shooter push servo 60 degrees and then back 60 degrees

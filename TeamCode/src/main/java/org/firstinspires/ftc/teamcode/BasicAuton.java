@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Basic Auton", group="Linear OpMode")
 public class BasicAuton extends LinearOpMode
@@ -21,6 +23,7 @@ public class BasicAuton extends LinearOpMode
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
+    private int epr = 28;
 
     //Initialize shooter motors and servos
 //    public Servo shooterBlocker;
@@ -90,26 +93,29 @@ public class BasicAuton extends LinearOpMode
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
+        shooterMotor.setVelocityPIDFCoefficients(400, 0, 0, 0);
         waitForStart();
 //        shooterMotor.setPower(0.715);
+        shooterMotor.setVelocity(RpmToTps(3750));
+        //turn blocker servo 90 degrees
+//        shooterBlocker.setPosition(0.5);
+        this.pause(5);
+        //turn the shooter push servo 60 degrees and then back 60 degrees
+        shooterPusher.setPosition(0.2);
+        this.pause(0.3);
+        shooterPusher.setPosition(0);
+        //turn blocker servo 90 degrees
+//        shooterBlocker.setPosition(0.5);
         shooterMotor.setVelocity(1690);
-        //turn blocker servo 90 degrees
-//        shooterBlocker.setPosition(0.5);
-        this.pause(2);
+        this.pause(3);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(0.2);
         this.pause(0.3);
         shooterPusher.setPosition(0);
         //turn blocker servo 90 degrees
 //        shooterBlocker.setPosition(0.5);
-        this.pause(2);
-        //turn the shooter push servo 60 degrees and then back 60 degrees
-        shooterPusher.setPosition(0.2);
-        this.pause(0.3);
-        shooterPusher.setPosition(0);
-        //turn blocker servo 90 degrees
-//        shooterBlocker.setPosition(0.5);
-        this.pause(2);
+        shooterMotor.setVelocity(1690);
+        this.pause(3);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(0.2);
         this.pause(0.3);
@@ -157,6 +163,13 @@ public class BasicAuton extends LinearOpMode
                 return;
             }
         }
+    }
+    public double TpsToRpm (double tps) {
+        return tps * 60 / epr;
+    }
+
+    public double RpmToTps (double rpm) {
+        return rpm * epr / 60;
     }
 }
 /*    @Override
