@@ -115,7 +115,7 @@ public class OpModeTeleOp extends OpMode {
 //        telemetry.update();
 
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
-        shooterMotor.setVelocityPIDFCoefficients(400, 0, 0, 0);
+//        shooterMotor.setVelocityPIDFCoefficients(400, 0, 0, 0);
     }
 
     @Override
@@ -124,7 +124,8 @@ public class OpModeTeleOp extends OpMode {
         use gamepad1.left_stick_x and gamepad1.left_stick_y to get the current x and y positions
         of the left stick on the first gamepad.*/
         //Set up telemetry
-        telemetry.addData("Velocity", this.TpsToRpm(shooterMotor.getVelocity()));
+//        telemetry.addData("Velocity", this.TpsToRpm(shooterMotor.getVelocity()));
+        telemetry.addData("Velocity", shooterMotor.getVelocity());
         telemetry.update();
 
 
