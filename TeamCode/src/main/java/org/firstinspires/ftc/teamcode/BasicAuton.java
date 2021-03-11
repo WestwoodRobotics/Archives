@@ -106,7 +106,7 @@ public class BasicAuton extends LinearOpMode
         shooterPusher.setPosition(0);
         //turn blocker servo 90 degrees
 //        shooterBlocker.setPosition(0.5);
-        shooterMotor.setVelocity(1690);
+        shooterMotor.setVelocity(1600);
         this.pause(3);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(0.2);
