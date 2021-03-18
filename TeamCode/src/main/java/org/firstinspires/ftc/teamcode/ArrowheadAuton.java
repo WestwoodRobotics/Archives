@@ -11,21 +11,21 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * This code calls several methods from the AutonMethods class. And this is the official
  * code that will be run from the driver station.
  *
- * @version Last updated on 2/14/2021
+ * @version Last updated on 3/9/2021
  */
 
-@Autonomous(name = "Basic: Linear OpMode", group = "Linear Opmode")
+@Autonomous(name = "ArrowheadAuton", group = "Linear Opmode")
 public class ArrowheadAuton extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     // initialize motors
-    private DcMotor frontLeft = null;
-    private DcMotor frontRight = null;
-    private DcMotor backLeft = null;
-    private DcMotor backRight = null;
+    private DcMotorEx frontLeft = null;
+    private DcMotorEx frontRight = null;
+    private DcMotorEx backLeft = null;
+    private DcMotorEx backRight = null;
     private DcMotor intakeLeft = null;
     private DcMotor intakeRight = null;
-    private DcMotor shooter = null;
+    private DcMotorEx shooter = null;
     private DcMotor arm = null;
 
     // initialize servos
@@ -38,26 +38,26 @@ public class ArrowheadAuton extends LinearOpMode {
      */
     public void runOpMode() {
         // put all 8 motors and all 3 servos on the hardware map
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
+        frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
+        backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
+        backRight = hardwareMap.get(DcMotorEx.class, "backRight");
         intakeLeft = hardwareMap.get(DcMotor.class, "intakeLeft");
-        //intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
-        shooter = hardwareMap.get(DcMotor.class, "shooter");
+        intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
+        shooter = hardwareMap.get(DcMotorEx.class, "shooter");
         arm = hardwareMap.get(DcMotor.class, "arm");
         claw1 = hardwareMap.get(Servo.class, "claw1");
         claw2 = hardwareMap.get(Servo.class, "claw2");
         shooterHelper = hardwareMap.get(Servo.class, "shooterHelper");
 
         // set directions of all 8 motors
-        frontLeft.setDirection(DcMotor.Direction.FORWARD);
-        frontRight.setDirection(DcMotor.Direction.FORWARD);
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        frontRight.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
-        backRight.setDirection(DcMotor.Direction.FORWARD);
-        intakeLeft.setDirection(DcMotor.Direction.FORWARD);
-        //intakeRight.setDirection(DcMotor.Direction.FORWARD);
-        shooter.setDirection(DcMotor.Direction.FORWARD);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
+        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
+        shooter.setDirection(DcMotor.Direction.REVERSE);
         arm.setDirection(DcMotor.Direction.FORWARD);
 
         // run using encoders
@@ -65,6 +65,7 @@ public class ArrowheadAuton extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // set ZeroPowerBehavior to brake
         frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -72,26 +73,49 @@ public class ArrowheadAuton extends LinearOpMode {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        // set PIDF coefficients for all motors using PID
+        //frontLeft.setVelocityPIDFCoefficients(30, 0, 0, 0);
+        //frontRight.setVelocityPIDFCoefficients(30, 0, 0, 0);
+        //backLeft.setVelocityPIDFCoefficients(30, 0, 0, 0);
+        //backRight.setVelocityPIDFCoefficients(30, 0, 0, 0);
+
+        //shooter.setVelocityPIDFCoefficients(30, 0, 0, 0);
+
+
         waitForStart();
 
-        AutonMethods methods = new AutonMethods(frontLeft, frontRight, backLeft, backRight, intakeLeft, shooter, arm, claw1, claw2, shooterHelper);
+        AutonMethods methods = new AutonMethods(this, telemetry, frontLeft, frontRight, backLeft, backRight, intakeLeft, intakeRight, shooter, arm, claw1, claw2, shooterHelper);
 
-        //AutonMethods methods = new AutonMethods(frontLeft, frontRight, backLeft, backRight, intakeLeft, intakeRight, shooter, arm, claw1, claw2, shooterHelper);
+        int stopInt = 0;
 
-        while (opModeIsActive() && runtime.seconds() < 30) {
-            methods.setToUsingEncoders();
+        while (stopInt == 0 && opModeIsActive() && runtime.seconds() < 30) {
+            methods.goLeftTime(.9);
+            methods.stopForTime(2);
+            methods.goForwardTime(1.8);
+            methods.goLeftTime(.25);
+
+            //methods.setToUsingEncoders();
 
             // hit 1st powershot [from right to left]
-            methods.goLeft(6);
+            //methods.goLeft(1);
+            //methods.goRight(1);
+
+            /*methods.shootOn();
+            methods.pause(1);
+            methods.moveHelper();
+            methods.shootOff();
+            */
+
+            /*
             methods.goForward(72);
             methods.shootOn();
             methods.pause(1);
-            methods.moveHelper();
-
+            methods.moveHelper();*/
+/*
             // hit 2nd powershot
             methods.goLeft(7.5);
             methods.pause(1);
@@ -101,11 +125,11 @@ public class ArrowheadAuton extends LinearOpMode {
             methods.goLeft(7.5);
             methods.pause(1);
             methods.moveHelper();
-            methods.shootOff();
+            methods.shootOff();*/
             /**** AT THIS POINT:
              *    3 POWERSHOTS SHOULD HAVE BEEN SCORED,
              *    0 RINGS REMAIN IN THE ROBOT****/
-
+/*
             // go intake the rings in the pile
             methods.intakesOn();
             methods.goBackward(50);
@@ -113,11 +137,11 @@ public class ArrowheadAuton extends LinearOpMode {
             // just for good measure
             methods.goLeft(10);
             methods.goRight(10);
-            methods.intakesOff();
+            methods.intakesOff();*/
             /**** AT THIS POINT:
              *    3 POWERSHOTS SHOULD HAVE BEEN SCORED,
              *    3 RINGS REMAIN IN THE ROBOT****/
-
+/*
             // score in the goals
             methods.shootOn();
             methods.goBackward(12);
@@ -128,40 +152,16 @@ public class ArrowheadAuton extends LinearOpMode {
             methods.moveHelper();
             methods.pause(1);
             methods.moveHelper();
-            methods.shootOff();
+            methods.shootOff();*/
             /**** AT THIS POINT:
              *    3 POWERSHOTS SHOULD HAVE BEEN SCORED,
              *    3 GOALS SHOULD HAVE BEEN SCORED
              *    0 RINGS REMAIN IN THE ROBOT****/
-
+/*
             // park on launch line
-            methods.goForward(72);
+            methods.goForward(72);*/
 
-
-            /** OLD CODE **/
-
-            // intake square A
-            //methods.goForward(12);
-            //methods.intakesOn();
-            //methods.goRight(12);
-            //methods.goLeft(12);
-
-            // intake square B
-            //methods.goForward(12);
-            //methods.goLeft(12);
-            //methods.goRight(12);
-
-            // intake square C
-            //methods.goForward(12);
-            //methods.goRight(12);
-            //methods.goLeft(12);
-
-            // back to shoot in high goal
-            //methods.goBackward(12 + 24 + 12);
-            //methods.goLeft(12);
-            //methods.shootOn();
-            //methods.pause(5);
-            //methods.shootOff();
+            stopInt++;
         }
     }
 }

@@ -3,20 +3,19 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 
-@TeleOp(name = "TeleOp2", group = "Iterative Opmode")
+@TeleOp(name = "ArrowheadTeleOp", group = "Iterative Opmode")
 
 /**
  * This is the TeleOp code for Team 17264 Arrowhead for the 2020-2021 FTC season. It enables
  * drivers to remotely control our robot using two controllers (GAMEPAD1 and GAMEPAD2). This
  * is done by the use of a phone connected to the Control Hub.
  *
- * @version Last updated on 2/14/2021
+ * @version Last updated on 3/9/2021
  */
 public class ArrowheadTeleOp extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
@@ -24,8 +23,12 @@ public class ArrowheadTeleOp extends OpMode {
     /**
      * Initializes motors and servos.
      */
-    private DcMotor frontLeft, frontRight, backLeft, backRight, intakeLeft, shooter, arm;
+    private DcMotor frontLeft, frontRight, backLeft, backRight, intakeLeft, intakeRight, arm;
+    private DcMotorEx shooter;
     private Servo claw1, claw2, shooterHelper;
+    private final int MAX_DRIVETRAIN_VELOCITY = 2000;
+    private final int SHOOTER_VELOCITY = 2120;
+
     //private CRServo shooterHelper;
 
     /**
@@ -44,8 +47,9 @@ public class ArrowheadTeleOp extends OpMode {
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         intakeLeft = hardwareMap.get(DcMotor.class, "intakeLeft");
-        //intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
-        shooter = hardwareMap.get(DcMotor.class, "shooter");
+        intakeRight = hardwareMap.get(DcMotor.class, "intakeRight");
+
+        shooter = hardwareMap.get(DcMotorEx.class, "shooter");
         arm = hardwareMap.get(DcMotor.class, "arm");
         claw1 = hardwareMap.get(Servo.class, "claw1");
         claw2 = hardwareMap.get(Servo.class, "claw2");
@@ -57,7 +61,7 @@ public class ArrowheadTeleOp extends OpMode {
         backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intakeLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        intakeRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooter.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -66,10 +70,13 @@ public class ArrowheadTeleOp extends OpMode {
         frontRight.setDirection(DcMotor.Direction.REVERSE);
         backLeft.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.REVERSE);
-        intakeLeft.setDirection(DcMotor.Direction.FORWARD);
-        //intakeRight.setDirection(DcMotor.Direction.FORWARD);
+        intakeLeft.setDirection(DcMotor.Direction.REVERSE);
+        intakeRight.setDirection(DcMotor.Direction.FORWARD);
         shooter.setDirection(DcMotor.Direction.REVERSE);
         arm.setDirection(DcMotor.Direction.FORWARD);
+
+        // set PIDF coefficients for all motors using PID
+        shooter.setVelocityPIDFCoefficients(150, 0, 0, 0);
 
 
         // tell driver that initialization is complete.
@@ -90,8 +97,8 @@ public class ArrowheadTeleOp extends OpMode {
      *      A makes shooterHelper go FORWARD    (press & hold)
      *
      * INTAKES (GAMEPAD2) --
-     *      RIGHT_TRIGGER makes LEFT intake go FORWARD (sucks in)
-     *      RIGHT_BUMPER makes LEFT intake go BACKWARD (rejects)
+     *      RIGHT_TRIGGER makes BOTH intakes go FORWARD (sucks in)
+     *      RIGHT_BUMPER makes BOTH intakes go BACKWARD (rejects)
      *
      * ARM (GAMEPAD2) --
      *      DPAD_UP makes the arm move up
@@ -168,20 +175,19 @@ public class ArrowheadTeleOp extends OpMode {
          *      LEFT_TRIGGER shoots
          *      LEFT_BUMPER shoots @ const. speed   (press & hold)
          *      A makes shooterHelper go FORWARD    (press & hold)
+         *      B makes the robots shoot 3 times
          */
-        if (gamepad2.left_trigger != 0) {
-            shooter.setPower(gamepad2.left_trigger);
-        } else if (gamepad2.left_bumper) {
-            shooter.setPower(0.822);
+        if (-gamepad2.left_stick_y > 0.25 ) {
+            shooter.setVelocity(SHOOTER_VELOCITY);
         } else {
-            shooter.setPower(0);
+            shooter.setVelocity(0);
         }
 
         if (gamepad2.a) {
             //runtime.reset();
 
             //while (runtime.seconds() < 1) {
-            shooterHelper.setPosition(1);
+            shooterHelper.setPosition(0);
             //}
 
             //runtime.reset();
@@ -190,19 +196,44 @@ public class ArrowheadTeleOp extends OpMode {
             //    shooterHelper.setPosition(0);
             //}
         } else {
-            shooterHelper.setPosition(0);
+            shooterHelper.setPosition(1);
+        }
+
+        // shoots 3 times
+        if (gamepad2.b) {
+            for(int t = 0; t < 3; t++) {
+                runtime.reset();
+
+                while(runtime.seconds() < .4) {
+                    shooterHelper.setPosition(0);
+                }
+
+                while(runtime.seconds() < .9) {
+                    shooterHelper.setPosition(1);
+                }
+            }
         }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
         /* INTAKES (GAMEPAD2) --
-         *      RIGHT_TRIGGER makes LEFT intake go FORWARD (sucks in)
-         *      RIGHT_BUMPER makes LEFT intake go BACKWARD (rejects)
+         *      RIGHT_TRIGGER makes right intake go FORWARD (sucks in)
+         *      RIGHT_BUMPER makes right intake go BACKWARD (rejects)
+         *      LEFT_TRIGGER makes left intake go FORWARD (sucks in)
+         *      LEFT_BUMPER makes left intake go BACKWARD (rejects)
          */
         if (gamepad2.right_trigger != 0) {
-            intakeLeft.setPower(gamepad2.right_trigger * 0.7);
+            intakeRight.setPower(gamepad2.right_trigger * 0.7);
         } else if (gamepad2.right_bumper) {
-            intakeLeft.setPower(-0.1);
+            intakeRight.setPower(-0.5);
+        } else {
+            intakeRight.setPower(0);
+        }
+
+        if (gamepad2.left_trigger != 0) {
+            intakeLeft.setPower(gamepad2.left_trigger * 0.7);
+        } else if (gamepad2.left_bumper) {
+            intakeLeft.setPower(-0.5);
         } else {
             intakeLeft.setPower(0);
         }
@@ -211,10 +242,10 @@ public class ArrowheadTeleOp extends OpMode {
         telemetry.addData("Status", "Run Time: " + runtime.toString());
 
         telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight (%.2f)", frontLeft.getPower(), frontRight.getPower(), backLeft.getPower(), backRight.getPower());
-        telemetry.addData("Motors", "intakeLeft (%.2f), shooter (%.2f), arm (%.2f)", intakeLeft.getPower(), shooter.getPower(), arm.getPower());
+        telemetry.addData("Motors", "intakeLeft (%.2f), intakeRight (%.2f), shooter (%.2f), arm (%.2f)", intakeLeft.getPower(), intakeRight.getPower(), shooter.getPower(), arm.getPower());
         //telemetry.addData("Servos", "claw1 (%.2f), claw2 (%.2f), shooterHelper (%.2f)", claw1.getPosition(), claw2.getPosition(), shooterHelper.getPower());
         telemetry.addData("Servos", "claw1 (%.2f), claw2 (%.2f), shooterHelper (%.2f)", claw1.getPosition(), claw2.getPosition(), shooterHelper.getPosition());
-
+        telemetry.addData("ShooterVelocity", shooter.getVelocity());
         telemetry.update();
     }
 

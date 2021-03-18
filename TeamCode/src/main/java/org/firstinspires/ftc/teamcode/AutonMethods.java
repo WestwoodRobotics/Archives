@@ -1,24 +1,54 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 /**
- * This holds the bulk of the Autonomous code for Team 17264 Arrowhead for the 2020-2021 FTC season.
- * This code holds all of the methods that will be called in the ArrowheadAuton class, which is the
- * official autonomous class that the driver station will run.
+ * This holds the bulk of the Autonomous code for Team 17264 Arrowhead for the
+ * 2020-2021 FTC season.This code holds all of the methods that will be called
+ * in the ArrowheadAuton class, which is the official autonomous class that the
+ * driver station will run.
  *
- * @version Last updated on 2/14/2021
+ * @version Last updated on 3/3/2021
  */
 public class AutonMethods {
+    private LinearOpMode opmode;
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor frontLeft, frontRight, backLeft, backRight, intakeLeft, intakeRight, shooter, arm;
+    private Telemetry telemetry;
+
+    private DcMotorEx frontLeft, frontRight, backLeft, backRight;
+    private DcMotor intakeLeft, intakeRight, arm;
+    private DcMotorEx shooter;
+
     private Servo claw1, claw2, shooterHelper;
-    private final int INCHES_TO_TICKS = 5;
+
+    private final double YARDS_TO_TICKS = 6.97;
+    private final double MTRPWR = 1.0;
     private final double DEGREES_TO_TICKS = 0.284;
 
-    public AutonMethods(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, DcMotor intakeLeft, DcMotor intakeRight, DcMotor shooter, DcMotor arm, Servo claw1, Servo claw2, Servo shooterHelper) {
+    private final int MAX_DRIVETRAIN_VELOCITY = 2000;
+    private final int SHOOTER_VELOCITY = 2000;
+
+    public AutonMethods(LinearOpMode opmode,
+                        Telemetry telemetry,
+                        DcMotorEx frontLeft,
+                        DcMotorEx frontRight,
+                        DcMotorEx backLeft,
+                        DcMotorEx backRight,
+                        DcMotor intakeLeft,
+                        DcMotor intakeRight,
+                        DcMotorEx shooter,
+                        DcMotor arm,
+                        Servo claw1,
+                        Servo claw2,
+                        Servo shooterHelper) {
+        this.opmode = opmode;
+        this.telemetry = telemetry;
         this.frontLeft = frontLeft;
         this.frontRight = frontRight;
         this.backLeft = backLeft;
@@ -32,275 +62,221 @@ public class AutonMethods {
         this.shooterHelper = shooterHelper;
     }
 
-    // 1st comp constructor;  will be deleted once intakeRight finished
-    public AutonMethods(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, DcMotor intakeLeft, DcMotor shooter, DcMotor arm, Servo claw1, Servo claw2, Servo shooterHelper) {
-        this.frontLeft = frontLeft;
-        this.frontRight = frontRight;
-        this.backLeft = backLeft;
-        this.backRight = backRight;
-        this.intakeLeft = intakeLeft;
-        this.shooter = shooter;
-        this.arm = arm;
-        this.claw1 = claw1;
-        this.claw2 = claw2;
-        this.shooterHelper = shooterHelper;
-    }
-
-    /**
-     * Puts shooterHelper at extended position (1) and then returns it to its initial position (0).
-     */
-    public void moveHelper() {
+    public void stopForTime(double seconds){
         runtime.reset();
+        while(runtime.seconds()<seconds){
 
-        while (runtime.seconds() < 1.0) {
-            shooterHelper.setPosition(1);
         }
+    }
+    public void goForwardTime(double seconds){
+        runtime.reset();
+        frontLeft.setPower(.25);
+        backRight.setPower(.25);
+        backLeft.setPower(-0.25);
+        frontRight.setPower(-0.25);
+        while(runtime.seconds() < seconds){
 
-        shooterHelper.setPosition(0);
+        }
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
     }
 
-    /**
-     * Lowers arm and opens the claws.
-     */
-    public void releaseWobbleGoal() {
-        arm.setPower(-1);
-        claw1.setPosition(1);
-        claw1.setPosition(0);
-    }
+    public void goBackwardTime(double seconds){
+        runtime.reset();
+        frontLeft.setPower(-.25);
+        backRight.setPower(-.25);
+        backLeft.setPower(.25);
+        frontRight.setPower(.25);
+        while(runtime.seconds() < seconds){
 
-    /**
-     * Turns both intakes ON.
-     */
-    public void intakesOn() {
-        intakeLeft.setPower(1);
-        // intakeRight.setPower(1);
+        }
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
     }
+    public void goLeftTime(double seconds){
+        runtime.reset();
+        frontLeft.setPower(-.25);
+        backRight.setPower(-.25);
+        backLeft.setPower(-.25);
+        frontRight.setPower(-.25);
+        while(runtime.seconds() < seconds){
 
-    /**
-     * Turns both intakes OFF.
-     */
-    public void intakesOff() {
-        intakeLeft.setPower(0);
-        // intakeRight.setPower(0);
+        }
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
     }
+    public void goRightTime(double seconds){
+        runtime.reset();
+        frontLeft.setPower(.5);
+        backRight.setPower(.5);
+        backLeft.setPower(.5);
+        frontRight.setPower(.5);
+        while(runtime.seconds() < seconds){
 
-    /**
-     * Turns the shooter ON.
-     */
-    public void shootOn() {
-        shooter.setPower(1);
+        }
+        frontLeft.setPower(0);
+        backRight.setPower(0);
+        backLeft.setPower(0);
+        frontRight.setPower(0);
     }
-
-    /**
-     * Turns the shooter OFF.
-     */
-    public void shootOff() {
-        shooter.setPower(0);
-    }
-
-    /**
-     * Uses RUN_TO_POSITION (PID) to go the inputted amount of inches forward.
-     *
-     * @param inches
-     */
     public void goForward(double inches) {
-        int ticks = (int) (inches * INCHES_TO_TICKS);
+        // reset encoders
+        //resetAllEncoders();
+
+        // velocity PID
+        //frontLeft.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+        //frontRight.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
+        //backLeft.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
+        //backRight.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+        //runtime.reset();
+        //while(runtime < inches){
+
+        //}
+        //brakeAllMotors();
+        //setToUsingEncoders();
+    }
+
+    public void goBackward(double yards) {
+        int ticks = (int) (yards * YARDS_TO_TICKS);
 
         // reset encoders
         resetAllEncoders();
 
-        // set target
-        frontLeft.setTargetPosition(ticks);
-        frontRight.setTargetPosition(-ticks);
-        backLeft.setTargetPosition(-ticks);
-        backRight.setTargetPosition(ticks);
-
-        // RUN_TO_POSITION mode
-        setToRunToPosition();
-
-        // set power
-        frontLeft.setPower(1);
-        frontRight.setPower(-1);
-        backLeft.setPower(-1);
-        backRight.setPower(1);
-
-        // wait until all motors reach target
-        waitUntilReached();
+        // velocity PID
+        frontLeft.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
+        frontRight.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+        backLeft.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+        backRight.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
 
         brakeAllMotors();
         setToUsingEncoders();
     }
 
-    /**
-     * Uses RUN_TO_POSITION (PID) to go the inputted amount of inches backward.
-     *
-     * @param inches
-     */
-    public void goBackward(double inches) {
-        int ticks = (int) (inches * INCHES_TO_TICKS);
+    public void goLeft(double yards) {
+        if (opmode.opModeIsActive()) {
+            int ticks = (int) (yards * YARDS_TO_TICKS);
 
-        // reset encoders
-        resetAllEncoders();
+            // reset encoders
+            resetAllEncoders();
 
-        // set target
-        frontLeft.setTargetPosition(-ticks);
-        frontRight.setTargetPosition(ticks);
-        backLeft.setTargetPosition(ticks);
-        backRight.setTargetPosition(-ticks);
+            // velocity PID
+            frontLeft.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
+            frontRight.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
+            backLeft.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
+            backRight.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
 
-        // RUN_TO_POSITION mode
-        setToRunToPosition();
+            brakeAllMotors();
 
-        // set power
-        frontLeft.setPower(-1);
-        frontRight.setPower(1);
-        backLeft.setPower(1);
-        backRight.setPower(-1);
+            telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight (%.2f)", frontLeft.getPower(), frontRight.getPower(), backLeft.getPower(), backRight.getPower());
+            telemetry.addData("Motors", "intakeLeft (%.2f), shooter (%.2f), arm (%.2f)", intakeLeft.getPower(), shooter.getPower(), arm.getPower());
+            //telemetry.addData("Servos", "claw1 (%.2f), claw2 (%.2f), shooterHelper (%.2f)", claw1.getPosition(), claw2.getPosition(), shooterHelper.getPower());
+            telemetry.addData("Servos", "claw1 (%.2f), claw2 (%.2f), shooterHelper (%.2f)", claw1.getPosition(), claw2.getPosition(), shooterHelper.getPosition());
+            telemetry.addData("Ticks", ticks);
+            telemetry.addData("Yards", yards);
 
-        // wait until all motors reach target
-        waitUntilReached();
+            telemetry.update();
 
-        brakeAllMotors();
-        setToUsingEncoders();
+            setToUsingEncoders();
+        }
     }
 
-    /**
-     * Uses RUN_TO_POSITION (PID) to go the inputted amount of inches left.
-     *
-     * @param inches
-     */
-    public void goLeft(double inches) {
-        int ticks = (int) (inches * INCHES_TO_TICKS);
+    public void goRight(double yards) {
+        if (opmode.opModeIsActive()) {
+            int ticks = (int) (yards * YARDS_TO_TICKS);
 
-        // reset encoders
-        resetAllEncoders();
+            // reset encoders
+            resetAllEncoders();
 
-        // set target
-        frontLeft.setTargetPosition(-ticks);
-        frontRight.setTargetPosition(-ticks);
-        backLeft.setTargetPosition(-ticks);
-        backRight.setTargetPosition(-ticks);
+            // velocity PID
+            frontLeft.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+            frontRight.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+            backLeft.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+            backRight.setVelocity(MAX_DRIVETRAIN_VELOCITY);
 
-        // RUN_TO_POSITION mode
-        setToRunToPosition();
-
-        // set power
-        frontLeft.setPower(-1);
-        frontRight.setPower(-1);
-        backLeft.setPower(-1);
-        backRight.setPower(-1);
-
-        // wait until all motors reach target
-        waitUntilReached();
-
-        brakeAllMotors();
-        setToUsingEncoders();
+            brakeAllMotors();
+            setToUsingEncoders();
+        }
     }
 
-    /**
-     * Uses RUN_TO_POSITION (PID) to go the inputted amount of inches right.
-     *
-     * @param inches
-     */
-    public void goRight(double inches) {
-        int ticks = (int) (inches * INCHES_TO_TICKS);
-
-        // reset encoders
-        resetAllEncoders();
-
-        // set target
-        frontLeft.setTargetPosition(ticks);
-        frontRight.setTargetPosition(ticks);
-        backLeft.setTargetPosition(ticks);
-        backRight.setTargetPosition(ticks);
-
-        // RUN_TO_POSITION mode
-        setToRunToPosition();
-
-        // set power
-        frontLeft.setPower(1);
-        frontRight.setPower(1);
-        backLeft.setPower(1);
-        backRight.setPower(1);
-
-        // wait until all motors reach target
-        waitUntilReached();
-
-        brakeAllMotors();
-        setToUsingEncoders();
-    }
-
-    /**
-     * Uses RUN_TO_POSITION (PID) to turn right the number of inputted degrees with the center of
-     * rotation being the center of the robot.
-     *
-     * @param degrees
-     */
     public void turnRightCenter(double degrees) {
         int ticks = (int) (degrees * DEGREES_TO_TICKS);
 
         // reset encoders
         resetAllEncoders();
 
-        // set target
-        frontLeft.setTargetPosition(ticks);
-        frontRight.setTargetPosition(ticks);
-        backLeft.setTargetPosition(-ticks);
-        backRight.setTargetPosition(-ticks);
-
-        // RUN_TO_POSITION mode
-        setToRunToPosition();
-
-        // set power
-        frontLeft.setPower(1);
-        frontRight.setPower(1);
-        backLeft.setPower(-1);
-        backRight.setPower(-1);
-
-        // wait until all motors reach target
-        waitUntilReached();
+        // velocity PID
+        frontLeft.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+        frontRight.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+        backLeft.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
+        backRight.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
 
         brakeAllMotors();
         setToUsingEncoders();
     }
 
-    /**
-     * Uses RUN_TO_POSITION (PID) to turn right the number of inputted degrees, with the center of
-     * rotation being the center of the robot.
-     *
-     * @param degrees
-     */
     public void turnLeftCenter(double degrees) {
         int ticks = (int) (degrees * DEGREES_TO_TICKS);
 
         // reset encoders
         resetAllEncoders();
 
-        // set target
-        frontLeft.setTargetPosition(-ticks);
-        frontRight.setTargetPosition(-ticks);
-        backLeft.setTargetPosition(ticks);
-        backRight.setTargetPosition(ticks);
-
-        // RUN_TO_POSITION mode
-        setToRunToPosition();
-
-        // set power
-        frontLeft.setPower(-1);
-        frontRight.setPower(-1);
-        backLeft.setPower(1);
-        backRight.setPower(1);
-
-        // wait until all motors reach target
-        waitUntilReached();
+        // velocity PID
+        frontLeft.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
+        frontRight.setVelocity(-MAX_DRIVETRAIN_VELOCITY);
+        backLeft.setVelocity(MAX_DRIVETRAIN_VELOCITY);
+        backRight.setVelocity(MAX_DRIVETRAIN_VELOCITY);
 
         brakeAllMotors();
         setToUsingEncoders();
     }
 
-    /**
-     * Sets all motors to run using encoders to simplify other methods.
-     */
+    public void moveHelper() {
+        if (opmode.opModeIsActive()) {
+            runtime.reset();
+
+            while(runtime.seconds() < .4) {
+                shooterHelper.setPosition(0);
+            }
+
+            while(runtime.seconds() < .8) {
+                shooterHelper.setPosition(.7);
+            }
+        }
+    }
+
+    public void releaseWobbleGoal() {
+        arm.setPower(-1);
+        claw1.setPosition(1);
+        claw1.setPosition(0);
+    }
+
+    public void intakesOn() {
+        intakeLeft.setPower(1);
+        intakeRight.setPower(1);
+    }
+
+    public void intakesOff() {
+        intakeLeft.setPower(0);
+        intakeRight.setPower(0);
+    }
+
+    public void shootOn() {
+        // reset encoders
+        shooter.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        shooter.setVelocity(SHOOTER_VELOCITY);
+    }
+
+    public void shootOff() {
+        shooter.setVelocity(0);
+    }
+
     public void setToUsingEncoders() {
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -308,9 +284,6 @@ public class AutonMethods {
         backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    /**
-     * Resets the encoder values of all motors to simplify other methods.
-     */
     public void resetAllEncoders() {
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -318,100 +291,23 @@ public class AutonMethods {
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
 
-    /**
-     * Stops all motors to simplify other methods.
-     */
     public void brakeAllMotors() {
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
+        frontLeft.setVelocity(0);
+        frontRight.setVelocity(0);
+        backLeft.setVelocity(0);
+        backRight.setVelocity(0);
     }
 
-    /**
-     * Sets all motors to run until a set position is reached (according to the encoder values)
-     * to simplify other methods.
-     */
-    public void setToRunToPosition() {
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-    }
-
-    /**
-     * Makes sure nothing is done while the drivetrain is active.
-     */
     public void waitUntilReached() {
-        while (frontLeft.isBusy() && frontRight.isBusy() && backLeft.isBusy() && backRight.isBusy()) {
+        runtime.reset();
+
+        while ((frontLeft.isBusy() || frontRight.isBusy() || backLeft.isBusy() || backRight.isBusy())) {
             // do nothing until target reached for all motors
+            telemetry.addData("Motors", "frontLeft (%.2f), frontRight (%.2f), backLeft (%.2f), backRight (%.2f)", frontLeft.getVelocity(), frontRight.getVelocity(), backLeft.getVelocity(), backRight.getVelocity());
+            telemetry.addData("Motors", "intakeLeft (%.2f), shooter (%.2f), arm (%.2f)", intakeLeft.getPower(), shooter.getVelocity(), arm.getPower());
+            telemetry.addData("Servos", "claw1 (%.2f), claw2 (%.2f), shooterHelper (%.2f)", claw1.getPosition(), claw2.getPosition(), shooterHelper.getPosition());
+
+            telemetry.update();
         }
     }
-
-    /**
-     * Makes sure nothing is done for the number of seconds inputted.
-     *
-     * @param seconds
-     */
-    public void pause(double seconds) {
-        runtime.reset();
-
-        while(runtime.seconds() < seconds) {
-            // do nothing because it's a pause
-        }
-    }
-
-
-    //THIS WAS THE TIME-BASED AUTON WHICH DID NOT WORK
-
-    /*
-    public void noEForward() {
-        runtime.reset();
-
-        while (runtime.seconds() < 2) {
-            frontLeft.setPower(1);
-            frontRight.setPower(-1);
-            backLeft.setPower(-1);
-            backRight.setPower(1);
-        }
-
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
-    }
-
-    public void noEBackward() {
-        runtime.reset();
-
-        while (runtime.seconds() < 2) {
-            frontLeft.setPower(-1);
-            frontRight.setPower(1);
-            backLeft.setPower(1);
-            backRight.setPower(-1);
-        }
-
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
-    }
-
-    public void noELeft() {
-        runtime.reset();
-
-        while (runtime.seconds() < 0.2) {
-            frontLeft.setPower(-1);
-            frontRight.setPower(-1);
-            backLeft.setPower(-1);
-            backRight.setPower(-1);
-        }
-
-        frontLeft.setPower(0);
-        frontRight.setPower(0);
-        backLeft.setPower(0);
-        backRight.setPower(0);
-    }
-*/
-
 }
