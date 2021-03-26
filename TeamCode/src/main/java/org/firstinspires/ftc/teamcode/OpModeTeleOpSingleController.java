@@ -32,7 +32,7 @@ public class OpModeTeleOpSingleController extends OpMode
 
     public Telemetry telemetry;
     //Initialize the servo for opening and closing the claw
-//    public Servo clawServo;
+    public Servo clawServo;
 
     //Boolean to store if the claw is open or closed as well as a doubles for setting the claw servo's position
 //    private boolean isClawOpen;
@@ -81,7 +81,7 @@ public class OpModeTeleOpSingleController extends OpMode
         intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
         scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
 
-//        clawServo = hardwareMap.get(Servo.class, "clawServo");
+        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
@@ -113,6 +113,8 @@ public class OpModeTeleOpSingleController extends OpMode
         //Set up telemetry
 //        telemetry.addData("Status", "Initialized");
 //        telemetry.update();
+
+        clawServo.setPosition(0);
 
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
     }
