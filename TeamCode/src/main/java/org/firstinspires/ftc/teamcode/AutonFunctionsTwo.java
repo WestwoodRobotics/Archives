@@ -29,12 +29,15 @@ public class AutonFunctionsTwo {
 //    public final double BLOCKER_CLOSED_POSITION = 0;
     public final double PUSHER_OPEN_POSITION = 0.25;
     public final double PUSHER_CLOSED_POSITION = 0;
+    public final double CLAW_OVER_POSITION = 0.5;
+    public final double CLAW_GRAB_POSITION = 0;
+    public final double CLAW_UNUSED_POSITION = -0.5;
 
     Telemetry telemetry;
 
     public ElapsedTime runtime = new ElapsedTime();
 
-//    public Servo clawServo;
+    public Servo clawServo;
 
     public int encoderCounts; //Variable we use in our move functions to store what the encoder counts should be at once we finish moving the desired distance
     public int shooterEncoderCounts;
@@ -57,7 +60,7 @@ public class AutonFunctionsTwo {
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
-    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootP, DcMotorEx shootM, DcMotor sMotor) {
+    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootP, DcMotorEx shootM, DcMotor sMotor, Servo claw) {
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;
@@ -68,7 +71,7 @@ public class AutonFunctionsTwo {
 //        shooterAngler = shootA;
 //        this.clawServo = clawServo;
         scuffedMotor = sMotor;
-
+        clawServo = claw;
         wheelCircumference = 9.435; //Circumference of our mecanum wheels may be subject to change
     }
 
@@ -227,6 +230,18 @@ public class AutonFunctionsTwo {
 //        shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
         //stop spinning the shooter motor
         shooterMotor.setPower(0);
+    }
+
+    public void setAngleOver () {
+        clawServo.setPosition(CLAW_OVER_POSITION);
+    }
+
+    public void setAngleGrab () {
+        clawServo.setPosition(CLAW_GRAB_POSITION);
+    }
+
+    public void setAngleUnused () {
+        clawServo.setPosition(CLAW_UNUSED_POSITION);
     }
 
 //    public void shooterPID (int shooterAnglerPower) {

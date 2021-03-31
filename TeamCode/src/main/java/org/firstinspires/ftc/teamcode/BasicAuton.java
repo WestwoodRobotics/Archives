@@ -32,7 +32,7 @@ public class BasicAuton extends LinearOpMode
     public DcMotor scuffedMotor;
 //    public DcMotor shooterAngler;
 
-//    public Servo clawServo;
+    public Servo clawServo;
 
     //Create motor power variables for drive train motors
     private double frontLeftPower;
@@ -83,7 +83,7 @@ public class BasicAuton extends LinearOpMode
         backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
  */
-        shooterPusher.setPosition(0);
+        shooterPusher.setPosition(0.36);
 //        shooterBlocker.setPosition(0);
         //Set the zero power behavior of the motors to stop quickly
 
@@ -92,8 +92,8 @@ public class BasicAuton extends LinearOpMode
         telemetry.update();
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
-//        shooterMotor.setVelocityPIDFCoefficients(400, 0, 0, 0);
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
+        shooterMotor.setVelocityPIDFCoefficients(300, 0, 0, 0);
         waitForStart();
 //        shooterMotor.setPower(0.715);
 //        shooterMotor.setVelocity(RpmToTps(3750));
@@ -102,28 +102,29 @@ public class BasicAuton extends LinearOpMode
 //        shooterBlocker.setPosition(0.5);
         this.pause(5);
         //turn the shooter push servo 60 degrees and then back 60 degrees
-        shooterPusher.setPosition(0.2);
+        shooterPusher.setPosition(0.1);
         this.pause(0.3);
-        shooterPusher.setPosition(0);
+        shooterPusher.setPosition(0.36);
         //turn blocker servo 90 degrees
 //        shooterBlocker.setPosition(0.5);
         shooterMotor.setVelocity(1695);
         this.pause(3);
         //turn the shooter push servo 60 degrees and then back 60 degrees
-        shooterPusher.setPosition(0.2);
+        shooterPusher.setPosition(0.1);
         this.pause(0.3);
-        shooterPusher.setPosition(0);
+        shooterPusher.setPosition(0.36);
         //turn blocker servo 90 degrees
 //        shooterBlocker.setPosition(0.5);
         shooterMotor.setVelocity(1695);
         this.pause(3);
         //turn the shooter push servo 60 degrees and then back 60 degrees
-        shooterPusher.setPosition(0.2);
+        shooterPusher.setPosition(0.1);
         this.pause(0.3);
-        shooterPusher.setPosition(0);
+        shooterPusher.setPosition(0.36);
+        this.pause(0.5);
  //       shooterBlocker.setPosition(0);
         shooterMotor.setPower(0);
-        this.pause(0.3);
+
 /*        frontLeftDrive.setPower(0.5);
         frontRightDrive.setPower(0.5);
         backLeftDrive.setPower(0.5);

@@ -19,7 +19,8 @@ public class OpModeAuton extends OpMode {
     public DcMotor frontRightDrive;
     public DcMotor backLeftDrive;
     public DcMotor backRightDrive;
-
+    public final double PUSHER_OPEN_POSITION = 0.1;
+    public final double PUSHER_CLOSED_POSITION = 0.36;
     //    public Servo shooterBlocker;
     public Servo shooterPusher;
     public DcMotorEx shooterMotor;
@@ -32,7 +33,7 @@ public class OpModeAuton extends OpMode {
 
     public ElapsedTime runtime = new ElapsedTime();
 
-//    public Servo clawServo;
+    public Servo clawServo;
 
     //Create motor power variables for drive train motors
     private double frontLeftPower;
@@ -57,7 +58,7 @@ public class OpModeAuton extends OpMode {
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
 
-//        clawServo = hardwareMap.get(Servo.class, "clawServo");
+        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
@@ -78,19 +79,12 @@ public class OpModeAuton extends OpMode {
         //Set the zero power behavior of the motors to stop quickly
         stop();
 
-        //Set the default values for toggle control booleans such as if the intake is on or off or if the claw is open or closed
-//        isIntakeOn = false;
-//        isClawOpen = true;
-
-        //Set the minimum and maximum values for the claw servo and set the claw servo position to the open position by default
-//        clawClosedPosition = 0;
-//        clawOpenPosition = 0.5;
 
         //Set up telemetry
 //        telemetry.addData("Status", "Initialized");
 //        telemetry.update();
 
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
+//        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
 /*
@@ -126,10 +120,36 @@ public class OpModeAuton extends OpMode {
     public void loop() { // Assuming that the shooter stays angled at a fixed angle at all times
 //        autFunc.moveForward(54); //Might should be re-calculated distance from start to right behind launch line for shooting
 //        autFunc.moveLeft(0); //Needs to be calculated to line up straight with high goal
-        autFunc.shoot3times();
-//        autFunc.moveForward(12);//Might should be re-calculated distance to get onto launch line for parking points
-        autFunc.pause(30);
+//        autFunc.shoot3times();
+        //start spinning the shooter motor
+        shooterMotor.setVelocity(1695);
+        //turn blocker servo 90 degrees
+//        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
+        //turn the shooter push servo 60 degrees and then back 60 degrees
+        //delay
+        this.pause(2);
+        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+        this.pause(1);
+        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
+        //delay
 
+        this.pause(1);
+        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+        this.pause(1);
+        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
+        /*
+        //delay
+        this.pause(1);
+        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
+        this.pause(1);
+        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
+        */
+        //turn blocker servo 90 degrees counter clockwise
+//        shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
+        //stop spinning the shooter motor
+        this.pause(5);
+        shooterMotor.setPower(0);
+//        autFunc.moveForward(12);//Might should be re-calculated distance to get onto launch line for parking points
 
         /*//forwards 54 inches; front of the robot will be at the 3rd square line
         //spin and shoot 3 times
@@ -150,6 +170,14 @@ public class OpModeAuton extends OpMode {
         autFunc.moveForward(12);*/
     }
 
+    public void pause(double seconds) {
+        runtime.reset();
+        while (true) {
+            if (runtime.seconds() - 0 > seconds) {
+                break;
+            }
+        }
+    }
 
     public void stop() {
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

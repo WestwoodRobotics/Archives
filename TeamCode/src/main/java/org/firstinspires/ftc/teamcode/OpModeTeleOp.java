@@ -32,7 +32,7 @@ public class OpModeTeleOp extends OpMode {
     public DcMotor scuffedMotor;
 
     //Initialize the servo for opening and closing the claw
-//    public Servo clawServo;
+    public Servo clawServo;
 
     //Boolean to store if the claw is open or closed as well as a doubles for setting the claw servo's position
 //    private boolean isClawOpen;
@@ -81,7 +81,7 @@ public class OpModeTeleOp extends OpMode {
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
 
-//        clawServo = hardwareMap.get(Servo.class, "clawServo");
+        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
@@ -114,7 +114,7 @@ public class OpModeTeleOp extends OpMode {
 //        telemetry.addData("Status", "Initialized");
 //        telemetry.update();
 
-        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor);
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
 //        shooterMotor.setVelocityPIDFCoefficients(400, 0, 0, 0);
     }
 
@@ -126,6 +126,7 @@ public class OpModeTeleOp extends OpMode {
         //Set up telemetry
 //        telemetry.addData("Velocity", this.TpsToRpm(shooterMotor.getVelocity()));
         telemetry.addData("Velocity", shooterMotor.getVelocity());
+        telemetry.addData("clawServoPosition", clawServo.getPosition());
         telemetry.update();
 
 
@@ -167,6 +168,12 @@ public class OpModeTeleOp extends OpMode {
             backRightPower *= 0.5;
         }
 
+        else if (gamepad1.right_bumper) {
+            frontLeftPower *= 0.25;
+            frontRightPower *= 0.25;
+            backLeftPower *= 0.25;
+            backRightPower *= 0.25;
+        }
         //Set the motor powers to their corresponding values
         frontLeftDrive.setPower(frontLeftPower);
         frontRightDrive.setPower(frontRightPower);
@@ -211,12 +218,28 @@ public class OpModeTeleOp extends OpMode {
 //            shooterBlocker.setPosition(0.5);
 //            this.pause(1);
             //turn the shooter push servo 60 degrees and then back 60 degrees
-            shooterPusher.setPosition(0.25);
-            this.pause(0.3);
-            shooterPusher.setPosition(0);
+            shooterPusher.setPosition(0.1);
+            this.pause(1);
+            shooterPusher.setPosition(0.36);
             //turn blocker servo 90 degrees counter clockwise
             this.pause(0.75);
 //            shooterBlocker.setPosition(0);
+        }
+
+        if (gamepad2.dpad_up) {
+            clawServo.setPosition(0);
+        }
+
+        else if (gamepad2.dpad_down) {
+            clawServo.setPosition(0.75);
+        }
+
+        else if (gamepad2.dpad_right) {
+            clawServo.setPosition(0.25);
+        }
+
+        else if (gamepad2.dpad_left) {
+            clawServo.setPosition(0.5);
         }
 /*        if (gamepad2.right_trigger > 0) {
             //start spinning the shooter motor
