@@ -210,9 +210,9 @@ public class OpModeTeleOpSingleController extends OpMode
 //            shooterBlocker.setPosition(0.5);
 //            this.pause(1);
             //turn the shooter push servo 60 degrees and then back 60 degrees
-            shooterPusher.setPosition(0.25);
+            shooterPusher.setPosition(0.1);
             this.pause(0.3);
-            shooterPusher.setPosition(0);
+            shooterPusher.setPosition(0.36);
             //turn blocker servo 90 degrees counter clockwise
             this.pause(0.75);
 //            shooterBlocker.setPosition(0);
