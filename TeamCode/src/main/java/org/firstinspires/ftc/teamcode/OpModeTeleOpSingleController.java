@@ -195,7 +195,7 @@ public class OpModeTeleOpSingleController extends OpMode
         }
         else if (gamepad1.a) {
 //            shooterMotor.setPower(0.55);
-            shooterMotor.setVelocity(1450);
+            shooterMotor.setVelocity(1465);
         }
         else if (gamepad1.b) {
 //            shooterMotor.setPower(0.68);
@@ -217,6 +217,23 @@ public class OpModeTeleOpSingleController extends OpMode
             this.pause(0.75);
 //            shooterBlocker.setPosition(0);
         }
+
+        if (gamepad1.dpad_up) {
+            clawServo.setPosition(0);
+        }
+
+        else if (gamepad1.dpad_down) {
+            clawServo.setPosition(0.75);
+        }
+
+        else if (gamepad1.dpad_right) {
+            clawServo.setPosition(0.25);
+        }
+
+        else if (gamepad1.dpad_left) {
+            clawServo.setPosition(0.5);
+        }
+
 /*        if (gamepad2.right_trigger > 0) {
             //start spinning the shooter motor
             shooterMotor.setPower(1);
