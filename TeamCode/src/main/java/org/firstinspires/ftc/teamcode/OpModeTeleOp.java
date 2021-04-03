@@ -115,7 +115,7 @@ public class OpModeTeleOp extends OpMode {
 //        telemetry.update();
 
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
-//        shooterMotor.setVelocityPIDFCoefficients(400, 0, 0, 0);
+        shooterMotor.setVelocityPIDFCoefficients(350, 0, 1.5, 0);
     }
 
     @Override

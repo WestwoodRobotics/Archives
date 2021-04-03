@@ -1,258 +1,182 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import java.lang.Thread;
 
-public class Test {
-    public DcMotor frontLeftDrive;
-    public DcMotor frontRightDrive;
-    public DcMotor backLeftDrive;
-    public DcMotor backRightDrive;
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test", group="Linear OpMode")
+public class Test extends LinearOpMode
+{
+    private ElapsedTime runtime = new ElapsedTime();
 
-    public Servo shooterBlocker;
+    //Initialize drive train motors
+    public DcMotorEx frontLeftDrive;
+    public DcMotorEx frontRightDrive;
+    public DcMotorEx backLeftDrive;
+    public DcMotorEx backRightDrive;
+    private int epr = 28;
+
+    //Initialize shooter motors and servos
+//    public Servo shooterBlocker;
     public Servo shooterPusher;
-    public DcMotor shooterMotor;
-//    public DcMotor shooterAngler;
+    public DcMotorEx shooterMotor;
     public DcMotor scuffedMotor;
+//    public DcMotor shooterAngler;
 
-    public DcMotor intakeMotor;
+    public Servo clawServo;
 
-    public final double BLOCKER_OPEN_POSITION = 0.5;
-    public final double BLOCKER_CLOSED_POSITION = 0;
-    public final double PUSHER_OPEN_POSITION = 0.333;
-    public final double PUSHER_CLOSED_POSITION = 0;
+    //Create motor power variables for drive train motors
+    private double frontLeftPower;
+    private double frontRightPower;
+    private double backLeftPower;
+    private double backRightPower;
 
-    public Telemetry telemetry;
+//    private final int HIGH_GOAL_ANGLE = 30; //Needs to test for actual value
 
-    public ElapsedTime runtime = new ElapsedTime();
+    //Assign the auton functions class to a variable name
+    AutonFunctionsTwo autFunc;
 
-    public Test (DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootB, Servo shootP, DcMotor shootM, Telemetry t, DcMotor intake, DcMotor sMotor) {
-        frontLeftDrive = fLDrive;
-        frontRightDrive = fRDrive;
-        backLeftDrive = bLDrive;
-        backRightDrive = bRDrive;
-        shooterBlocker = shootB;
-        shooterPusher = shootP;
-        shooterMotor = shootM;
-        intakeMotor = intake;
-//        shooterAngler = aMotor;
-        scuffedMotor = sMotor;
-        telemetry = t;
+    @Override
+    public void runOpMode () {
+        /*initialize your motors here using the hardwareMap variable and the .get method within it.
+        Map the motor objects to the physical motors using the control hub*/
+        frontLeftDrive = hardwareMap.get(DcMotorEx.class,"frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotorEx.class,"frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotorEx.class,"backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotorEx.class,"backRightDrive");
+
+        shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
+//        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
+
+//        shooterBlocker = hardwareMap.get(Servo.class, "shooterBlocker");
+        shooterPusher = hardwareMap.get(Servo.class, "shooterPusher");
+
+//        clawServo = hardwareMap.get(Servo.class, "clawServo");
+
+        //Set the motor directions
+        frontLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
+
+        //Set the motor powers to 0 by default
+        frontLeftPower = 0;
+        frontRightPower = 0;
+        backLeftPower = 0;
+        backRightPower = 0;
+
+/*        frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+ */
+        shooterPusher.setPosition(0.36);
+//        shooterBlocker.setPosition(0);
+        //Set the zero power behavior of the motors to stop quickly
+
+        //Set up telemetry
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
+        //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
+        AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
+        shooterMotor.setVelocityPIDFCoefficients(350, 0, 1.5, 0);
+        backLeftDrive.setVelocityPIDFCoefficients(0, 0, 0, 0);
+        waitForStart();
+//        shooterMotor.setPower(0.715);
+//        shooterMotor.setVelocity(RpmToTps(3750));
+/*        shooterMotor.setVelocity(1695);
+        double startTime = runtime.seconds();
+        while (true) {
+            telemetry.addData("Velocity", shooterMotor.getVelocity());
+            telemetry.update();
+            if (runtime.seconds() - startTime > 7) {
+                break;
+            }
+        }
+
+ */
+        backLeftDrive.setVelocity(100);
+        double startTime = runtime.seconds();
+        while (true) {
+            telemetry.addData("Velocity", backLeftDrive.getVelocity());
+            telemetry.update();
+            if (runtime.seconds() - startTime > 7) {
+                break;
+            }
+        }
+/*        frontLeftDrive.setPower(0.5);
+        frontRightDrive.setPower(0.5);
+        backLeftDrive.setPower(0.5);
+        backRightDrive.setPower(0.5);
+        double startTime = runtime.seconds();
+        while (true) {
+            if (runtime.seconds() - startTime > 6) {
+                break;
+            }
+        }
+*/
+/*
+        double encoderCounts = 28 * 20 * 62 / (3 * Math.PI);
+        frontLeftDrive.setTargetPosition((int) encoderCounts);
+        frontRightDrive.setTargetPosition((int) encoderCounts);
+        backLeftDrive.setTargetPosition((int) encoderCounts);
+        backRightDrive.setTargetPosition((int) encoderCounts);
+        frontLeftDrive.setPower(0.5);
+        frontRightDrive.setPower(0.5);
+        backLeftDrive.setPower(0.5);
+        backRightDrive.setPower(0.5);
+        frontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        while (frontLeftDrive.isBusy()) { }
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
+*/
     }
 
-    //waits for a given time
     public void pause (double seconds) {
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
-                break;
+                return;
             }
         }
     }
-
-    //assumes robot moves at 5in per sec
-    public void moveForward () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 3) {
-            frontLeftDrive.setPower(0.5);
-            frontRightDrive.setPower(0.5);
-            backLeftDrive.setPower(0.5);
-            backRightDrive.setPower(0.5);
-        }
-        stop();
+    public double TpsToRpm (double tps) {
+        return tps * 60 / epr;
     }
 
-    public void moveBackward () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 3) {
-            frontLeftDrive.setPower(-0.5);
-            frontRightDrive.setPower(-0.5);
-            backLeftDrive.setPower(-0.5);
-            backRightDrive.setPower(-0.5);
-        }
-        stop();
+    public double RpmToTps (double rpm) {
+        return rpm * epr / 60;
     }
-
-    public void moveLeft () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 3) {
-            frontLeftDrive.setPower(-0.5);
-            frontRightDrive.setPower(0.5);
-            backLeftDrive.setPower(0.5);
-            backRightDrive.setPower(-0.5);
-        }
-        stop();
-    }
-
-    public void moveRight () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 3) {
-            frontLeftDrive.setPower(0.5);
-            frontRightDrive.setPower(-0.5);
-            backLeftDrive.setPower(-0.5);
-            backRightDrive.setPower(0.5);
-        }
-        stop();
-    }
-    public void moveDiagFL () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 3) {
-            frontRightDrive.setPower(0.5);
-            backLeftDrive.setPower(0.5);
-        }
-        stop();
-    }
-    public void moveDiagFR () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 3) {
-            frontLeftDrive.setPower(0.5);
-            backRightDrive.setPower(0.5);
-        }
-        stop();
-    }
-    public void moveDiagBL (double inch, double power) {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 3) {
-            frontLeftDrive.setPower(-0.5);
-            backRightDrive.setPower(-0.5);
-        }
-        stop();
-    }
-    public void moveDiagBR () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 3) {
-            frontRightDrive.setPower(-0.5);
-            backLeftDrive.setPower(-0.5);
-        }
-        stop();
-    }
-
-    //assumes robot spins at 90 degrees per second
-    public void turnFrontCenterClock (double degrees) {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < (degrees/90)) {
-            backLeftDrive.setPower(1);
-            backRightDrive.setPower(-1);
-        }
-    }
-
-    public void turnFrontCenterCounterClock (double degrees) {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < (degrees/90)) {
-            backLeftDrive.setPower(-1);
-            backRightDrive.setPower(1);
-        }
-    }
-
-    public void shoot() {
-        //start spinning the shooter motor
-        shooterMotor.setPower(1);
-        //turn blocker servo 90 degrees
-        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
-        this.pause(0.2);
-        //turn the shooter push servo 60 degrees and then back 60 degrees
-        shooterPusher.setPosition(PUSHER_OPEN_POSITION);
-
-        shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
-        //turn blocker servo 90 degrees counter clockwise
-        shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-        //stop spinning the shooter motor
-        shooterMotor.setPower(0);
-    }
-
-    public void shoot3times() {
-        //start spinning the shooter motor
-        shooterMotor.setPower(1);
-        //turn blocker servo 90 degrees
-        shooterBlocker.setPosition(BLOCKER_OPEN_POSITION);
-        //turn the shooter push servo 60 degrees and then back 60 degrees
-        for (int i = 0; i < 3 ; i++) {
-            //delay
-            this.pause(0.5);
-            shooterPusher.setPosition(PUSHER_OPEN_POSITION);
-            this.pause(0.5);
-            shooterPusher.setPosition(PUSHER_CLOSED_POSITION);
-        }
-        //turn blocker servo 90 degrees counter clockwise
-        shooterBlocker.setPosition(BLOCKER_CLOSED_POSITION);
-        //stop spinning the shooter motor
-        shooterMotor.setPower(0);
-    }
-
-
-    public void testFR () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 5) {
-            frontRightDrive.setPower(1);
-        }
-        frontRightDrive.setPower(0);
-    }
-
-    public void testFL () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 5) {
-            frontLeftDrive.setPower(1);
-        }
-        frontLeftDrive.setPower(0);
-    }
-
-    public void testBR () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 5) {
-            backRightDrive.setPower(1);
-        }
-        backRightDrive.setPower(0);
-    }
-
-    public void testBL () {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < 5) {
-            backLeftDrive.setPower(1);
-        }
-        backLeftDrive.setPower(0);
-    }
-
-    public void scuffedOn () {
-        scuffedMotor.setPower(1);
-    }
-
-    public void scuffedOff () {
-        scuffedMotor.setPower(0);
-    }
-    public void intakeOn () {
-        intakeMotor.setPower(1);
-    }
-
-    public void intakeOff () {
-        intakeMotor.setPower(0);
-    }
-
-/*    public void changeAngle (double seconds, int direction) {
-        double startTime = runtime.seconds();
-        while (runtime.seconds() - startTime < seconds) {
-            shooterAngler.setPower(direction * 0.5);
-        }
-        shooterAngler.setPower(0);
-    }
-
- */
-
-    public void stop() {
-        frontLeftDrive.setPower(0);
-        frontRightDrive.setPower(0);
-        backLeftDrive.setPower(0);
-        backRightDrive.setPower(0);
-        shooterMotor.setPower(0);
-//        shooterAngler.setPower(0);
-        intakeMotor.setPower(0);
-    }
-
 }
+/*    @Override
+    public void stop() {
+        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
+    }
+*/

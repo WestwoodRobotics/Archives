@@ -11,10 +11,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 public class AutonFunctionsTwo {
-    public DcMotor frontLeftDrive;
-    public DcMotor frontRightDrive;
-    public DcMotor backLeftDrive;
-    public DcMotor backRightDrive;
+    public DcMotorEx frontLeftDrive;
+    public DcMotorEx frontRightDrive;
+    public DcMotorEx backLeftDrive;
+    public DcMotorEx backRightDrive;
 
     public Servo shooterBlocker;
     public Servo shooterPusher;
@@ -60,7 +60,7 @@ public class AutonFunctionsTwo {
 
     /*The constructor for the class which is called inside the OpModeAuton file (which is the auton file we use to run the robot),
     and allows us to access the motors and servos on the robot from this file*/
-    public AutonFunctionsTwo(DcMotor fLDrive, DcMotor fRDrive, DcMotor bLDrive, DcMotor bRDrive, Servo shootP, DcMotorEx shootM, DcMotor sMotor, Servo claw) {
+    public AutonFunctionsTwo(DcMotorEx fLDrive, DcMotorEx fRDrive, DcMotorEx bLDrive, DcMotorEx bRDrive, Servo shootP, DcMotorEx shootM, DcMotor sMotor, Servo claw) {
         frontLeftDrive = fLDrive;
         frontRightDrive = fRDrive;
         backLeftDrive = bLDrive;

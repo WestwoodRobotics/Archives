@@ -93,7 +93,7 @@ public class BasicAuton extends LinearOpMode
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
-        shooterMotor.setVelocityPIDFCoefficients(300, 0, 0, 0);
+        shooterMotor.setVelocityPIDFCoefficients(350, 0, 1.5, 0);
         waitForStart();
 //        shooterMotor.setPower(0.715);
 //        shooterMotor.setVelocity(RpmToTps(3750));
