@@ -19,10 +19,10 @@ public class BasicAuton extends LinearOpMode
     private ElapsedTime runtime = new ElapsedTime();
 
     //Initialize drive train motors
-    public DcMotor frontLeftDrive;
-    public DcMotor frontRightDrive;
-    public DcMotor backLeftDrive;
-    public DcMotor backRightDrive;
+    public DcMotorEx frontLeftDrive;
+    public DcMotorEx frontRightDrive;
+    public DcMotorEx backLeftDrive;
+    public DcMotorEx backRightDrive;
     private int epr = 28;
 
     //Initialize shooter motors and servos
@@ -49,10 +49,10 @@ public class BasicAuton extends LinearOpMode
     public void runOpMode () {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotor.class,"frontLeftDrive");
-        frontRightDrive = hardwareMap.get(DcMotor.class,"frontRightDrive");
-        backLeftDrive = hardwareMap.get(DcMotor.class,"backLeftDrive");
-        backRightDrive = hardwareMap.get(DcMotor.class,"backRightDrive");
+        frontLeftDrive = hardwareMap.get(DcMotorEx.class,"frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotorEx.class,"frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotorEx.class,"backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotorEx.class,"backRightDrive");
 
         shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
@@ -63,10 +63,10 @@ public class BasicAuton extends LinearOpMode
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         //Set the motor directions
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
 
         //Set the motor powers to 0 by default
         frontLeftPower = 0;

@@ -63,10 +63,10 @@ public class Test extends LinearOpMode
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         //Set the motor directions
-        frontLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
-        backLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
 
         //Set the motor powers to 0 by default
         frontLeftPower = 0;
@@ -94,7 +94,7 @@ public class Test extends LinearOpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
         shooterMotor.setVelocityPIDFCoefficients(350, 0, 1.5, 0);
-        backLeftDrive.setVelocityPIDFCoefficients(0, 0, 0, 0);
+        backLeftDrive.setPositionPIDFCoefficients(0);
         waitForStart();
 //        shooterMotor.setPower(0.715);
 //        shooterMotor.setVelocity(RpmToTps(3750));
@@ -109,7 +109,7 @@ public class Test extends LinearOpMode
         }
 
  */
-        backLeftDrive.setVelocity(100);
+
         double startTime = runtime.seconds();
         while (true) {
             telemetry.addData("Velocity", backLeftDrive.getVelocity());

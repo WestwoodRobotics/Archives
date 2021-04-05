@@ -15,10 +15,10 @@ import com.qualcomm.robotcore.util.Range;
 public class OpModeTeleOp extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     //Initialize drive train motors
-    public DcMotor frontLeftDrive;
-    public DcMotor frontRightDrive;
-    public DcMotor backLeftDrive;
-    public DcMotor backRightDrive;
+    public DcMotorEx frontLeftDrive;
+    public DcMotorEx frontRightDrive;
+    public DcMotorEx backLeftDrive;
+    public DcMotorEx backRightDrive;
 
     //Create motor power variables for drive train motors
     private double frontLeftPower;
@@ -73,10 +73,10 @@ public class OpModeTeleOp extends OpMode {
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotor.class, "frontLeftDrive");
-        frontRightDrive = hardwareMap.get(DcMotor.class, "frontRightDrive");
-        backLeftDrive = hardwareMap.get(DcMotor.class, "backLeftDrive");
-        backRightDrive = hardwareMap.get(DcMotor.class, "backRightDrive");
+        frontLeftDrive = hardwareMap.get(DcMotorEx.class, "frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotorEx.class, "frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotorEx.class, "backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotorEx.class, "backRightDrive");
 
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
@@ -91,10 +91,10 @@ public class OpModeTeleOp extends OpMode {
 
 
         //Set the motor directions
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         shooterMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -305,12 +305,12 @@ public class OpModeTeleOp extends OpMode {
     }
 
     public void stop() {
-        frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        shooterMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontLeftDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        frontRightDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backLeftDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        backRightDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        shooterMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         frontLeftDrive.setPower(0);
         frontRightDrive.setPower(0);
@@ -319,7 +319,6 @@ public class OpModeTeleOp extends OpMode {
         shooterMotor.setPower(0);
         intakeMotor.setPower(0);
     }
-
 /*    public void shooterPID (int shooterAnglerPower) {
         double prevError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
         double prevTime = runtime.seconds();
