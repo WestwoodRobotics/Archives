@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.controller.PDController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -94,7 +95,6 @@ public class Test extends LinearOpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
         shooterMotor.setVelocityPIDFCoefficients(350, 0, 1.5, 0);
-        backLeftDrive.setPositionPIDFCoefficients(0);
         waitForStart();
 //        shooterMotor.setPower(0.715);
 //        shooterMotor.setVelocity(RpmToTps(3750));
@@ -110,13 +110,36 @@ public class Test extends LinearOpMode
 
  */
 
-        double startTime = runtime.seconds();
+        /*
+         * A sample control loop for a motor
+         */
+        PDController pdController = new PDController(1,0);
+
+// We set the setpoint here.
+// Now we don't have to declare the setpoint
+// in our calculate() method arguments.
+        pdController.setSetPoint(1200);
+
+// perform the control loop
+        /*
+         * The loop checks to see if the controller has reached
+         * the desired setpoint within a specified tolerance
+         * range
+         */
+        do {
+            double output = pdController.calculate(backLeftDrive.getCurrentPosition());
+            backLeftDrive.setVelocity(output);
+        } while (!pdController.atSetPoint());
+        backLeftDrive.setPower(0); // stop the motor
+/*        double startTime = runtime.seconds();
         while (true) {
             telemetry.addData("Velocity", backLeftDrive.getVelocity());
             telemetry.update();
             if (runtime.seconds() - startTime > 7) {
                 break;
             }
+
+ */
         }
 /*        frontLeftDrive.setPower(0.5);
         frontRightDrive.setPower(0.5);
@@ -149,7 +172,6 @@ public class Test extends LinearOpMode
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
 */
-    }
 
     public void pause (double seconds) {
         double startTime = runtime.seconds();
