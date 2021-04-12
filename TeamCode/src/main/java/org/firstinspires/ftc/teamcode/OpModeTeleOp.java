@@ -200,15 +200,15 @@ public class OpModeTeleOp extends OpMode {
 
         if (gamepad2.right_trigger > 0) {
 //            shooterMotor.setVelocity(RpmToTps(3650));
-            shooterMotor.setVelocity(1695);
+            shooterMotor.setVelocity(1725);
         } else if (gamepad2.a) {
 //            shooterMotor.setPower(0.55);
 //            shooterMotor.setVelocity(RpmToTps(3100));
-            shooterMotor.setVelocity(1465);
+            shooterMotor.setVelocity(1550);
         } else if (gamepad2.b) {
 //            shooterMotor.setPower(0.68);
 //            shooterMotor.setVelocity(RpmToTps(3500));
-            shooterMotor.setVelocity(1650);
+            shooterMotor.setVelocity(1700);
         } else {
             shooterMotor.setPower(0);
         }

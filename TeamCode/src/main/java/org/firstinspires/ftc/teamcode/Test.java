@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.arcrobotics.ftclib.controller.PDController;
+//import com.arcrobotics.ftclib.controller.PDController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -50,10 +50,10 @@ public class Test extends LinearOpMode
     public void runOpMode () {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotorEx.class,"frontLeftDrive");
-        frontRightDrive = hardwareMap.get(DcMotorEx.class,"frontRightDrive");
-        backLeftDrive = hardwareMap.get(DcMotorEx.class,"backLeftDrive");
-        backRightDrive = hardwareMap.get(DcMotorEx.class,"backRightDrive");
+        frontLeftDrive = hardwareMap.get(DcMotorEx.class, "frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotorEx.class, "frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotorEx.class, "backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotorEx.class, "backRightDrive");
 
         shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
@@ -94,85 +94,19 @@ public class Test extends LinearOpMode
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
-        shooterMotor.setVelocityPIDFCoefficients(350, 0, 1.5, 0);
+        backLeftDrive.setVelocityPIDFCoefficients(20, 0, 0, 0);
         waitForStart();
-//        shooterMotor.setPower(0.715);
-//        shooterMotor.setVelocity(RpmToTps(3750));
-/*        shooterMotor.setVelocity(1695);
+        backLeftDrive.setVelocity(100);
+
         double startTime = runtime.seconds();
-        while (true) {
-            telemetry.addData("Velocity", shooterMotor.getVelocity());
-            telemetry.update();
-            if (runtime.seconds() - startTime > 7) {
-                break;
-            }
-        }
-
- */
-
-        /*
-         * A sample control loop for a motor
-         */
-        PDController pdController = new PDController(1,0);
-
-// We set the setpoint here.
-// Now we don't have to declare the setpoint
-// in our calculate() method arguments.
-        pdController.setSetPoint(1200);
-
-// perform the control loop
-        /*
-         * The loop checks to see if the controller has reached
-         * the desired setpoint within a specified tolerance
-         * range
-         */
-        do {
-            double output = pdController.calculate(backLeftDrive.getCurrentPosition());
-            backLeftDrive.setVelocity(output);
-        } while (!pdController.atSetPoint());
-        backLeftDrive.setPower(0); // stop the motor
-/*        double startTime = runtime.seconds();
         while (true) {
             telemetry.addData("Velocity", backLeftDrive.getVelocity());
             telemetry.update();
             if (runtime.seconds() - startTime > 7) {
                 break;
             }
-
- */
         }
-/*        frontLeftDrive.setPower(0.5);
-        frontRightDrive.setPower(0.5);
-        backLeftDrive.setPower(0.5);
-        backRightDrive.setPower(0.5);
-        double startTime = runtime.seconds();
-        while (true) {
-            if (runtime.seconds() - startTime > 6) {
-                break;
-            }
-        }
-*/
-/*
-        double encoderCounts = 28 * 20 * 62 / (3 * Math.PI);
-        frontLeftDrive.setTargetPosition((int) encoderCounts);
-        frontRightDrive.setTargetPosition((int) encoderCounts);
-        backLeftDrive.setTargetPosition((int) encoderCounts);
-        backRightDrive.setTargetPosition((int) encoderCounts);
-        frontLeftDrive.setPower(0.5);
-        frontRightDrive.setPower(0.5);
-        backLeftDrive.setPower(0.5);
-        backRightDrive.setPower(0.5);
-        frontLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backLeftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        backRightDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        while (frontLeftDrive.isBusy()) { }
-        frontLeftDrive.setPower(0);
-        frontRightDrive.setPower(0);
-        backLeftDrive.setPower(0);
-        backRightDrive.setPower(0);
-*/
-
+    }
     public void pause (double seconds) {
         double startTime = runtime.seconds();
         while (true) {

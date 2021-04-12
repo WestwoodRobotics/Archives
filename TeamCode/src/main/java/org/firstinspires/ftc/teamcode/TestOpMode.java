@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Basic Auton", group="Linear OpMode")
-public class BasicAuton extends LinearOpMode
+public class TestOpMode extends LinearOpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -121,9 +121,17 @@ public class BasicAuton extends LinearOpMode
         this.pause(0.3);
         shooterPusher.setPosition(0.36);
         this.pause(0.5);
- //       shooterBlocker.setPosition(0);
+        //       shooterBlocker.setPosition(0);
         shooterMotor.setPower(0);
-
+        frontLeftDrive.setPower(0.5);
+        frontRightDrive.setPower(0.5);
+        backLeftDrive.setPower(0.5);
+        backRightDrive.setPower(0.5);
+        pause(2.5);
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
 /*        frontLeftDrive.setPower(0.5);
         frontRightDrive.setPower(0.5);
         backLeftDrive.setPower(0.5);
