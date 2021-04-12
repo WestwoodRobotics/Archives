@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-//import com.arcrobotics.ftclib.controller.PDController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -14,8 +13,8 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test", group="Linear OpMode")
-public class Test extends LinearOpMode
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test Auton", group="Linear OpMode")
+public class OpModeAutonTest extends LinearOpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -50,10 +49,10 @@ public class Test extends LinearOpMode
     public void runOpMode () {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotorEx.class, "frontLeftDrive");
-        frontRightDrive = hardwareMap.get(DcMotorEx.class, "frontRightDrive");
-        backLeftDrive = hardwareMap.get(DcMotorEx.class, "backLeftDrive");
-        backRightDrive = hardwareMap.get(DcMotorEx.class, "backRightDrive");
+        frontLeftDrive = hardwareMap.get(DcMotorEx.class,"frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotorEx.class,"frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotorEx.class,"backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotorEx.class,"backRightDrive");
 
         shooterMotor = hardwareMap.get(DcMotorEx.class, "shooterMotor");
 //        shooterAngler = hardwareMap.get(DcMotor.class, "shooterAngler");
@@ -64,10 +63,10 @@ public class Test extends LinearOpMode
 //        clawServo = hardwareMap.get(Servo.class, "clawServo");
 
         //Set the motor directions
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
 
         //Set the motor powers to 0 by default
         frontLeftPower = 0;
@@ -75,15 +74,6 @@ public class Test extends LinearOpMode
         backLeftPower = 0;
         backRightPower = 0;
 
-/*        frontLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backLeftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        backRightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        frontLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backLeftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backRightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
- */
         shooterPusher.setPosition(0.36);
 //        shooterBlocker.setPosition(0);
         //Set the zero power behavior of the motors to stop quickly
@@ -94,44 +84,45 @@ public class Test extends LinearOpMode
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
-        backLeftDrive.setVelocityPIDFCoefficients(20, 0, 0, 0);
+        shooterMotor.setVelocityPIDFCoefficients(350, 0, 1.5, 0);
         waitForStart();
-        backLeftDrive.setVelocity(100);
+        shooterMotor.setVelocity(1695);
+        this.pause(5);
+        //turn the shooter push servo 60 degrees and then back 60 degrees
+        shooterPusher.setPosition(0.1);
+        this.pause(0.3);
+        shooterPusher.setPosition(0.36);
+        //turn blocker servo 90 degrees
+//        shooterBlocker.setPosition(0.5);
+        shooterMotor.setVelocity(1695);
+        this.pause(3);
+        //turn the shooter push servo 60 degrees and then back 60 degrees
+        shooterPusher.setPosition(0.1);
+        this.pause(0.3);
+        shooterPusher.setPosition(0.36);
+        //turn blocker servo 90 degrees
+//        shooterBlocker.setPosition(0.5);
+        shooterMotor.setVelocity(1695);
+        this.pause(3);
+        //turn the shooter push servo 60 degrees and then back 60 degrees
+        shooterPusher.setPosition(0.1);
+        this.pause(0.3);
+        shooterPusher.setPosition(0.36);
+        this.pause(0.5);
+        //       shooterBlocker.setPosition(0);
+        shooterMotor.setPower(0);
 
-<<<<<<< HEAD
-        double startTime = runtime.seconds();
-=======
-        /*
-         * A sample control loop for a motor
-         */
-//        PDController pdController = new PDController(1,0);
-
-// We set the setpoint here.
-// Now we don't have to declare the setpoint
-// in our calculate() method arguments.
-//        pdController.setSetPoint(1200);
-
-// perform the control loop
-        /*
-         * The loop checks to see if the controller has reached
-         * the desired setpoint within a specified tolerance
-         * range
-         */
-//        do {
-//            double output = pdController.calculate(backLeftDrive.getCurrentPosition());
-//            backLeftDrive.setVelocity(output);
-//        } while (!pdController.atSetPoint());
-        backLeftDrive.setPower(0); // stop the motor
-/*        double startTime = runtime.seconds();
->>>>>>> 7084c6ccbad1ad3f1dee30153a2f01313c2da593
-        while (true) {
-            telemetry.addData("Velocity", backLeftDrive.getVelocity());
-            telemetry.update();
-            if (runtime.seconds() - startTime > 7) {
-                break;
-            }
-        }
+        frontLeftDrive.setPower(0.5);
+        frontRightDrive.setPower(0.5);
+        backLeftDrive.setPower(0.5);
+        backRightDrive.setPower(0.5);
+        pause(2.5);
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
     }
+
     public void pause (double seconds) {
         double startTime = runtime.seconds();
         while (true) {
@@ -139,13 +130,6 @@ public class Test extends LinearOpMode
                 return;
             }
         }
-    }
-    public double TpsToRpm (double tps) {
-        return tps * 60 / epr;
-    }
-
-    public double RpmToTps (double rpm) {
-        return rpm * epr / 60;
     }
 }
 /*    @Override
