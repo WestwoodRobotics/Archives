@@ -15,8 +15,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 @com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test", group="Linear OpMode")
-public class Test extends LinearOpMode
-{
+public class Test extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
     //Initialize drive train motors
@@ -47,7 +46,7 @@ public class Test extends LinearOpMode
     AutonFunctionsTwo autFunc;
 
     @Override
-    public void runOpMode () {
+    public void runOpMode() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
         frontLeftDrive = hardwareMap.get(DcMotorEx.class, "frontLeftDrive");
@@ -97,42 +96,16 @@ public class Test extends LinearOpMode
         backLeftDrive.setVelocityPIDFCoefficients(20, 0, 0, 0);
         waitForStart();
         backLeftDrive.setVelocity(100);
-
-<<<<<<< HEAD
         double startTime = runtime.seconds();
-=======
-        /*
-         * A sample control loop for a motor
-         */
-//        PDController pdController = new PDController(1,0);
-
-// We set the setpoint here.
-// Now we don't have to declare the setpoint
-// in our calculate() method arguments.
-//        pdController.setSetPoint(1200);
-
-// perform the control loop
-        /*
-         * The loop checks to see if the controller has reached
-         * the desired setpoint within a specified tolerance
-         * range
-         */
-//        do {
-//            double output = pdController.calculate(backLeftDrive.getCurrentPosition());
-//            backLeftDrive.setVelocity(output);
-//        } while (!pdController.atSetPoint());
-        backLeftDrive.setPower(0); // stop the motor
-/*        double startTime = runtime.seconds();
->>>>>>> 7084c6ccbad1ad3f1dee30153a2f01313c2da593
         while (true) {
-            telemetry.addData("Velocity", backLeftDrive.getVelocity());
-            telemetry.update();
+            telemetry.addData("backLeftMotor Velocity", backLeftDrive.getVelocity());
             if (runtime.seconds() - startTime > 7) {
                 break;
             }
         }
     }
-    public void pause (double seconds) {
+
+    public void pause(double seconds) {
         double startTime = runtime.seconds();
         while (true) {
             if (runtime.seconds() - startTime > seconds) {
@@ -140,14 +113,14 @@ public class Test extends LinearOpMode
             }
         }
     }
-    public double TpsToRpm (double tps) {
+
+    public double TpsToRpm(double tps) {
         return tps * 60 / epr;
     }
 
-    public double RpmToTps (double rpm) {
+    public double RpmToTps(double rpm) {
         return rpm * epr / 60;
     }
-}
 /*    @Override
     public void stop() {
         frontLeftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -161,3 +134,4 @@ public class Test extends LinearOpMode
         backRightDrive.setPower(0);
     }
 */
+}

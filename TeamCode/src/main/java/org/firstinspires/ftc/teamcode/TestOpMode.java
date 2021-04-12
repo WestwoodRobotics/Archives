@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
-@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Basic Auton", group="Linear OpMode")
+@com.qualcomm.robotcore.eventloop.opmode.Autonomous(name="Hunga Munga Test OpMode Auton", group="Linear OpMode")
 public class TestOpMode extends LinearOpMode
 {
     private ElapsedTime runtime = new ElapsedTime();
