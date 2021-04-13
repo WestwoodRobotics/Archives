@@ -5,12 +5,13 @@ import com.qualcomm.robotcore.hardware.CRServoImpl;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class Robot {
+public class RobotA {
 
 
     private DcMotor leftBackDrive = null;
@@ -23,17 +24,21 @@ public class Robot {
     private CRServoImpl wobbleClaw = null;
     private CRServoImpl wobbleClaw2 = null;
     private CRServoImpl shooterAngle = null;
+    private  Telemetry telemetry = null;
+
     BNO055IMU imu;
     Orientation angles;
 
     public autonfunctionsR functions = new autonfunctionsR(leftBackDrive, rightBackDrive, leftFrontDrive,
-            rightFrontDrive, conveyorMotor, shooterMotor,intakeMotor, shooterAngle);
+            rightFrontDrive, conveyorMotor, shooterMotor,intakeMotor, shooterAngle,telemetry);
 
 
 
 
 
-    public Robot(HardwareMap hardwareMap){
+
+    public RobotA(HardwareMap hardwareMap,Telemetry telemetry){
+        this.telemetry = telemetry;
         leftBackDrive  = hardwareMap.get(DcMotor.class, "leftBack");
         rightBackDrive = hardwareMap.get(DcMotor.class, "rightBack");
         rightFrontDrive = hardwareMap.get(DcMotor.class, "rightFront");
@@ -42,6 +47,7 @@ public class Robot {
         shooterMotor = hardwareMap.get(DcMotor.class,"shooterMotor");
         intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
         shooterAngle = hardwareMap.get(CRServoImpl.class,"shooterAngle");
+
 
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
