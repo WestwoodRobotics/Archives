@@ -174,13 +174,26 @@ public class OpModeTeleOp extends OpMode {
             backLeftPower *= 0.25;
             backRightPower *= 0.25;
         }
+
+        if (gamepad1.right_trigger > 0) {
+            frontLeftDrive.setPower(-0.5);
+            frontRightDrive.setPower(0.5);
+            backLeftDrive.setPower(-0.5);
+            backRightDrive.setPower(0.5);
+        }
+        else if (gamepad1.left_trigger > 0) {
+            frontLeftDrive.setPower(0.5);
+            frontRightDrive.setPower(-0.5);
+            backLeftDrive.setPower(0.5);
+            backRightDrive.setPower(-0.5);
+        }
         //Set the motor powers to their corresponding values
-        frontLeftDrive.setPower(frontLeftPower);
-        frontRightDrive.setPower(frontRightPower);
-        backLeftDrive.setPower(backLeftPower);
-        backRightDrive.setPower(backRightPower);
-
-
+        else {
+            frontLeftDrive.setPower(frontLeftPower);
+            frontRightDrive.setPower(frontRightPower);
+            backLeftDrive.setPower(backLeftPower);
+            backRightDrive.setPower(backRightPower);
+        }
         //When LB or RB is pressed turn the intake on or off and change the variable to match the current state
         if (gamepad2.left_bumper) {
             intakeMotor.setPower(1);
