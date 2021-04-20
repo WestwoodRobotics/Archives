@@ -115,7 +115,7 @@ public class OpModeTeleOp extends OpMode {
 //        telemetry.update();
 
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
-        shooterMotor.setVelocityPIDFCoefficients(350, 0, 1.5, 0);
+        shooterMotor.setVelocityPIDFCoefficients(275, 0, 0, 0);
     }
 
     @Override
@@ -176,16 +176,16 @@ public class OpModeTeleOp extends OpMode {
         }
 
         if (gamepad1.right_trigger > 0) {
-            frontLeftDrive.setPower(-0.5);
-            frontRightDrive.setPower(0.5);
-            backLeftDrive.setPower(-0.5);
-            backRightDrive.setPower(0.5);
+            frontLeftDrive.setPower(0.25);
+            frontRightDrive.setPower(-0.25);
+            backLeftDrive.setPower(0.25);
+            backRightDrive.setPower(-0.25);
         }
         else if (gamepad1.left_trigger > 0) {
-            frontLeftDrive.setPower(0.5);
-            frontRightDrive.setPower(-0.5);
-            backLeftDrive.setPower(0.5);
-            backRightDrive.setPower(-0.5);
+            frontLeftDrive.setPower(-0.25);
+            frontRightDrive.setPower(0.25);
+            backLeftDrive.setPower(-0.25);
+            backRightDrive.setPower(0.25);
         }
         //Set the motor powers to their corresponding values
         else {
@@ -213,7 +213,7 @@ public class OpModeTeleOp extends OpMode {
 
         if (gamepad2.right_trigger > 0) {
 //            shooterMotor.setVelocity(RpmToTps(3650));
-            shooterMotor.setVelocity(1725);
+            shooterMotor.setVelocity(1780);
         } else if (gamepad2.a) {
 //            shooterMotor.setPower(0.55);
 //            shooterMotor.setVelocity(RpmToTps(3100));
@@ -221,7 +221,7 @@ public class OpModeTeleOp extends OpMode {
         } else if (gamepad2.b) {
 //            shooterMotor.setPower(0.68);
 //            shooterMotor.setVelocity(RpmToTps(3500));
-            shooterMotor.setVelocity(1700);
+            shooterMotor.setVelocity(1750);
         } else {
             shooterMotor.setPower(0);
         }
@@ -359,22 +359,22 @@ public class OpModeTeleOp extends OpMode {
     }
 
 
-/*    public void angleShooter(int angle) {
-        newShooterHeight = angleToHeight(angle);
-        heightDifference = newShooterHeight - currentShooterHeight;
-        //Translate heightDifference into encoder counts and use PID to move the motor correctly in order to angle the shooter
-        if (heightDifference < 0) {
-            shooterEncoderCounts = 1; //Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
-        } else if (heightDifference > 0) {
-            shooterEncoderCounts = -1;//Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+    /*    public void angleShooter(int angle) {
+            newShooterHeight = angleToHeight(angle);
+            heightDifference = newShooterHeight - currentShooterHeight;
+            //Translate heightDifference into encoder counts and use PID to move the motor correctly in order to angle the shooter
+            if (heightDifference < 0) {
+                shooterEncoderCounts = 1; //Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+            } else if (heightDifference > 0) {
+                shooterEncoderCounts = -1;//Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+            }
+            currentShooterHeight = newShooterHeight;
         }
-        currentShooterHeight = newShooterHeight;
-    }
-    public static double angleToHeight (int angleDesired) {
-        double radAngle = Math.toRadians(angleDesired);
-        return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
-    }
- */
+        public static double angleToHeight (int angleDesired) {
+            double radAngle = Math.toRadians(angleDesired);
+            return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
+        }
+     */
     public double TpsToRpm (double tps) {
         return tps * 60 / epr;
     }

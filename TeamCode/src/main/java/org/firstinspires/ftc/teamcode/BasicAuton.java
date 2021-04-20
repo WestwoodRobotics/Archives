@@ -93,12 +93,12 @@ public class BasicAuton extends LinearOpMode
 
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
-        shooterMotor.setVelocityPIDFCoefficients(350, 0, 1.5, 0);
+        shooterMotor.setVelocityPIDFCoefficients(150, 0, 0, 0);
 //        backLeftDrive.setVelocityPIDFCoefficients(20, 0, 0, 0);
         waitForStart();
 //        shooterMotor.setPower(0.715);
 //        shooterMotor.setVelocity(RpmToTps(3750));
-        shooterMotor.setVelocity(1725);
+        shooterMotor.setVelocity(1825);
         //turn blocker servo 90 degrees
 //        shooterBlocker.setPosition(0.5);
         this.pause(5);
@@ -120,9 +120,18 @@ public class BasicAuton extends LinearOpMode
         shooterPusher.setPosition(0.1);
         this.pause(0.3);
         shooterPusher.setPosition(0.36);
-        this.pause(0.5);
- //       shooterBlocker.setPosition(0);
+        this.pause(1);
+        //       shooterBlocker.setPosition(0);
         shooterMotor.setPower(0);
+        frontLeftDrive.setPower(0.5);
+        frontRightDrive.setPower(0.5);
+        backLeftDrive.setPower(0.5);
+        backRightDrive.setPower(0.5);
+        pause(2.5);
+        frontLeftDrive.setPower(0);
+        frontRightDrive.setPower(0);
+        backLeftDrive.setPower(0);
+        backRightDrive.setPower(0);
 
 /*        frontLeftDrive.setPower(0.5);
         frontRightDrive.setPower(0.5);
@@ -160,6 +169,7 @@ public class BasicAuton extends LinearOpMode
     public void pause (double seconds) {
         double startTime = runtime.seconds();
         while (true) {
+            telemetry.addData("Velocity", shooterMotor.getVelocity());
             if (runtime.seconds() - startTime > seconds) {
                 return;
             }
