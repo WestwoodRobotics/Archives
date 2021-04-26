@@ -11,8 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 @com.qualcomm.robotcore.eventloop.opmode.TeleOp(name="Hunga Munga OneConTeleOp", group="Iterative Opmode")
-public class OpModeTeleOpSingleController extends OpMode
-{
+public class OpModeTeleOpSingleController extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     //Initialize drive train motors
     public DcMotorEx frontLeftDrive;
@@ -25,12 +24,12 @@ public class OpModeTeleOpSingleController extends OpMode
     private double frontRightPower;
     private double backLeftPower;
     private double backRightPower;
+    private int epr = 28;
 
     //Initialize intake motor and create the power variable
     public DcMotor intakeMotor;
     public DcMotor scuffedMotor;
 
-    public Telemetry telemetry;
     //Initialize the servo for opening and closing the claw
     public Servo clawServo;
 
@@ -73,12 +72,12 @@ public class OpModeTeleOpSingleController extends OpMode
     public void init() {
         /*initialize your motors here using the hardwareMap variable and the .get method within it.
         Map the motor objects to the physical motors using the control hub*/
-        frontLeftDrive = hardwareMap.get(DcMotorEx.class,"frontLeftDrive");
-        frontRightDrive = hardwareMap.get(DcMotorEx.class,"frontRightDrive");
-        backLeftDrive = hardwareMap.get(DcMotorEx.class,"backLeftDrive");
-        backRightDrive = hardwareMap.get(DcMotorEx.class,"backRightDrive");
+        frontLeftDrive = hardwareMap.get(DcMotorEx.class, "frontLeftDrive");
+        frontRightDrive = hardwareMap.get(DcMotorEx.class, "frontRightDrive");
+        backLeftDrive = hardwareMap.get(DcMotorEx.class, "backLeftDrive");
+        backRightDrive = hardwareMap.get(DcMotorEx.class, "backRightDrive");
 
-        intakeMotor = hardwareMap.get(DcMotor.class,"intakeMotor");
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
         scuffedMotor = hardwareMap.get(DcMotor.class, "scuffedMotor");
 
         clawServo = hardwareMap.get(Servo.class, "clawServo");
@@ -91,10 +90,10 @@ public class OpModeTeleOpSingleController extends OpMode
 
 
         //Set the motor directions
-        frontLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        frontRightDrive.setDirection(DcMotor.Direction.FORWARD);
-        backLeftDrive.setDirection(DcMotor.Direction.REVERSE);
-        backRightDrive.setDirection(DcMotor.Direction.FORWARD);
+        frontLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        frontRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
+        backLeftDrive.setDirection(DcMotorEx.Direction.REVERSE);
+        backRightDrive.setDirection(DcMotorEx.Direction.FORWARD);
 
         intakeMotor.setDirection(DcMotor.Direction.REVERSE);
         shooterMotor.setDirection(DcMotor.Direction.FORWARD);
@@ -114,9 +113,8 @@ public class OpModeTeleOpSingleController extends OpMode
 //        telemetry.addData("Status", "Initialized");
 //        telemetry.update();
 
-        clawServo.setPosition(0);
-
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
+        shooterMotor.setVelocityPIDFCoefficients(275, 0, 0, 0);
     }
 
     @Override
@@ -124,6 +122,12 @@ public class OpModeTeleOpSingleController extends OpMode
         /*use the left stick of gamepad1 in order to find what angle the left stick is at.
         use gamepad1.left_stick_x and gamepad1.left_stick_y to get the current x and y positions
         of the left stick on the first gamepad.*/
+        //Set up telemetry
+//        telemetry.addData("Velocity", this.TpsToRpm(shooterMotor.getVelocity()));
+        telemetry.addData("Velocity", shooterMotor.getVelocity());
+        telemetry.addData("clawServoPosition", clawServo.getPosition());
+        telemetry.update();
+
 
         //Get the values of the joystick input filtered through the corresponding equation for each wheel/motor
         frontLeftPower = gamepad1.left_stick_x - gamepad1.left_stick_y + gamepad1.right_stick_x;
@@ -155,53 +159,71 @@ public class OpModeTeleOpSingleController extends OpMode
             backRightPower /= greatestPower;
         }
 
-        //Slo-Mo when holding Y
-        if (gamepad1.y){
+        //Slo-Mo when holding LB
+        if (gamepad1.left_bumper) {
             frontLeftPower *= 0.5;
             frontRightPower *= 0.5;
             backLeftPower *= 0.5;
             backRightPower *= 0.5;
+        } else if (gamepad1.right_bumper) {
+            frontLeftPower *= 0.25;
+            frontRightPower *= 0.25;
+            backLeftPower *= 0.25;
+            backRightPower *= 0.25;
         }
 
+/*        if (gamepad1.right_trigger > 0) {
+            frontLeftDrive.setPower(0.25);
+            frontRightDrive.setPower(-0.25);
+            backLeftDrive.setPower(0.25);
+            backRightDrive.setPower(-0.25);
+        }
+        else if (gamepad1.left_trigger > 0) {
+            frontLeftDrive.setPower(-0.25);
+            frontRightDrive.setPower(0.25);
+            backLeftDrive.setPower(-0.25);
+            backRightDrive.setPower(0.25);
+        }
+
+ */
         //Set the motor powers to their corresponding values
-        frontLeftDrive.setPower(frontLeftPower);
-        frontRightDrive.setPower(frontRightPower);
-        backLeftDrive.setPower(backLeftPower);
-        backRightDrive.setPower(backRightPower);
-
-
+        else {
+            frontLeftDrive.setPower(frontLeftPower);
+            frontRightDrive.setPower(frontRightPower);
+            backLeftDrive.setPower(backLeftPower);
+            backRightDrive.setPower(backRightPower);
+        }
         //When LB or RB is pressed turn the intake on or off and change the variable to match the current state
         if (gamepad1.left_bumper) {
             intakeMotor.setPower(1);
-        }
-        else if (gamepad1.right_bumper) {
+            scuffedMotor.setPower(1);
+
+        } else if (gamepad1.right_bumper) {
             intakeMotor.setPower(-1);
-        }
-        else {
+        } else {
             intakeMotor.setPower(0);
         }
 
-        //May need to be reversed
         if (gamepad1.x) {
             scuffedMotor.setPower(1);
-        }
-        else {
+        } else if (gamepad1.y) {
+            scuffedMotor.setPower(-1);
+        } else {
             scuffedMotor.setPower(0);
         }
 
         if (gamepad1.right_trigger > 0) {
-//            shooterMotor.setPower(0.715);
-            shooterMotor.setVelocity(1695);
-        }
-        else if (gamepad1.a) {
+//            shooterMotor.setVelocity(RpmToTps(3650));
+            shooterMotor.setVelocity(1780);
+        } else if (gamepad1.a) {
 //            shooterMotor.setPower(0.55);
-            shooterMotor.setVelocity(1465);
-        }
-        else if (gamepad1.b) {
+//            shooterMotor.setVelocity(RpmToTps(3100));
+            shooterMotor.setVelocity(1550);
+        } else if (gamepad1.b) {
 //            shooterMotor.setPower(0.68);
-            shooterMotor.setVelocity(1650);
-        }
-        else {
+//            shooterMotor.setVelocity(RpmToTps(3500));
+            shooterMotor.setVelocity(1750);
+        } else {
             shooterMotor.setPower(0);
         }
 
@@ -211,7 +233,7 @@ public class OpModeTeleOpSingleController extends OpMode
 //            this.pause(1);
             //turn the shooter push servo 60 degrees and then back 60 degrees
             shooterPusher.setPosition(0.1);
-            this.pause(0.3);
+            this.pause(1);
             shooterPusher.setPosition(0.36);
             //turn blocker servo 90 degrees counter clockwise
             this.pause(0.75);
@@ -220,20 +242,13 @@ public class OpModeTeleOpSingleController extends OpMode
 
         if (gamepad1.dpad_up) {
             clawServo.setPosition(0);
-        }
-
-        else if (gamepad1.dpad_down) {
+        } else if (gamepad1.dpad_down) {
             clawServo.setPosition(0.75);
-        }
-
-        else if (gamepad1.dpad_right) {
+        } else if (gamepad1.dpad_right) {
             clawServo.setPosition(0.25);
-        }
-
-        else if (gamepad1.dpad_left) {
+        } else if (gamepad1.dpad_left) {
             clawServo.setPosition(0.5);
         }
-
 /*        if (gamepad2.right_trigger > 0) {
             //start spinning the shooter motor
             shooterMotor.setPower(1);
@@ -296,15 +311,6 @@ public class OpModeTeleOpSingleController extends OpMode
 //        telemetry.addData("Status", "Run Time: " + runtime.toString());
 //        telemetry.update();
     }
-    //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
-    public void pause (double seconds) {
-        double startTime = runtime.seconds();
-        while (true) {
-            if (runtime.seconds() - startTime > seconds) {
-                return;
-            }
-        }
-    }
 
     public void stop() {
         frontLeftDrive.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
@@ -321,7 +327,6 @@ public class OpModeTeleOpSingleController extends OpMode
         shooterMotor.setPower(0);
         intakeMotor.setPower(0);
     }
-
 /*    public void shooterPID (int shooterAnglerPower) {
         double prevError = shooterEncoderCounts - shooterAngler.getCurrentPosition();
         double prevTime = runtime.seconds();
@@ -338,24 +343,38 @@ public class OpModeTeleOpSingleController extends OpMode
     }
     */
 
-
-
-
-/*    public void angleShooter(int angle) {
-        newShooterHeight = angleToHeight(angle);
-        heightDifference = newShooterHeight - currentShooterHeight;
-        //Translate heightDifference into encoder counts and use PID to move the motor correctly in order to angle the shooter
-        if (heightDifference < 0) {
-            shooterEncoderCounts = 1; //Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
-        } else if (heightDifference > 0) {
-            shooterEncoderCounts = -1;//Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+    //Use the runtime/elapsed time to start a while loop (which will prevent any other code from running) the ends after a desired amount of time has passed
+    public void pause(double seconds) {
+        double startTime = runtime.seconds();
+        while (true) {
+            if (runtime.seconds() - startTime > seconds) {
+                return;
+            }
         }
-        currentShooterHeight = newShooterHeight;
     }
-    public static double angleToHeight (int angleDesired) {
-        double radAngle = Math.toRadians(angleDesired);
-        return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
-    }
- */
 
+
+    /*    public void angleShooter(int angle) {
+            newShooterHeight = angleToHeight(angle);
+            heightDifference = newShooterHeight - currentShooterHeight;
+            //Translate heightDifference into encoder counts and use PID to move the motor correctly in order to angle the shooter
+            if (heightDifference < 0) {
+                shooterEncoderCounts = 1; //Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+            } else if (heightDifference > 0) {
+                shooterEncoderCounts = -1;//Use current height and new height to calculate what the encoder counts should be when the angling is done (factor in current encoder counts - or + depending on direction/height difference sign)
+            }
+            currentShooterHeight = newShooterHeight;
+        }
+        public static double angleToHeight (int angleDesired) {
+            double radAngle = Math.toRadians(angleDesired);
+            return Math.tan(radAngle) * (96.0 - (41.0/Math.sin(radAngle)));
+        }
+     */
+    public double TpsToRpm(double tps) {
+        return tps * 60 / epr;
+    }
+
+    public double RpmToTps(double rpm) {
+        return rpm * epr / 60;
+    }
 }
