@@ -160,7 +160,7 @@ public class OpModeTeleOpSingleController extends OpMode {
         }
 
         //Slo-Mo when holding LB
-        if (gamepad1.left_bumper) {
+/*        if (gamepad1.left_bumper) {
             frontLeftPower *= 0.5;
             frontRightPower *= 0.5;
             backLeftPower *= 0.5;
@@ -171,7 +171,7 @@ public class OpModeTeleOpSingleController extends OpMode {
             backLeftPower *= 0.25;
             backRightPower *= 0.25;
         }
-
+*/
 /*        if (gamepad1.right_trigger > 0) {
             frontLeftDrive.setPower(0.25);
             frontRightDrive.setPower(-0.25);
