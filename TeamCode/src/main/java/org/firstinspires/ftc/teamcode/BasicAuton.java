@@ -94,35 +94,25 @@ public class BasicAuton extends LinearOpMode
         //Setup the auton functions class so it can access the motors and servos on the robot and so we can use the functions from it
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
         shooterMotor.setVelocityPIDFCoefficients(62.5, 0, 0, 0);
-//        backLeftDrive.setVelocityPIDFCoefficients(20, 0, 0, 0);
         waitForStart();
-//        shooterMotor.setPower(0.715);
-//        shooterMotor.setVelocity(RpmToTps(3750));
         shooterMotor.setVelocity(1950);
-        //turn blocker servo 90 degrees
-//        shooterBlocker.setPosition(0.5);
         this.pause(5);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(0.1);
         this.pause(0.3);
         shooterPusher.setPosition(0.36);
-        //turn blocker servo 90 degrees
-//        shooterBlocker.setPosition(0.5);
         this.pause(3);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(0.1);
         this.pause(0.3);
         shooterPusher.setPosition(0.36);
-        //turn blocker servo 90 degrees
-//        shooterBlocker.setPosition(0.5);
         this.pause(3);
         //turn the shooter push servo 60 degrees and then back 60 degrees
         shooterPusher.setPosition(0.1);
         this.pause(0.3);
         shooterPusher.setPosition(0.36);
         this.pause(1);
-        //       shooterBlocker.setPosition(0);
-/*        shooterMotor.setPower(0);
+        shooterMotor.setPower(0);
         frontLeftDrive.setPower(0.5);
         frontRightDrive.setPower(0.5);
         backLeftDrive.setPower(0.5);
@@ -132,7 +122,6 @@ public class BasicAuton extends LinearOpMode
         frontRightDrive.setPower(0);
         backLeftDrive.setPower(0);
         backRightDrive.setPower(0);
-        */
 
 /*        frontLeftDrive.setPower(0.5);
         frontRightDrive.setPower(0.5);

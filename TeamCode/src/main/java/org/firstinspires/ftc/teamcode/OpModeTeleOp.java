@@ -126,7 +126,7 @@ public class OpModeTeleOp extends OpMode {
         //Set up telemetry
 //        telemetry.addData("Velocity", this.TpsToRpm(shooterMotor.getVelocity()));
         telemetry.addData("Velocity", shooterMotor.getVelocity());
-        telemetry.addData("clawServoPosition", clawServo.getPosition());
+//        telemetry.addData("clawServoPosition", clawServo.getPosition());
         telemetry.update();
 
 
@@ -135,12 +135,6 @@ public class OpModeTeleOp extends OpMode {
         frontRightPower = -gamepad1.left_stick_x - gamepad1.left_stick_y - gamepad1.right_stick_x;
         backLeftPower = -gamepad1.left_stick_x - gamepad1.left_stick_y + gamepad1.right_stick_x;
         backRightPower = gamepad1.left_stick_x - gamepad1.left_stick_y - gamepad1.right_stick_x;
-
-        /* Incorrect equations:
-        frontLeftPower =  gamepad1.left_stick_y - gamepad1.right_stick_x - gamepad1.left_stick_x;
-        frontRightPower=  gamepad1.left_stick_y + gamepad1.right_stick_x + gamepad1.left_stick_x;
-        backLeftPower  = -gamepad1.left_stick_y + gamepad1.right_stick_x - gamepad1.left_stick_x;
-        backRightPower = -gamepad1.left_stick_y - gamepad1.right_stick_x + gamepad1.left_stick_x; */
 
         //Keep the motor powers between -1 and 1 (inclusive) without changing the proportion between the values
         double greatestPower = Math.abs(frontLeftPower);
@@ -212,31 +206,21 @@ public class OpModeTeleOp extends OpMode {
         }
 
         if (gamepad2.right_trigger > 0) {
-//            shooterMotor.setVelocity(RpmToTps(3650));
             shooterMotor.setVelocity(1780);
         } else if (gamepad2.a) {
-//            shooterMotor.setPower(0.55);
-//            shooterMotor.setVelocity(RpmToTps(3100));
             shooterMotor.setVelocity(1550);
         } else if (gamepad2.b) {
-//            shooterMotor.setPower(0.68);
-//            shooterMotor.setVelocity(RpmToTps(3500));
             shooterMotor.setVelocity(1750);
         } else {
             shooterMotor.setPower(0);
         }
 
         if (gamepad2.left_trigger > 0) {
-            //turn blocker servo 90 degrees
-//            shooterBlocker.setPosition(0.5);
-//            this.pause(1);
             //turn the shooter push servo 60 degrees and then back 60 degrees
             shooterPusher.setPosition(0.1);
             this.pause(1);
             shooterPusher.setPosition(0.36);
-            //turn blocker servo 90 degrees counter clockwise
             this.pause(0.75);
-//            shooterBlocker.setPosition(0);
         }
 
         if (gamepad2.dpad_up) {
