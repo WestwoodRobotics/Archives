@@ -115,7 +115,7 @@ public class OpModeTeleOp extends OpMode {
 //        telemetry.update();
 
         AutonFunctionsTwo autFunc = new AutonFunctionsTwo(frontLeftDrive, frontRightDrive, backLeftDrive, backRightDrive, shooterPusher, shooterMotor, scuffedMotor, clawServo);
-        shooterMotor.setVelocityPIDFCoefficients(275, 0, 0, 0);
+        shooterMotor.setVelocityPIDFCoefficients(47.5, 0, 0, 0);
     }
 
     @Override
@@ -206,11 +206,11 @@ public class OpModeTeleOp extends OpMode {
         }
 
         if (gamepad2.right_trigger > 0) {
-            shooterMotor.setVelocity(1780);
+            shooterMotor.setVelocity(2175);
         } else if (gamepad2.a) {
-            shooterMotor.setVelocity(1550);
+            shooterMotor.setVelocity(1700);
         } else if (gamepad2.b) {
-            shooterMotor.setVelocity(1750);
+            shooterMotor.setVelocity(1975);
         } else {
             shooterMotor.setPower(0);
         }
