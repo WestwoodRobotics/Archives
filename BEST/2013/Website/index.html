@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<!--Design by Austin Reuland-->
+<!--Content by Madan Gopal, Austin Reuland-->
+<!--Pictures by Madan Gopal, Govind Girish, Austin Reuland, and Kids with Cameras-->
+<!--Designed for BEST 2013 Gatekeeper Competition-->
+<!--Custom Made from Scratch using Sublime Text 3 and Inkscape Vector Graphics Editor-->
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="content-language" content="en-us">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width">
+		<title>Westwood Robotics!</title>
+		<link rel="stylesheet" type="text/css" href="css/roboto/stylesheet.css" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="icon" type="image/png" href="img/favicon.png" />
+		<script src="js/jq-scroll-stellar-ease-galleria.js"></script>
+		<script src="js/main.js"></script>
+	</head>
+	<body>
+		<div id="container">
+			<div id="header">
+				<div id="nav">
+					<ul>
+						<li class="sl"><a href="#/about-home">home</a></li>
+						<li class="sl"><a href="#/about-comp">competition</a></li>
+						<li class="sl"><a href="#/about-process">process</a></li>
+						<li class="sl"><a href="#/about-robot">robot</a></li>
+						<li class="sl"><a href="#/about-experience">experience</a></li>
+						<li class="sl"><a href="#/about-team">the team</a></li>
+						<li class="sl"><a href="#/about-team-hist">team history</a></li>
+						<li>|</li>
+						<li><span onclick="toggleDropdown('drop-sitemap');">sitemap</span></li>
+						<li><span onclick="toggleDropdown('drop-members');">members</span></li>
+						<li><span onclick="toggleDropdown('drop-credits');">credits</span></li>
+					</ul>
+				</div>
+			</div>
+			<div id="content">
+				<div class="wrapper">
+					<div class="section-half-divider"></div>
+					<div id="about-home" class="section">
+						<div class="section-title">home</div>
+						<div class="inner-section">
+							<div class="slide-arrow">
+								<span class="right" onclick="nextSection(this);">
+									<img style="display: block; margin: 0 0 10px 0; top: 143px;" src="img/arrow-right.svg" alt="Arrow Right"/>
+									<img style="display: block; margin: 0 0 10px 0; top: 143px;" src="img/arrow-right.svg" alt="Arrow Right"/>
+									<img style="display: block; margin: 0 0 10px 0; top: 143px;" src="img/arrow-right.svg" alt="Arrow Right"/>
+								</span>
+							</div>
+							<div style="text-align: center; vertical-align: middle; margin: 60px 0 -60px 0;">
+								<div style="vertical-align: middle;">
+									<img src="img/logocolor.min.png" alt="Westwood Robotics" width="450"/>
+								</div>
+								<div style="width: 50px; height: 1px;"></div>
+								<div style="vertical-align: middle;">
+									<img src="img/roboscience.min.png" alt="Robot Science" width="250"/>
+								</div>
+								<div><p>Use the Arrows or your Arrow Keys to scroll left or right</p></div>
+							</div>
+						</div>
+					</div>
+					<div class="section-divider">
+						<div class="cpu y2"></div>
+						<div class="cpu x2 y2"></div>
+						<div class="cpu x1 y1"></div>
+					</div>
+					<div id="about-comp" class="section">
+						<div class="section-title">competition</div>
+						<div class="inner-section">
+							<div class="slide-arrow">
+								<span class="left" onclick="prevSection(this);"><img src="img/arrow-left.svg" alt="Arrow Left" /></span>
+								<span class="right" onclick="nextSection(this);"><img src="img/arrow-right.svg" alt="Arrow Right" /></span>
+							</div>
+							<div class="split">
+								<img src="img/field.png" alt="Gatekeeper Field" width="400" height="400">
+								<div style="right: 0; width: 600px">
+									<p style="margin: 0;">This year’s game, Gatekeeper, is focused on the manufacturing 
+									of CPUs (8 or 32-bit), and their components.</p>
+									<p>Each team designs a robot capable of moving transitiors, ICs and/or CPU components 
+									from point to point. These dowels including transistor containers, IC’s, and CPU chips. 
+									Each transistor container, which there are 15 of (6 have a washer on top), can yield 
+									up to 96 transistors depending on its orientation, which gate it is placed in, and which 
+									level of the assembly area it is located in. AND, OR, and NOT gates (10pts. ea) require 
+									24 transistors each to make while the NAND gate (8pts.) requires only 16. IC fabrication 
+									consists of 20 coat hangers that can be hung either on an upper or lower assembly line 
+									(the upper produces twice as many as the lower) in certain amounts to produce the MUX 
+									(80pts. ea), Adder (60pts. ea), Decoder (40pts. ea), and D-Latch (60pts. ea) components.
+									All components produced saved and can be used later during construction of the CPU. 
+									The CPU is composed of two areas: the core processor and the memory module. 
+									Depending on how many of certain components are placed into the CPU and 
+									memory modules, an 8-bit memory module (worth 90 pts.), a 32- bit memory module 
+									(worth 420 pts.), an 8-bit CPU (worth 512 pts.), and/or a 32-bit CPU (worth 1,024 pts.) 
+									can be created.</p>
+								</div>
+							</div>
+						</div>
+					</div>					
+					<div class="section-divider">
+						<div class="cpu y2"></div>
+						<div class="cpu y1"></div>
+						<div class="cpu x1 y2"></div>
+						<div class="cpu x1 y1"></div>
+						<div class="cpu x2 y3"></div>						
+					</div>
+					<div id="about-process" class="section">
+						<div class="section-title">engineering/design process</div>
+						<div class="inner-section">
+							<div class="slide-arrow">
+								<span class="left" onclick="prevSection(this);"><img src="img/arrow-left.svg" alt="Arrow Left" /></span>
+								<span class="right" onclick="nextSection(this);"><img src="img/arrow-right.svg" alt="Arrow Right" /></span>
+							</div>
+							<p style="margin: 0;">We start the design process with a <b>Kickoff debrief</b> in 
+							order to make sure everyone understands the rules and the intricacies of the game. 
+							This year, due to the rather perplexing nature of the points system and the multiples 
+							configurations, we decided to make our own game summary to distribute to our members. 
+							<a href="Rules_Summary.pdf" target="_blank">This summary</a> condensed the game rules 
+							to 5 pages and highlighted the information that we believed was important.</p>
+							<p>Next follows our <b>Brainstorming Process</b>. More BEST-experienced members will 
+							try and relate the game to previous years' games and robots. For example, our robot's 
+							main arm is based off concepts from last year. Usually by the end of the brainstorming 
+							process, we have a generous list of different mechanisms and ideas for completing the 
+							given tasks, which are compiled into a list and split between groups to test and build.</p>
+							<p><b>Rapid Prototyping</b> is the most hands-on, and exciting part of our engineering 
+							process. It is also very fast paced, as we could all our time testing various ideas. We 
+							allot one week purely for prototyping in order to build parts of a working robot. This 
+							speed prototyping makes us prepared to test at the Test Drive and on Practice Day.</p>
+							<p>Perhaps the most important step is <b>Solution Evaluation</b>. When the team assesses 
+							a solution's successes and failures with achieving a goal. If the solution was mostly 
+							successful, we go back to our prototyping phase to improve weak details, finishing with 
+							a refined component. However, if the solution completely fails, we dump it, and evaluate 
+							how our other solutions tested.</p>
+							<p>Finally, when have all the specs that we need, and have thought through our strategy, 
+							we begin <b>Building our Final Robot.</b> Usually a 1 - 1 and 1/2 week process, Our final 
+							robot will contain most or all of our best solutions.</p>
+						</div>
+					</div>
+					<div class="section-divider">
+						<div class="cpu y2"></div>
+						<div class="cpu y1"></div>
+						<div class="cpu x1 y2"></div>
+						<div class="cpu x2 y2"></div>
+					</div>
+					<div id="about-robot" class="section">
+						<div class="section-title">robot</div>
+						<div class="inner-section">
+							<div class="slide-arrow">
+								<span class="left" onclick="prevSection(this);"><img src="img/arrow-left.svg" alt="Arrow Left" /></span>
+								<span class="right" onclick="nextSection(this);"><img src="img/arrow-right.svg" alt="Arrow Right" /></span>
+							</div>
+							<div class="split">
+								<img src="photos/robot.png" style="right: 0; margin: 10px 0 0 0" alt="Gatekeeper Field" width="490" height="367" />
+								<div style="margin: 0 0 0 15px; width: 500px">
+									<p style="margin: 0;"><b>We are the RoboWarriors!</b></p>
+									<p>This years challenge required us to build a robust design and one that could 
+									move easily with two people driving it. Our robot, named Trump Card, is completely 
+									different from anything that we have seen at any other competition. What we hope 
+									to achieve with every robotics competition is to make a unique robot that is efficient 
+									and "trumps" the competition. This year, we noticed that many of the robots present 
+									at Test Drive and Practice Day were very similar to the demo robot shown at the 
+									Kickoff. Our design is not only unique and efficient but show a different way of 
+									thinking, one that most teams aspire to achieve.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="section-divider">
+						<div class="cpu y3"></div>
+						<div class="cpu x1 y1"></div>
+						<div class="cpu x2 y1"></div>
+					</div>
+					<div id="about-experience" class="section">
+					<div class="section-title">experience</div>
+						<div class="inner-section">
+							<div class="slide-arrow">
+								<span class="left" onclick="prevSection(this);"><img src="img/arrow-left.svg" alt="Arrow Left" /></span>
+								<span class="right" onclick="nextSection(this);"><img src="img/arrow-right.svg" alt="Arrow Right" /></span>
+							</div>
+							<div class="split">
+								<div id="galleria"></div>
+								<div style="left: 0; width: 446px">
+									<p>The experience we receive from competing in BEST and FIRST helps us to teach kids 
+									about robotics, during the summer break. We host a summer camp each year and invite kids 
+									to come and explore robotics with us.</p>
+									<p>These competitions also prepare us for the real world, in a way. They teach us 
+									mechanics, electronics, and teamwork/team building.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="section-divider">
+						<div class="cpu y2"></div>
+						<div class="cpu y1"></div>
+						<div class="cpu x1 y3"></div>
+						<div class="cpu x2 y1"></div>
+					</div>
+					<div id="about-team" class="section">
+						<div class="section-title">the team</div>
+						<div class="inner-section">
+							<div class="slide-arrow">
+								<span class="left" onclick="prevSection(this);"><img src="img/arrow-left.svg" alt="Arrow Left" /></span>
+								<span class="right" onclick="nextSection(this);"><img src="img/arrow-right.svg" alt="Arrow Right" /></span>
+							</div>
+							<div class="split">
+								<img src="photos/team.png" style="margin: 10px 0 0 0" alt="Gatekeeper Field" width="480" height="360" />
+								<div style="right: 0; width: 520px">
+									<p style="margin: 0;"><b>We are the RoboWarriors!</b></p>
+									<p>The Westwood Robotics team is made up of a diverse set of students all striving 
+									toward the same goal, to inspire new opportunities through technology.</p>
+									<p>Our team consists of students of all grade levels, from freshman to senior. We 
+									also feature a few students from other high schools and even some middle schools. 
+									Westwood Robotics members come from various backgrounds. We are an ethnically 
+									minority team. Our members also have a wide range of interests; including band, 
+									orchestra, dance, soccer, lacrosse, swimming and everything else in between.</p>
+									<p>Our club offers a large parent network and mentor system. Our mentors and parents 
+									are more to us than just chaperones; they offer us guidance and act as our support 
+									system and as our instructors. To say the least, the Westwood Robotics team is a group 
+									of intelligent individuals with great potential.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="section-divider">
+						<div class="cpu y2"></div>
+						<div class="cpu y1"></div>
+						<div class="cpu x1 y2"></div>
+						<div class="cpu x1 y1"></div>
+						<div class="cpu x2 y2"></div>
+						<div class="cpu x2 y1"></div>
+					</div>
+					<div id="about-team-hist" class="section">
+						<div class="section-title">team history</div>
+						<div class="inner-section">
+							<div class="slide-arrow">
+								<span class="left" onclick="prevSection(this);"><img src="img/arrow-left.svg" alt="Arrow Left" /></span>
+							</div>
+							<p>Our club was founded many years ago, back before any of our current members were at Westwood. 
+							Ancient records revealed that at this time in our history the Westwood Robotics Club had participated 
+							actively in the early years of the BEST robotics competition, although we do not know much else. Just 
+							like many great civilizations before it, suddenly the club and its glory vanished, leaving very little 
+							behind.</p>
+							<p>In 2007 Collin Buchan and Eric Wood joined up to resurrect the club, determined to keep it from 
+							fading away ever again. Before long many other students started following them, and within the first 
+							month they had the manpower they needed to realize their vision of the club's future. Harnessing the 
+							finest brainpower Westwood had to offer, we were once again on track, taking on the annual BEST 
+							challenge in stride. But that only served to fan the flames of our passion for robotics, and before long 
+							we were hungry for more action.</p>
+							<p>The club evolved into a powerful engineering force almost overnight, and 
+							the very next year Westwood students ascended to the next level by qualifying for the Texas BEST 
+							championships. In the years following, a group of students who had learned under these two passionate 
+							revisionists continued out their legacy, even though they had both graduated. Westwood robotics has 
+							continued to qualify for the Texas BEST championships since then, currently for four, going on five, 
+							consecutive years. This dynastic success comes regardless of the hardships the club has suffered, 
+							including strife within the school causing several switches in teacher-sponsors and constant relocations 
+							of the club’s arsenal of tools.</p>
+							<p>Last year we earned 2nd place for the BEST Award as well as Robot performance 
+							in the regional competition. Following regionals we Finished 4th in the state competition against 
+							500+ other schools.</p>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="conveyor-base back"></div>
+				<div class="conveyor-belt"></div>
+				<div class="conveyor-base"></div>
+				<div id="dropdowns">
+					<div id="drop-sitemap" class="drop">
+						<div style="text-align: center; font-size: 50px; height: 78px;">
+							<a href="index.html">home</a>
+						</div>
+					</div>
+					<div id="drop-members" class="drop" style="height: 350px;">
+						<div class="split">
+							<div style="left: 0;">
+								<b>Officers</b>
+								<ul>
+									<li>Madan G.</li>
+									<li>Sumeet S.</li>
+									<li>Govind G.</li>
+									<li>Abhishek D.</li>
+									<li>Ryan B.</li>
+								</ul>
+							</div>
+							<div style="left: 200px;">
+								<b>Members</b>
+								<ul>
+									<li>Joel A.</li>
+									<li>Nicholas A.</li>
+									<li>Quinn B.</li>
+									<li>Megan B.</li>
+									<li>David C.</li>
+									<li>Toby C.</li>
+									<li>Alex C.</li>
+									<li>Michael	D.</li>
+									<li>Shubham G.</li>
+									<li>Nolan G.</li>
+									<li>Murtaza H.</li>
+									<li>Josh L.</li>
+									<li>Saket M.</li>
+								</ul>
+							</div>
+							<div style="left: 350px;">
+								<b>Cont.</b>
+								<ul>
+									<li>Saavan N.</li>
+									<li>Liem N.</li>
+									<li>Rishab P.</li>
+									<li>Vikas P.</li>
+									<li>Varun R.</li>
+									<li>Austin R.</li>
+									<li>Nico R.</li>
+									<li>Juhan S.</li>
+									<li>Isaac T.</li>
+									<li>Nickolas T.</li>
+									<li>Yaswin V.</li>
+									<li>Eric Z.</li>
+									<li>Yusuf U.</li>
+								</ul>
+							</div>
+							<div style="left: 550px;">
+								<b>Mentors</b>
+								<ul>
+									<li>Paul A.</li>
+									<li>Mano B.</li>
+									<li>Kevin M.</li>
+									<li>Taylor M.</li>
+									<li>Chris T.</li>
+									<li>Mark W.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="drop-credits" class="drop">
+						<p>Website design by Austin Reuland</p>
+						<p>Made from scratch using</p> 
+						<ul>
+							<li>Sublime Text 3 Text Editor - HTML, CSS and Javascript</li>
+							<li>Inkscape Vector Graphics Editor - SVG Images</li>
+							<li>GIMP - PNG Images</li>
+						</ul>
+						<p>Content by Madan Gopal and Austin Reuland</p>
+						<p>Pictures by Madan Gopal, Govind Girish, and the rest of the Team</p>
+						<p>&copy; 2013 - Westwood Robotics</p>
+					</div>
+				</div>
+			</div>
+			<div id="footer">
+				<div>&copy; 2013 - Westwood Robotics</div>
+			</div>
+		</div>
+	</body>
+</html>

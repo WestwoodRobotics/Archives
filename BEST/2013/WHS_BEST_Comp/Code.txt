@@ -1,0 +1,38 @@
+#include "Main.h" 
+void main ( void ) {
+	int Motor[11] = {0,0,0,0,0,0,0,0,0,0,0};
+	int mint = 0; // increment
+	int HangerCount = 0;
+	int HangerBtn = 0;
+	int HangerSwitch = 0; // Hanger Release Limit Switch
+	int HangerBtnOld = 0; // Hanger Button Old Value
+	int HangerSwitchOld = 0;
+	int SwitchCount = 2;
+	int SwitchLast = 0;
+	// Set Deadband for Joysticks
+	SetJoystickAnalogDeadband ( 1 , 1 , 4 , 4 ) ;
+	SetJoystickAnalogDeadband ( 1 , 2 , 4 , 4 ) ;
+	SetJoystickAnalogDeadband ( 1 , 3 , 4 , 4 ) ;
+	SetJoystickAnalogDeadband ( 1 , 4 , 4 , 4 ) ;
+	while ( 1 ) {
+		// Get analog joystick value; assign to motors
+		HangerBtn = GetJoystickDigital ( 1 , 8 , 1 ) ;
+		Motor[2] = GetJoystickAnalog( 1 , 2 ) ;
+		Motor[3] = GetJoystickAnalog( 1 , 3 ) ;
+		Motor[4] = GetJoystickAnalog( 1 , 4 ) ;
+		SwitchLast += (SwitchLast <= SwitchCount ? 1 : 0) ;
+		SwitchLast = (SwitchLast > SwitchCount ? 0 : SwitchLast) ;
+		HangerSwitch = GetDigitalInput( 1 ) ;
+		HangerCount -= (HangerSwitch == 0 && HangerSwitchOld == 1 && SwitchLast == 0 ? 1 : 0);
+		HangerCount += (HangerBtn == 1 && HangerBtnOld == 0 ? 1 : 0);
+		Motor[8] = (HangerCount > 0 ? 127 : 0);
+		HangerCount = (HangerCount < 0 ? 0 : HangerCount);
+		HangerBtnOld = HangerBtn;
+		HangerSwitchOld = HangerSwitch;
+		// Increment through motor values
+		for ( mint = 2 ; mint < 10 ; mint++ ) {
+			// Assign temp array value to motor or serve
+			SetMotor ( mint , Motor[mint]) ;
+		}
+	}
+}
