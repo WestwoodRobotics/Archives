@@ -1,0 +1,117 @@
+[VSeparator@Widget]:
+    size_hint_x: None
+    width: 10
+    canvas:
+        Color:
+            rgba: .8, .8, .8, .3
+        Rectangle:
+            size: 1, self.height
+            pos: self.center_x, self.y
+
+[HSeparator@Label]:
+    size_hint_y: None
+    height: max(dp(25), self.texture_size[1])
+    text: ctx.text if 'text' in ctx else ''
+    text_size: self.width, None
+    valign: 'middle'
+    halign: 'left'
+    canvas.before:
+        Color:
+            rgba: .2, .2, .2, .8
+        Rectangle:
+            size: self.width/2, self.size[1]
+            pos: self.pos
+
+
+<Dashboard>:
+    BoxLayout:
+        orientation: 'horizontal'
+
+        BoxLayout:
+            orientation: 'vertical'
+
+            BoxLayout:
+                orientation: 'horizontal'
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing: 10
+                    padding: 10
+
+                    HSeparator:
+                        text: 'Drivemode'
+                    
+                    ToggleButton:
+                        id: toggle_drivemode_arcade
+                        text: 'Arcade'
+                        group: 'drivemode_toggle'
+                        on_press: root.change_drivemode(1)
+
+                    ToggleButton:
+                        id: toggle_drivemode_tank
+                        text: 'Tank'
+                        group: 'drivemode_toggle'
+                        on_press: root.change_drivemode(2)
+
+                    ToggleButton:
+                        id: toggle_drivemode_mecanum
+                        text: 'Mecanum'
+                        group: 'drivemode_toggle'
+                        on_press: root.change_drivemode(3)
+
+                    ToggleButton:
+                        id: toggle_drivemode_mecatank
+                        text: 'MecaTank'
+                        group: 'drivemode_toggle'
+                        on_press: root.change_drivemode(4)
+
+                    TextInput:
+                        id: text_drivemode
+                        multiline: False
+                        value: ''
+                        text: self.value
+                        readonly: True
+
+                    HSeparator:
+                        text: 'Battery Level'
+                        spacing: 0
+
+                    ProgressBar:
+                        id: battery_level_bar
+                        size_hint_y: None
+                        height: 10
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    spacing: 10
+                    padding: 10
+
+                    HSeparator:
+                        text: 'Distance (In)'
+
+                    TextInput:
+                        id: ultrasonic_out
+                        multiline: False
+                        input_type: 'number'
+                        text: '0.00'
+                        readonly: True
+
+                    HSeparator:
+                        text: 'Drive Scale'
+
+                    TextInput
+                        id: move_scaler
+                        multiline: False
+                        on_text_validate: root.change_move_scale(self.text)
+                        input_type: 'number'
+                        text: '10.0'
+
+                    HSeparator:
+                        text: 'Spindle Scale'
+
+                    TextInput
+                        id: spindle_scaler
+                        multiline: False
+                        on_text_validate: root.change_spindle_scale(self.text)
+                        input_type: 'number'
+                        text: '7.5'
