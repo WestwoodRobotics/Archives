@@ -10,6 +10,8 @@ The code for the robot itself was written in Java this year and uses the wpilib 
 
 In order to control the robot effectively, the driverstation's dashboard was modified to match our team's needs. The modifications were done in LabView, building upon the default dashboard.
 
+**NOTE FROM THE FUTURE** The driverstation code got lost in the transition to the archive repo, as it couldn't be checked out on case-insensitive file systems.
+
 ## The Arcade
 
 As a side project, our team created a retro video-game arcade station using a Raspberry Pi (see _RetroPi_). Our team made modifications to the sprites and sounds of the classic Super Mario Bros. video game.
